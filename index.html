@@ -494,9 +494,14 @@ body {
 }
 
 .guia-form {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 12px;
+}
+.guia-form.expanded {
+  display: flex;
+  animation: wlFadeIn 0.25s ease forwards;
 }
 
 .guia-input {
@@ -734,13 +739,14 @@ body {
       <div class="guia-card-bottom">
         <div class="guia-desc">Recursos prácticos para organizar tu vida con Fé y disciplina. Sin costo, directo a tu correo.</div>
         <div id="guia-form-wrap">
-          <div class="guia-form">
+          <div class="guia-form" id="guia-fields">
             <input id="guia-name" class="guia-input" type="text" placeholder="Tu nombre" autocomplete="name">
             <input id="guia-email" class="guia-input" type="email" placeholder="tu@correo.com" autocomplete="email">
-            <button class="btn btn-solid" onclick="submitLeads(this)">
-              <span class="guia-label">Quiero mi guía</span>
-              <span class="guia-loading" style="display:none">Enviando…</span>
-            </button>
+          </div>
+          <button type="button" class="btn btn-solid" onclick="handleLeads(this)">
+            <span class="guia-label">Quiero mi guía</span>
+            <span class="guia-loading" style="display:none">Enviando…</span>
+          </button>
           </div>
           <div id="guia-error" class="wl-error"></div>
         </div>
@@ -804,6 +810,17 @@ body {
       this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
     });
   });
+
+  function handleLeads(btn) {
+    const fields = document.getElementById('guia-fields');
+    if (!fields.classList.contains('expanded')) {
+      fields.classList.add('expanded');
+      btn.querySelector('.guia-label').textContent = 'Enviar →';
+      setTimeout(() => document.getElementById('guia-name').focus(), 50);
+      return;
+    }
+    submitLeads(btn);
+  }
 
   async function submitLeads(btn) {
     const name  = document.getElementById('guia-name').value.trim();
