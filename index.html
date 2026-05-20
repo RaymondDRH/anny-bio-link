@@ -187,8 +187,9 @@ body {
   text-decoration: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.22s;
+  transition: background 0.22s, transform 0.15s ease;
 }
+.hero-social-btn:active { transform: scale(0.9); }
 .hero-social-btn:hover { background: rgba(251,246,242,0.32); }
 .hero-social-btn svg { width: 14px; height: 14px; fill: var(--crema); transition: fill 0.22s; }
 .hero-social-btn.tapped,
@@ -258,7 +259,12 @@ body {
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.18s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn:active {
+  transform: scale(0.96);
+  box-shadow: none;
+  filter: brightness(0.92);
 }
 
 .btn-solid {
@@ -637,8 +643,9 @@ body {
   text-decoration: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.22s, border-color 0.22s;
+  transition: background 0.22s, border-color 0.22s, transform 0.15s ease;
 }
+.footer-icon:active { transform: scale(0.9); }
 .footer-icon:hover { background: var(--cobre); border-color: var(--cobre); }
 .footer-icon:hover svg { fill: var(--crema); }
 .footer-icon svg { width: 15px; height: 15px; fill: var(--topo); transition: fill 0.22s; }
