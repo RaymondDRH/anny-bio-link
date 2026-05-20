@@ -261,10 +261,12 @@ body {
   background: var(--cobre);
   color: var(--crema);
 }
-.btn-solid:hover {
-  background: #a96b43;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(196,133,90,0.28);
+@media (hover: hover) and (pointer: fine) {
+  .btn-solid:hover {
+    background: #a96b43;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(196,133,90,0.28);
+  }
 }
 
 .btn-outline {
@@ -272,10 +274,12 @@ body {
   color: var(--topo);
   border: 1.5px solid var(--rosa-arena);
 }
-.btn-outline:hover {
-  border-color: var(--cobre);
-  color: var(--cobre);
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    border-color: var(--cobre);
+    color: var(--cobre);
+    transform: translateY(-1px);
+  }
 }
 
 /* ---- RETO CARD ---- */
@@ -354,19 +358,18 @@ body {
 /* ---- WAITLIST FORM ---- */
 #waitlist-form-wrap, #waitlist-success { position: relative; z-index: 1; }
 .waitlist-fields {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 0;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.35s ease, margin-bottom 0.4s ease;
+  margin-bottom: 12px;
 }
 .waitlist-fields.expanded {
-  max-height: 200px;
-  opacity: 1;
-  margin-bottom: 12px;
+  display: flex;
+  animation: wlFadeIn 0.25s ease forwards;
+}
+@keyframes wlFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .wl-input {
   width: 100%;
@@ -519,9 +522,11 @@ body {
   border-top: 3px solid var(--salvia);
   transition: transform 0.22s, box-shadow 0.22s;
 }
-.blog-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 36px rgba(46,26,16,0.13);
+@media (hover: hover) and (pointer: fine) {
+  .blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 36px rgba(46,26,16,0.13);
+  }
 }
 
 .blog-top {
@@ -834,7 +839,8 @@ body {
     const fields = document.getElementById('wl-fields');
     if (!fields.classList.contains('expanded')) {
       fields.classList.add('expanded');
-      setTimeout(() => document.getElementById('wl-name').focus(), 350);
+      btn.querySelector('.wl-label').textContent = 'Enviar →';
+      setTimeout(() => document.getElementById('wl-name').focus(), 50);
       return;
     }
     submitWaitlist(btn);
