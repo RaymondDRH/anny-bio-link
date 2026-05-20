@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>¡Bienvenida a bordo! — Next Fly Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:    #330C15;
+  --gold:  #C49A3C;
+  --gold-lt: #DDB860;
+  --cream: #F5EDD8;
+  --text:  rgba(245,237,216,0.72);
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(196,154,60,0.1);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  animation: fadeInUp 0.7s ease both;
+}
+
+.icon svg { width: 32px; height: 32px; fill: var(--gold); }
+
+.logo {
+  font-family: 'Alex Brush', cursive;
+  font-size: 52px;
+  color: var(--gold-lt);
+  line-height: 1;
+  margin-bottom: 4px;
+  animation: fadeInUp 0.7s 0.1s ease both;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(196,154,60,0.55);
+  margin-bottom: 28px;
+  animation: fadeInUp 0.7s 0.2s ease both;
+}
+
+.headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.25;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.7s 0.25s ease both;
+}
+
+.headline em { font-style: italic; color: var(--gold); }
+
+.sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.8;
+  max-width: 360px;
+  margin: 0 auto 40px;
+  animation: fadeInUp 0.7s 0.35s ease both;
+}
+
+.steps {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(196,154,60,0.15);
+  border-radius: 20px;
+  padding: 28px 24px;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto 36px;
+  text-align: left;
+  animation: fadeInUp 0.7s 0.45s ease both;
+}
+
+.steps-title {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.step:last-child { border-bottom: none; }
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--bg);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-text { font-size: 13px; font-weight: 300; color: var(--text); line-height: 1.6; }
+
+.btn-back {
+  display: inline-block;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 12px;
+  animation: fadeInUp 0.7s 0.55s ease both;
+  transition: transform 0.18s, box-shadow 0.2s;
+}
+
+.btn-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(196,154,60,0.32);
+}
+</style>
+</head>
+<body>
+
+  <div class="icon">
+    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  </div>
+
+  <div class="logo">Anny Gómez</div>
+  <div class="eyebrow">Next Fly Academy</div>
+
+  <h1 class="headline">¡Bienvenida <em>a bordo!</em></h1>
+
+  <p class="sub">
+    Tu pago fue procesado con éxito. ¡Gracias por confiar en este vuelo! Estos son tus próximos pasos:
+  </p>
+
+  <div class="steps">
+    <div class="steps-title">¿Qué sigue ahora?</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Revisa tu correo — recibirás una confirmación de pago de Stripe</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Anny se pondrá en contacto contigo en las próximas 24–48 horas con las instrucciones de acceso al curso</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Mientras tanto, síguenos en Instagram para no perderte nada</div>
+    </div>
+  </div>
+
+  <a href="/" class="btn-back">← Volver al inicio</a>
+
+</body>
+</html>
