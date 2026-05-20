@@ -962,8 +962,9 @@ body {
   function closeModal() {
     document.getElementById('payment-overlay').classList.remove('active');
     document.body.style.overflow = '';
-    if (paymentElInstance) { paymentElInstance.unmount(); paymentElInstance = null; }
-    elementsInstance = null;
+    if (paymentElInstance) { paymentElInstance.destroy(); paymentElInstance = null; }
+    if (elementsInstance) { elementsInstance = null; }
+    document.getElementById('payment-element').innerHTML = '';
     const btn = document.getElementById('modal-submit');
     btn.disabled = false;
     document.getElementById('modal-submit-label').style.display  = 'inline';
