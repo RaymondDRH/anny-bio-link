@@ -187,50 +187,10 @@ body {
 
 .nfa-banner {
   width: 100%;
-  height: 130px;
-  background: linear-gradient(140deg, #1a0c05 0%, #3d2214 60%, var(--topo) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.nfa-banner::before {
-  content: '';
-  position: absolute;
-  width: 220px; height: 220px;
-  border-radius: 50%;
-  border: 1px solid rgba(196,133,90,0.18);
-  top: -80px; right: -60px;
-}
-.nfa-banner::after {
-  content: '';
-  position: absolute;
-  width: 140px; height: 140px;
-  border-radius: 50%;
-  border: 1px solid rgba(166,176,160,0.12);
-  bottom: -50px; left: -30px;
-}
-
-.nfa-logo {
-  font-family: 'Alex Brush', cursive;
-  font-size: 40px;
-  color: var(--nude);
-  line-height: 1;
-  position: relative;
-  z-index: 1;
-}
-.nfa-sub {
-  font-size: 8px;
-  font-weight: 400;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--cobre);
-  margin-top: 4px;
-  position: relative;
-  z-index: 1;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .nfa-body {
@@ -664,10 +624,7 @@ body {
 
     <!-- NEXT FLY ACADEMY -->
     <div class="nfa-card fade-in">
-      <div class="nfa-banner">
-        <div class="nfa-logo">Next Fly Academy</div>
-        <div class="nfa-sub">Educación · Emprendimiento</div>
-      </div>
+      <img class="nfa-banner" src="./next%20fly%20banner.jpeg" alt="NextFlight Academy">
       <div class="nfa-body">
         <div class="nfa-title">Transforma tu negocio digital</div>
         <div class="nfa-desc">Aprende a construir y escalar tu negocio con las herramientas y estrategias correctas. Una academia diseñada para emprendedoras que van en serio.</div>
