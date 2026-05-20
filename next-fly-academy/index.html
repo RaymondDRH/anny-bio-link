@@ -557,6 +557,40 @@ body {
   margin: 20px 0;
 }
 
+.modal-fields { margin-bottom: 16px; }
+.modal-field  { margin-bottom: 10px; }
+
+.modal-field-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,237,216,0.6);
+  margin-bottom: 6px;
+}
+
+.modal-field-input {
+  width: 100%;
+  padding: 11px 14px;
+  background: #2A0A12;
+  border: 1px solid rgba(196,154,60,0.22);
+  border-radius: 10px;
+  color: #F5EDD8;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.modal-field-input::placeholder { color: rgba(245,237,216,0.32); }
+
+.modal-field-input:focus {
+  border-color: rgba(196,154,60,0.55);
+  box-shadow: 0 0 0 3px rgba(196,154,60,0.1);
+}
+
 #payment-element { margin-bottom: 18px; min-height: 40px; }
 
 .modal-submit {
@@ -801,6 +835,16 @@ body {
     </div>
     <div class="modal-price-note">Pago único · Sin mensualidades</div>
     <div class="modal-divider"></div>
+    <div class="modal-fields">
+      <div class="modal-field">
+        <label class="modal-field-label" for="buyer-name">Nombre completo</label>
+        <input type="text" id="buyer-name" class="modal-field-input" placeholder="Tu nombre completo" autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label class="modal-field-label" for="buyer-email">Correo electrónico</label>
+        <input type="email" id="buyer-email" class="modal-field-input" placeholder="tu@correo.com" autocomplete="email">
+      </div>
+    </div>
     <div id="payment-element"></div>
     <div id="modal-error" class="modal-error"></div>
     <button id="modal-submit" class="modal-submit" onclick="submitPayment()">
@@ -922,6 +966,8 @@ body {
     document.getElementById('modal-submit-label').style.display  = 'inline';
     document.getElementById('modal-submit-loading').style.display = 'none';
     document.getElementById('modal-error').textContent = '';
+    document.getElementById('buyer-name').value  = '';
+    document.getElementById('buyer-email').value = '';
   }
 
   function handleOverlayClick(e) {
@@ -929,6 +975,14 @@ body {
   }
 
   async function submitPayment() {
+    const name  = document.getElementById('buyer-name').value.trim();
+    const email = document.getElementById('buyer-email').value.trim();
+
+    if (!name || !email) {
+      document.getElementById('modal-error').textContent = 'Por favor completá tu nombre y correo electrónico.';
+      return;
+    }
+
     const btn = document.getElementById('modal-submit');
     btn.disabled = true;
     document.getElementById('modal-submit-label').style.display  = 'none';
@@ -939,6 +993,9 @@ body {
       elements: elementsInstance,
       confirmParams: {
         return_url: 'https://annygomez.com/next-fly-academy/success.html',
+        payment_method_data: {
+          billing_details: { name, email },
+        },
       },
     });
 
