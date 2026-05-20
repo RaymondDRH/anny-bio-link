@@ -351,6 +351,61 @@ body {
   margin-bottom: 24px;
 }
 
+/* ---- WAITLIST FORM ---- */
+.waitlist-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.wl-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--rosa-arena);
+  background: var(--crema);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  color: var(--espresso);
+  outline: none;
+}
+.wl-input:focus { border-color: var(--cobre); }
+.wl-input::placeholder { color: var(--topo); opacity: 0.6; }
+.btn-cobre {
+  width: 100%;
+  background: var(--cobre);
+  color: var(--crema);
+  border: none;
+  border-radius: 100px;
+  padding: 14px 28px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-cobre:hover { opacity: 0.88; }
+.btn-cobre:disabled { opacity: 0.6; cursor: default; }
+.wl-error {
+  font-size: 12px;
+  color: #b94a4a;
+  margin-top: 8px;
+  min-height: 16px;
+}
+.wl-success {
+  font-size: 13px;
+  color: var(--topo);
+  font-weight: 400;
+  line-height: 1.6;
+  padding: 14px;
+  background: var(--crema);
+  border-radius: 12px;
+  border: 1px solid var(--rosa-arena);
+  text-align: center;
+}
+
 /* ---- GUÍA GRATUITA — rosa arena ---- */
 
 .guia-card {
@@ -605,7 +660,22 @@ body {
       </div>
       <div class="reto-title">Reto · <em>7 Días para<br>Volver a Ti</em></div>
       <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con fe y disciplina como guía.</div>
-      <a href="#" class="btn btn-outline">Avísame cuando esté listo</a>
+
+      <div id="waitlist-form-wrap">
+        <div class="waitlist-fields">
+          <input id="wl-name" type="text" placeholder="Tu nombre" class="wl-input" autocomplete="name">
+          <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
+        </div>
+        <button class="btn btn-cobre" onclick="submitWaitlist(this)">
+          <span class="wl-label">Avísame cuando esté listo</span>
+          <span class="wl-loading" style="display:none">Guardando…</span>
+        </button>
+        <div id="wl-error" class="wl-error"></div>
+      </div>
+
+      <div id="waitlist-success" style="display:none" class="wl-success">
+        ¡Listo! Te avisamos cuando el reto abra sus puertas.
+      </div>
     </div>
 
     <!-- BLOG -->
@@ -699,6 +769,46 @@ body {
       this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
     });
   });
+
+  async function submitWaitlist(btn) {
+    const name  = document.getElementById('wl-name').value.trim();
+    const email = document.getElementById('wl-email').value.trim();
+    const error = document.getElementById('wl-error');
+    error.textContent = '';
+
+    if (!name || !email) {
+      error.textContent = 'Por favor completa tu nombre y correo.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.querySelector('.wl-label').style.display   = 'none';
+    btn.querySelector('.wl-loading').style.display = 'inline';
+
+    try {
+      const res  = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await res.json();
+
+      if (data.success || data.alreadyRegistered) {
+        document.getElementById('waitlist-form-wrap').style.display  = 'none';
+        document.getElementById('waitlist-success').style.display = 'block';
+      } else {
+        error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
+        btn.disabled = false;
+        btn.querySelector('.wl-label').style.display   = 'inline';
+        btn.querySelector('.wl-loading').style.display = 'none';
+      }
+    } catch {
+      error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
+      btn.disabled = false;
+      btn.querySelector('.wl-label').style.display   = 'inline';
+      btn.querySelector('.wl-loading').style.display = 'none';
+    }
+  }
 </script>
 
 </body>
