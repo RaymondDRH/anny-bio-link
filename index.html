@@ -185,6 +185,8 @@ body {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: background 0.22s;
 }
 .hero-social-btn:hover { background: rgba(251,246,242,0.32); }
@@ -254,6 +256,8 @@ body {
   border-radius: 12px;
   border: none;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.18s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
 }
 
@@ -512,6 +516,10 @@ body {
 .guia-input:focus { border-color: var(--cobre); }
 
 /* ---- BLOG — blanco + acento salvia ---- */
+.blog-card, .nfa-card a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 .blog-card {
   background: white;
   border-radius: 20px;
@@ -622,6 +630,8 @@ body {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: background 0.22s, border-color 0.22s;
 }
 .footer-icon:hover { background: var(--cobre); border-color: var(--cobre); }
