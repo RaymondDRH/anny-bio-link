@@ -167,36 +167,12 @@ body {
   transition: fill 0.22s;
 }
 
-/* ---- DIVIDER ---- */
-.divider {
-  height: 1px;
-  background: var(--rosa-arena);
-  margin: 0 22px;
-  opacity: 0.55;
-}
-
-/* ---- SECTION WRAPPER ---- */
-.section {
-  padding: 28px 20px;
-}
-
-.section-label {
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--cobre);
-  margin-bottom: 16px;
+/* ---- CARDS AREA ---- */
+.cards-area {
+  padding: 16px;
   display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rosa-arena);
-  opacity: 0.6;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* ---- NEXT FLY ACADEMY ---- */
@@ -316,15 +292,17 @@ body {
   transform: translateY(-1px);
 }
 
-/* ---- RETO SECTION ---- */
-.reto-wrap {
+/* ---- RETO CARD ---- */
+.reto-card {
   background: var(--nude);
-  padding: 36px 20px;
+  border-radius: 20px;
+  padding: 28px 22px;
+  box-shadow: 0 4px 24px rgba(46,26,16,0.08);
   position: relative;
   overflow: hidden;
 }
 
-.reto-wrap::before {
+.reto-card::before {
   content: '';
   position: absolute;
   top: -50px; right: -50px;
@@ -332,7 +310,7 @@ body {
   border-radius: 50%;
   border: 1px solid rgba(196,133,90,0.1);
 }
-.reto-wrap::after {
+.reto-card::after {
   content: '';
   position: absolute;
   bottom: -70px; left: -70px;
@@ -340,8 +318,6 @@ body {
   border-radius: 50%;
   border: 1px solid rgba(166,176,160,0.12);
 }
-
-.reto-inner { position: relative; z-index: 1; }
 
 .coming-badge {
   display: inline-flex;
@@ -390,10 +366,6 @@ body {
 }
 
 /* ---- GUÍA GRATUITA ---- */
-.guia-wrap {
-  padding: 8px 20px 32px;
-  background: var(--crema);
-}
 
 .guia-card {
   background: white;
@@ -637,26 +609,11 @@ body {
     </a>
   </div>
 
-  <!-- ===== NEXT FLY ACADEMY ===== -->
-  <div class="divider"></div>
-  <section class="section fade-in">
-    <div class="section-label">Academia Digital</div>
-    <div class="nfa-card">
-      <div class="nfa-banner">
-        <div class="nfa-logo">Next Fly Academy</div>
-        <div class="nfa-sub">Educación · Emprendimiento</div>
-      </div>
-      <div class="nfa-body">
-        <div class="nfa-title">Transforma tu negocio digital</div>
-        <div class="nfa-desc">Aprende a construir y escalar tu negocio con las herramientas y estrategias correctas. Una academia diseñada para emprendedoras que van en serio.</div>
-        <a href="#" class="btn btn-solid">Conoce más →</a>
-      </div>
-    </div>
-  </section>
+  <!-- ===== CARDS AREA ===== -->
+  <div class="cards-area">
 
-  <!-- ===== RETO 7 DÍAS ===== -->
-  <div class="reto-wrap fade-in">
-    <div class="reto-inner">
+    <!-- RETO 7 DÍAS -->
+    <div class="reto-card fade-in">
       <div class="coming-badge">
         <span class="pulse-dot"></span>
         Próximamente
@@ -665,12 +622,9 @@ body {
       <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con fe y disciplina como guía.</div>
       <a href="#" class="btn btn-outline">Avísame cuando esté listo</a>
     </div>
-  </div>
 
-  <!-- ===== GUÍA GRATUITA ===== -->
-  <section class="guia-wrap fade-in">
-    <div class="section-label">Regalo para ti</div>
-    <div class="guia-card">
+    <!-- GUÍA GRATUITA -->
+    <div class="guia-card fade-in">
       <div class="guia-card-top">
         <div class="guia-icon-box">
           <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h10v2H7zm0-3h10v2H7zm0 6h7v2H7z"/></svg>
@@ -688,12 +642,9 @@ body {
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ===== BLOG ===== -->
-  <section class="section fade-in">
-    <div class="section-label">Blog</div>
-    <a href="#" class="blog-card">
+    <!-- BLOG -->
+    <a href="#" class="blog-card fade-in">
       <div class="blog-top">
         <div class="blog-icon-box">
           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -704,11 +655,25 @@ body {
         </div>
       </div>
       <div class="blog-bottom">
-        <div class="blog-desc">Encuentra recursos sobre fe, organización y crecimiento personal. Escrito desde la experiencia real — porque la teoría sin práctica no cambia vidas.</div>
+        <div class="blog-desc">Encuentra recursos sobre fe, organización y crecimiento personal. Escrito desde la experiencia real.</div>
         <div class="blog-cta">Leer artículos →</div>
       </div>
     </a>
-  </section>
+
+    <!-- NEXT FLY ACADEMY -->
+    <div class="nfa-card fade-in">
+      <div class="nfa-banner">
+        <div class="nfa-logo">Next Fly Academy</div>
+        <div class="nfa-sub">Educación · Emprendimiento</div>
+      </div>
+      <div class="nfa-body">
+        <div class="nfa-title">Transforma tu negocio digital</div>
+        <div class="nfa-desc">Aprende a construir y escalar tu negocio con las herramientas y estrategias correctas. Una academia diseñada para emprendedoras que van en serio.</div>
+        <a href="#" class="btn btn-solid">Conoce más →</a>
+      </div>
+    </div>
+
+  </div>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer fade-in">
