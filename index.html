@@ -148,37 +148,30 @@ body {
   animation: fadeInUp 1s 0.5s ease both;
 }
 
-/* ---- SOCIAL STRIP ---- */
-.social-strip {
-  background: var(--crema);
+/* ---- HERO SOCIAL ---- */
+.hero-social {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 14px;
-  padding: 16px 0 18px;
-  animation: fadeInUp 0.9s 0.65s ease both;
+  margin-top: 14px;
+  animation: fadeInUp 1s 0.65s ease both;
 }
 
-.social-btn {
-  width: 38px;
-  height: 38px;
+.hero-social-btn {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--nude);
+  background: rgba(251,246,242,0.18);
+  border: 1px solid rgba(251,246,242,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
   transition: background 0.22s;
 }
-.social-btn:hover { background: var(--cobre); }
-.social-btn:hover svg { fill: var(--crema); }
-.social-btn svg {
-  width: 15px;
-  height: 15px;
-  fill: var(--topo);
-  transition: fill 0.22s;
-}
-.social-btn.tapped,
+.hero-social-btn:hover { background: rgba(251,246,242,0.32); }
+.hero-social-btn svg { width: 14px; height: 14px; fill: var(--crema); transition: fill 0.22s; }
+.hero-social-btn.tapped,
 .footer-icon.tapped { animation: btn-tap 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 
 /* ---- CARDS AREA ---- */
@@ -569,21 +562,19 @@ body {
     <div class="hero-gradient">
       <div class="hero-logo">Anny Gómez</div>
       <div class="hero-tagline">Fé · Hábitos · Propósito</div>
+      <div class="hero-social">
+        <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="hero-social-btn" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="hero-social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
     </div>
   </section>
-
-  <!-- Social strip -->
-  <div class="social-strip">
-    <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-    </a>
-    <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">
-      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
-    </a>
-    <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
-      <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-    </a>
-  </div>
 
   <!-- ===== CARDS AREA ===== -->
   <div class="cards-area">
@@ -682,7 +673,7 @@ body {
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   // Bounce on tap — social buttons both strips
-  document.querySelectorAll('.social-btn, .footer-icon').forEach(btn => {
+  document.querySelectorAll('.hero-social-btn, .footer-icon').forEach(btn => {
     btn.addEventListener('click', function () {
       this.classList.remove('tapped');
       void this.offsetWidth;
