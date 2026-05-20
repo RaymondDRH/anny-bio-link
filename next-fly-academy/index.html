@@ -268,11 +268,12 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center 12%;
   border: 3px solid var(--gold);
   margin: 0 auto 22px;
   display: block;
+  background-image: url('/photos/hero.jpg');
+  background-size: 240%;
+  background-position: center 8%;
 }
 
 .capitana-bio {
@@ -531,7 +532,7 @@ body {
   <div class="container capitana">
     <div class="section-eyebrow fade-in">La Capitana del Vuelo</div>
     <div class="capitana-name fade-in">Anny Gómez</div>
-    <img class="capitana-photo fade-in" src="/photos/hero.jpg" alt="Anny Gómez">
+    <div class="capitana-photo fade-in" role="img" aria-label="Anny Gómez"></div>
     <p class="capitana-bio fade-in">
       Esposa, mamá y creadora de contenido enfocada en hábitos, organización y crecimiento personal. Profesional en Marketing y Administración, combina su experiencia laboral y su pasión por servir para inspirar a mujeres y emprendedoras a transformar su vida, fortalecer su relación con Dios y construir una vida con propósito, equilibrio y bienestar.
     </p>
