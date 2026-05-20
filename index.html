@@ -375,10 +375,10 @@ body {
 }
 .waitlist-fields.expanded {
   display: flex;
-  animation: wlFadeIn 0.25s ease forwards;
+  animation: wlFadeIn 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 @keyframes wlFadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
+  from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .wl-input {
@@ -507,7 +507,7 @@ body {
 }
 .guia-form.expanded {
   display: flex;
-  animation: wlFadeIn 0.25s ease forwards;
+  animation: wlFadeIn 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .guia-input {
