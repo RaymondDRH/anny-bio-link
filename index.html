@@ -796,6 +796,9 @@ body {
 
 <script>
   // Scroll animations — staggered per card
+  // Enables :active CSS on iOS Safari
+  document.addEventListener('touchstart', function(){}, { passive: true });
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
