@@ -358,6 +358,15 @@ body {
   flex-direction: column;
   gap: 10px;
   margin-bottom: 12px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-bottom 0.3s ease;
+}
+.waitlist-fields.expanded {
+  max-height: 200px;
+  opacity: 1;
+  margin-bottom: 12px;
 }
 .wl-input {
   width: 100%;
@@ -663,11 +672,11 @@ body {
       <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</div>
 
       <div id="waitlist-form-wrap">
-        <div class="waitlist-fields">
+        <div class="waitlist-fields" id="wl-fields">
           <input id="wl-name" type="text" placeholder="Tu nombre" class="wl-input" autocomplete="name">
           <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
         </div>
-        <button class="btn btn-cobre" onclick="submitWaitlist(this)">
+        <button class="btn btn-cobre" id="wl-btn" onclick="handleWaitlist(this)">
           <span class="wl-label">Avísame cuando esté listo</span>
           <span class="wl-loading" style="display:none">Guardando…</span>
         </button>
@@ -819,6 +828,16 @@ body {
       btn.querySelector('.guia-label').style.display   = 'inline';
       btn.querySelector('.guia-loading').style.display = 'none';
     }
+  }
+
+  function handleWaitlist(btn) {
+    const fields = document.getElementById('wl-fields');
+    if (!fields.classList.contains('expanded')) {
+      fields.classList.add('expanded');
+      setTimeout(() => document.getElementById('wl-name').focus(), 350);
+      return;
+    }
+    submitWaitlist(btn);
   }
 
   async function submitWaitlist(btn) {
