@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Hábitos con Propósito — Anny Gómez</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --crema:      #FBF6F2;
+    --nude:       #E8D9CD;
+    --rosa:       #D4BEB0;
+    --cobre:      #C4855A;
+    --cobre-lt:   #D9A07A;
+    --espresso:   #2E1A10;
+    --topo:       #8C6A58;
+    --salvia:     #A6B0A0;
+  }
+
+  html { background: #e8e0d8; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--espresso);
+    background: #e8e0d8;
+    padding: 40px 20px;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--crema);
+    margin: 0 auto 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 48px rgba(46,26,16,0.18);
+  }
+
+  /* ── ORNAMENTAL HELPERS ── */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* ── PAGE HEADER (pages 2-7) ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px 12px;
+    border-bottom: 1px solid var(--rosa);
+  }
+  .page-header .logo {
+    font-family: 'Alex Brush', cursive;
+    font-size: 22px;
+    color: var(--topo);
+    letter-spacing: 0.02em;
+  }
+  .page-header .tagline {
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rosa);
+    font-weight: 400;
+  }
+
+  /* ── PAGE FOOTER (pages 2-7) ── */
+  .page-footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 11px 28px;
+    border-top: 1px solid var(--rosa);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .page-footer span {
+    font-size: 8px;
+    color: var(--rosa);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .page-body {
+    padding: 28px 36px 60px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-label {
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--espresso);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .section-divider {
+    width: 36px;
+    height: 2px;
+    background: var(--cobre);
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--cobre);
+    padding: 14px 20px;
+    margin: 20px 0;
+    background: var(--nude);
+    border-radius: 0 10px 10px 0;
+  }
+  .pull-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--espresso);
+    line-height: 1.7;
+  }
+
+  /* ── VERSE BOX ── */
+  .verse-box {
+    background: linear-gradient(135deg, var(--nude) 0%, var(--crema) 100%);
+    border: 1px solid var(--rosa);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 22px;
+    text-align: center;
+  }
+  .verse-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--espresso);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .verse-ref {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+  }
+
+  /* ── BODY TEXT ── */
+  .body-text {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: var(--topo);
+    line-height: 1.82;
+    margin-bottom: 16px;
+  }
+  .body-text strong {
+    color: var(--espresso);
+    font-weight: 500;
+  }
+
+  /* ── INSIGHT BOX ── */
+  .insight-box {
+    background: var(--espresso);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 22px 0;
+  }
+  .insight-box p {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--crema);
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════
+     PAGE 1 — PORTADA
+  ═══════════════════════════════════ */
+  .cover {
+    background: linear-gradient(160deg, #FBF6F2 0%, #EFE3D6 45%, #E8D9CD 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 297mm;
+    text-align: center;
+    padding: 60px 48px;
+  }
+
+  .cover-orb-1 {
+    width: 320px; height: 320px;
+    border: 1px solid rgba(196,133,90,0.1);
+    top: -80px; right: -80px;
+  }
+  .cover-orb-2 {
+    width: 200px; height: 200px;
+    border: 1px solid rgba(166,176,160,0.15);
+    bottom: 60px; left: -60px;
+  }
+  .cover-orb-3 {
+    width: 120px; height: 120px;
+    border: 1px solid rgba(196,133,90,0.08);
+    bottom: 100px; right: 40px;
+  }
+
+  .cover-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--salvia);
+    font-weight: 400;
+    margin-bottom: 32px;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--espresso);
+    line-height: 1.18;
+    margin-bottom: 14px;
+    max-width: 340px;
+  }
+
+  .cover-subtitle {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--topo);
+    letter-spacing: 0.04em;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .cover-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+    width: 260px;
+  }
+  .cover-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--cobre);
+    opacity: 0.5;
+  }
+  .cover-divider-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cobre);
+  }
+
+  .cover-author {
+    font-family: 'Alex Brush', cursive;
+    font-size: 52px;
+    color: var(--cobre);
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .cover-tagline {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--topo);
+    font-weight: 400;
+    margin-bottom: 52px;
+  }
+
+  .cover-verse {
+    max-width: 300px;
+    border-top: 1px solid var(--rosa);
+    padding-top: 22px;
+  }
+  .cover-verse p {
+    font-family: 'Playfair Display', serif;
+    font-size: 11.5px;
+    font-style: italic;
+    color: var(--topo);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .cover-verse span {
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+  }
+
+  /* ═══════════════════════════════════
+     PAGE 2 — INTRO LETTER
+  ═══════════════════════════════════ */
+  .letter-drop-cap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cobre);
+    float: left;
+    line-height: 0.78;
+    margin-right: 8px;
+    margin-top: 6px;
+  }
+
+  .signature {
+    font-family: 'Alex Brush', cursive;
+    font-size: 36px;
+    color: var(--cobre);
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+  .signature-title {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--topo);
+  }
+
+  /* ═══════════════════════════════════
+     PAGE 3 — CIENCIA + FE
+  ═══════════════════════════════════ */
+  .science-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .science-card {
+    background: var(--nude);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .science-card-label {
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .science-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--espresso);
+    margin-bottom: 10px;
+  }
+
+  /* ═══════════════════════════════════
+     PAGES 4-5 — PILARES
+  ═══════════════════════════════════ */
+  .pillar-card {
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  .pillar-espiritual  { background: rgba(166,176,160,0.12); }
+  .pillar-espiritual::before  { background: var(--salvia); }
+  .pillar-organiz     { background: rgba(196,133,90,0.08); }
+  .pillar-organiz::before     { background: var(--cobre); }
+  .pillar-bienestar   { background: rgba(212,190,176,0.2); }
+  .pillar-bienestar::before   { background: var(--rosa); }
+  .pillar-relaciones  { background: rgba(140,106,88,0.08); }
+  .pillar-relaciones::before  { background: var(--topo); }
+
+  .pillar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .pillar-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .icon-salvia   { background: rgba(166,176,160,0.25); color: var(--salvia); }
+  .icon-cobre    { background: rgba(196,133,90,0.15);  color: var(--cobre); }
+  .icon-rosa     { background: rgba(212,190,176,0.35); color: var(--topo); }
+  .icon-topo     { background: rgba(140,106,88,0.15);  color: var(--topo); }
+
+  .pillar-number {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--topo);
+    opacity: 0.6;
+    font-weight: 400;
+  }
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--espresso);
+  }
+  .pillar-desc {
+    font-size: 10.5px;
+    font-style: italic;
+    color: var(--topo);
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .habit-list {
+    list-style: none;
+    margin: 0 0 12px;
+  }
+  .habit-list li {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--topo);
+    padding: 5px 0 5px 18px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(212,190,176,0.3);
+  }
+  .habit-list li:last-child { border-bottom: none; }
+  .habit-list li::before {
+    content: '◦';
+    position: absolute;
+    left: 4px;
+    color: var(--cobre);
+    font-size: 12px;
+    top: 4px;
+  }
+
+  .pillar-key {
+    font-size: 10.5px;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    color: var(--espresso);
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  /* ═══════════════════════════════════
+     PAGE 6 — MÉTODO 21 DÍAS
+  ═══════════════════════════════════ */
+  .phase-card {
+    background: var(--nude);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .phase-number {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--cobre);
+    color: var(--crema);
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .phase-content {}
+  .phase-name {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+    margin-bottom: 3px;
+  }
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--espresso);
+    margin-bottom: 6px;
+  }
+  .phase-desc {
+    font-size: 10.5px;
+    font-weight: 300;
+    color: var(--topo);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .phase-list {
+    list-style: none;
+  }
+  .phase-list li {
+    font-size: 10.5px;
+    font-weight: 300;
+    color: var(--topo);
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .phase-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cobre);
+    font-size: 10px;
+  }
+
+  .grace-box {
+    background: var(--espresso);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .grace-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .grace-box p {
+    font-size: 11px;
+    color: var(--crema);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .grace-box strong {
+    color: var(--cobre-lt);
+    font-weight: 500;
+  }
+
+  /* ═══════════════════════════════════
+     PAGE 7 — TRACKER
+  ═══════════════════════════════════ */
+  .tracker-write-line {
+    margin-bottom: 18px;
+  }
+  .tracker-write-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--topo);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .tracker-write-input {
+    border: none;
+    border-bottom: 1.5px solid var(--rosa);
+    background: transparent;
+    width: 100%;
+    padding: 6px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: var(--espresso);
+    outline: none;
+  }
+
+  .tracker-section-title {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    font-weight: 500;
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tracker-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rosa);
+  }
+
+  .tracker-week {
+    margin-bottom: 16px;
+  }
+  .tracker-week-label {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--topo);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .tracker-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .tracker-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .tracker-day-label {
+    font-size: 8px;
+    color: var(--topo);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+  }
+  .tracker-checkbox {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rosa);
+    background: var(--crema);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .tracker-checkbox.checked {
+    background: var(--cobre);
+    border-color: var(--cobre);
+  }
+  .tracker-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .tracker-closing {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rosa);
+    text-align: center;
+  }
+  .tracker-closing-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--espresso);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .tracker-closing-author {
+    font-family: 'Alex Brush', cursive;
+    font-size: 24px;
+    color: var(--cobre);
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    html { background: white; }
+    body { background: white; padding: 0; }
+    .page {
+      box-shadow: none;
+      margin: 0;
+      page-break-after: always;
+      width: 210mm;
+      min-height: 297mm;
+    }
+    .page:last-child { page-break-after: avoid; }
+    .cover { min-height: 297mm; }
+    .tracker-checkbox { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tracker-checkbox.checked { background: var(--cobre) !important; }
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ PAGE 1 — PORTADA ═══════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <span class="orb cover-orb-1"></span>
+    <span class="orb cover-orb-2"></span>
+    <span class="orb cover-orb-3"></span>
+
+    <p class="cover-eyebrow">Recurso gratuito &nbsp;·&nbsp; Anny Gómez</p>
+
+    <h1 class="cover-title">Guía de Hábitos con Propósito</h1>
+    <p class="cover-subtitle">Transforma tu vida anclando<br>tus hábitos en la fe</p>
+
+    <div class="cover-divider">
+      <div class="cover-divider-line"></div>
+      <div class="cover-divider-dot"></div>
+      <div class="cover-divider-line"></div>
+    </div>
+
+    <div class="cover-author">Anny Gómez</div>
+    <p class="cover-tagline">Fé &nbsp;·&nbsp; Hábitos &nbsp;·&nbsp; Propósito</p>
+
+    <div class="cover-verse">
+      <p>"Encomienda al Señor tus obras,<br>y tus pensamientos serán afirmados."</p>
+      <span>Proverbios 16:3</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 2 — CARTA DE ANNY ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Introducción</p>
+    <h2 class="section-title">Una palabra de Anny</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text letter-drop-cap">Hubo un momento en mi vida en que me sentí completamente perdida. Tenía la agenda llena, pero vacía por dentro. Hacía mil cosas, pero ninguna con verdadero propósito.</p>
+
+    <p class="body-text">Fue cuando entendí algo que cambió todo: <strong>los hábitos no son listas de tareas. Son la arquitectura de quién estás eligiendo ser cada día.</strong></p>
+
+    <p class="body-text">Y cuando los anclas en tu fe — cuando cada acción pequeña la dedicas a Dios — dejan de ser una carga y se convierten en un acto de amor y obediencia.</p>
+
+    <p class="body-text">Esta guía nació de mi propia transformación. No es teoría. Es lo que vivo cada día como mujer, esposa y mamá que eligió crecer con propósito.</p>
+
+    <p class="body-text">Mi deseo es que estas páginas te den claridad, dirección y sobre todo: <strong>la convicción de que con fe, cualquier hábito es posible.</strong></p>
+
+    <div class="pull-quote">
+      <p>"No empieces buscando la perfección. Empieza buscando la fidelidad. Dios hace el resto."</p>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <p style="font-size:11px;font-weight:300;color:var(--topo)">Con cariño,</p>
+      <div class="signature">Anny Gómez</div>
+      <p class="signature-title">@annygomezleal &nbsp;·&nbsp; annygomez.com</p>
+    </div>
+
+    <div class="verse-box">
+      <p class="verse-text">"No os conforméis a este siglo, sino transformaos por medio de la renovación de vuestro entendimiento."</p>
+      <p class="verse-ref">Romanos 12:2</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 3 — EL PODER DE LOS HÁBITOS ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Fundamento</p>
+    <h2 class="section-title">El Poder de los Hábitos</h2>
+    <div class="section-divider"></div>
+
+    <div class="science-grid">
+      <div class="science-card">
+        <p class="science-card-label">La ciencia detrás del hábito</p>
+        <h3 class="science-card-title">El bucle neuronal</h3>
+        <p class="body-text" style="margin:0">Un hábito es una acción que tu cerebro ha automatizado a través de la repetición. Los neurocientíficos lo llaman el <strong>"bucle del hábito"</strong>: existe una señal que desencadena una rutina, que produce una recompensa. Con cada repetición, las conexiones neuronales se fortalecen hasta que la acción se vuelve automática — sin esfuerzo consciente.</p>
+      </div>
+      <div class="science-card">
+        <p class="science-card-label">Lo que la fe añade</p>
+        <h3 class="science-card-title">Motivación eterna</h3>
+        <p class="body-text" style="margin:0">Cuando una acción tiene significado espiritual, la motivación no depende del ánimo del día. Depende de algo más grande que tú. Es la diferencia entre hacer ejercicio <em>para verte bien</em> y cuidar tu cuerpo <em>como templo del Espíritu Santo</em>. Misma acción. Motivación completamente distinta.</p>
+      </div>
+    </div>
+
+    <p class="body-text">La ciencia puede explicar cómo se forma un hábito. Pero no puede explicar por qué algunas personas persisten cuando todo se pone difícil y otras abandonan. La fe es esa variable que los laboratorios no pueden medir — y es la más poderosa de todas.</p>
+
+    <div class="insight-box">
+      <p>"Los hábitos forman el carácter. El carácter forma el destino. Y el destino está en manos de Dios — pero tú eliges el camino."</p>
+    </div>
+
+    <p class="body-text">Cada pequeña acción que repites con intención es un voto que le das a la persona que quieres llegar a ser. Y cuando esa persona está alineada con el propósito que Dios puso en ti, los hábitos dejan de ser disciplina y se convierten en identidad.</p>
+
+    <div class="verse-box">
+      <p class="verse-text">"El que es fiel en lo muy poco, también en lo más es fiel."</p>
+      <p class="verse-ref">Lucas 16:10</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 4 — PILARES 1 Y 2 ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Los 4 Pilares</p>
+    <h2 class="section-title">Hábitos con Propósito</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text" style="margin-bottom:20px">Tu vida no es solo una dimensión. Eres espiritual, eres organizada, eres cuerpo, eres relación. Cuando cada pilar está fuerte, todo lo demás fluye.</p>
+
+    <!-- Pilar 1 -->
+    <div class="pillar-card pillar-espiritual">
+      <div class="pillar-header">
+        <div class="pillar-icon icon-salvia">✦</div>
+        <div>
+          <p class="pillar-number">Pilar 01</p>
+          <h3 class="pillar-title">Hábitos Espirituales</h3>
+        </div>
+      </div>
+      <p class="pillar-desc">El fundamento de todo. Sin esto, los demás pilares no tienen raíz.</p>
+      <ul class="habit-list">
+        <li><strong>Oración diaria</strong> — mínimo 10 minutos, al despertar</li>
+        <li><strong>Lectura bíblica</strong> — un capítulo al día, consistencia sobre cantidad</li>
+        <li><strong>Gratitud escrita</strong> — 3 cosas específicas cada noche</li>
+        <li><strong>Versículo ancla del día</strong> — elige uno, memorízalo, repítelo</li>
+      </ul>
+      <div class="pillar-key">"No se trata de perfección religiosa. Se trata de conversación diaria con Dios."</div>
+    </div>
+
+    <!-- Pilar 2 -->
+    <div class="pillar-card pillar-organiz">
+      <div class="pillar-header">
+        <div class="pillar-icon icon-cobre">◈</div>
+        <div>
+          <p class="pillar-number">Pilar 02</p>
+          <h3 class="pillar-title">Hábitos de Organización</h3>
+        </div>
+      </div>
+      <p class="pillar-desc">La organización no es control — es respeto por tu tiempo y el de los demás.</p>
+      <ul class="habit-list">
+        <li><strong>Planificación semanal</strong> — cada domingo, 15 minutos</li>
+        <li><strong>Las 3 prioridades del día</strong> — no 10, no 5, tres</li>
+        <li><strong>Revisión nocturna</strong> — 5 minutos: ¿qué hice? ¿qué mañana?</li>
+        <li><strong>Un espacio ordenado</strong> — tu escritorio, tu cocina, tu mente</li>
+      </ul>
+      <div class="pillar-key">"Una semana sin planificar es una semana que le pertenece al caos."</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 5 — PILARES 3 Y 4 ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body" style="padding-top:24px">
+
+    <!-- Pilar 3 -->
+    <div class="pillar-card pillar-bienestar">
+      <div class="pillar-header">
+        <div class="pillar-icon icon-rosa">◇</div>
+        <div>
+          <p class="pillar-number">Pilar 03</p>
+          <h3 class="pillar-title">Hábitos de Bienestar</h3>
+        </div>
+      </div>
+      <p class="pillar-desc">Tu cuerpo es el vehículo de tu propósito. No puedes cumplir tu llamado sintiéndote vacía.</p>
+      <ul class="habit-list">
+        <li><strong>Movimiento diario</strong> — 30 minutos, caminar cuenta</li>
+        <li><strong>Hidratación consciente</strong> — 2 litros de agua</li>
+        <li><strong>Descanso sagrado</strong> — hora fija para dormir, el sueño es productividad</li>
+        <li><strong>Límites digitales</strong> — sin celular la primera hora del día</li>
+      </ul>
+      <div class="pillar-key">"Cuidarte no es egoísmo. Es mayordomía."</div>
+    </div>
+
+    <!-- Pilar 4 -->
+    <div class="pillar-card pillar-relaciones">
+      <div class="pillar-header">
+        <div class="pillar-icon icon-topo">◉</div>
+        <div>
+          <p class="pillar-number">Pilar 04</p>
+          <h3 class="pillar-title">Hábitos de Relaciones</h3>
+        </div>
+      </div>
+      <p class="pillar-desc">Somos seres de conexión. Los hábitos relacionales son los más difíciles — y los más transformadores.</p>
+      <ul class="habit-list">
+        <li><strong>Tiempo de calidad sin pantallas</strong> — con tu familia, cada día</li>
+        <li><strong>Comunicación intencional</strong> — di lo que sientes, no lo que conviene</li>
+        <li><strong>Servicio semanal</strong> — un acto de generosidad sin esperar nada</li>
+        <li><strong>Comunidad de fe</strong> — no crezcas sola, la iglesia no es opcional</li>
+      </ul>
+      <div class="pillar-key">"Tus relaciones son el espejo de tu carácter. Los hábitos relacionales revelan quién realmente eres."</div>
+    </div>
+
+    <div class="verse-box" style="margin-top:18px">
+      <p class="verse-text">"Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres."</p>
+      <p class="verse-ref">Colosenses 3:23</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 6 — MÉTODO 21 DÍAS ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Metodología</p>
+    <h2 class="section-title">El Método de los 21 Días con Fe</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text">Los 21 días no son magia — son el tiempo promedio que el cerebro necesita para crear una nueva ruta neuronal. Pero con fe, añades algo que la neurociencia no contempla: <strong>gracia para los días difíciles.</strong></p>
+
+    <!-- Fase 1 -->
+    <div class="phase-card">
+      <div class="phase-number">1</div>
+      <div class="phase-content">
+        <p class="phase-name">Días 1–7</p>
+        <h3 class="phase-title">Siembra</h3>
+        <p class="phase-desc">Los primeros 7 días son los más difíciles. Tu cerebro resiste el cambio. Es normal. No lo interpretes como señal de que no funciona — es señal de que está funcionando.</p>
+        <ul class="phase-list">
+          <li>Elige UN solo hábito — no tres, no cinco, uno</li>
+          <li>Ancla el hábito a algo que ya haces (después de orar, hago X)</li>
+          <li>Hazlo ridículamente fácil — 2 minutos si es necesario</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fase 2 -->
+    <div class="phase-card">
+      <div class="phase-number">2</div>
+      <div class="phase-content">
+        <p class="phase-name">Días 8–14</p>
+        <h3 class="phase-title">Raíces</h3>
+        <p class="phase-desc">Ya empieza a sentirse más natural. Aquí es cuando la mayoría abandona porque piensan "ya lo tengo" y añaden más. No lo hagas.</p>
+        <ul class="phase-list">
+          <li>Mantén el mismo hábito, añade un versículo relacionado</li>
+          <li>Registra en el tracker cada día que lo cumples</li>
+          <li>Celebra cada día — dite a ti misma "lo hice"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fase 3 -->
+    <div class="phase-card">
+      <div class="phase-number">3</div>
+      <div class="phase-content">
+        <p class="phase-name">Días 15–21</p>
+        <h3 class="phase-title">Cosecha</h3>
+        <p class="phase-desc">El hábito empieza a sentirse incómodo cuando NO lo haces. Esa es la señal de que se instaló.</p>
+        <ul class="phase-list">
+          <li>Evalúa: ¿cómo me siento diferente?</li>
+          <li>Prepara el siguiente hábito (pero termina los 21 días primero)</li>
+          <li>Comparte tu proceso — enseñar lo que aprendes lo ancla más profundo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grace-box">
+      <span class="grace-icon">🕊</span>
+      <p><strong>Si fallas un día:</strong> Gracia. Empieza de nuevo al día siguiente. Un día perdido no arruina el proceso. Abandonar sí.</p>
+    </div>
+
+    <div class="verse-box">
+      <p class="verse-text">"Todo lo puedo en Cristo que me fortalece."</p>
+      <p class="verse-ref">Filipenses 4:13</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PAGE 7 — TRACKER ═══════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Guía de Hábitos con Propósito</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Bonus — Herramienta práctica</p>
+    <h2 class="section-title">Mi Tracker de 21 Días</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text" style="margin-bottom:20px">Escribe tu hábito, pega este tracker donde lo veas todos los días y marca cada círculo que completes.</p>
+
+    <div class="tracker-write-line">
+      <p class="tracker-write-label">Mi hábito a trabajar</p>
+      <input class="tracker-write-input" type="text" placeholder="Escribe aquí...">
+    </div>
+    <div class="tracker-write-line">
+      <p class="tracker-write-label">Mi versículo ancla</p>
+      <input class="tracker-write-input" type="text" placeholder="Escribe aquí...">
+    </div>
+
+    <p class="tracker-section-title">Registro de 21 días</p>
+
+    <!-- Semana 1 -->
+    <div class="tracker-week">
+      <p class="tracker-week-label">Semana 1 — Siembra</p>
+      <div class="tracker-days">
+        <div class="tracker-day"><span class="tracker-day-label">Día 1</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 2</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 3</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 4</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 5</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 6</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 7</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+      </div>
+    </div>
+
+    <!-- Semana 2 -->
+    <div class="tracker-week">
+      <p class="tracker-week-label">Semana 2 — Raíces</p>
+      <div class="tracker-days">
+        <div class="tracker-day"><span class="tracker-day-label">Día 8</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 9</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 10</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 11</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 12</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 13</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 14</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+      </div>
+    </div>
+
+    <!-- Semana 3 -->
+    <div class="tracker-week">
+      <p class="tracker-week-label">Semana 3 — Cosecha</p>
+      <div class="tracker-days">
+        <div class="tracker-day"><span class="tracker-day-label">Día 15</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 16</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 17</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 18</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 19</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 20</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+        <div class="tracker-day"><span class="tracker-day-label">Día 21</span><div class="tracker-checkbox" onclick="this.classList.toggle('checked')"></div></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
+      <div class="tracker-write-line">
+        <p class="tracker-write-label">Al día 21, me siento</p>
+        <input class="tracker-write-input" type="text" placeholder="Escribe aquí...">
+      </div>
+      <div class="tracker-write-line">
+        <p class="tracker-write-label">Mi siguiente hábito será</p>
+        <input class="tracker-write-input" type="text" placeholder="Escribe aquí...">
+      </div>
+    </div>
+
+    <div class="tracker-closing">
+      <p class="tracker-closing-quote">"Las mujeres que hoy son extraordinarias<br>simplemente fueron fieles en lo pequeño, cada día."</p>
+      <div class="tracker-closing-author">Anny Gómez</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Fé · Hábitos · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+</body>
+</html>
