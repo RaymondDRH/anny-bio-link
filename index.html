@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Anny Gómez</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --crema:      #FBF6F2;
+  --nude:       #E8D9CD;
+  --rosa-arena: #D4BEB0;
+  --cobre:      #C4855A;
+  --espresso:   #2E1A10;
+  --topo:       #8C6A58;
+  --salvia:     #A6B0A0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #EDEAE6;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.phone-frame {
+  width: 100%;
+  max-width: 390px;
+  background: var(--crema);
+  min-height: 100vh;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(46,26,16,0.18);
+}
+
+/* ---- ANIMATIONS ---- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.8); }
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-2%, -2%); }
+  20%  { transform: translate(2%, 2%); }
+  30%  { transform: translate(-1%, 1%); }
+  40%  { transform: translate(1%, -1%); }
+  50%  { transform: translate(-2%, 1%); }
+  60%  { transform: translate(2%, -2%); }
+  70%  { transform: translate(0, 2%); }
+  80%  { transform: translate(-1%, 0); }
+  90%  { transform: translate(1%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.fade-in.visible { opacity: 1; transform: none; }
+
+/* ---- HERO ---- */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  min-height: 580px;
+  overflow: hidden;
+  animation: fadeInUp 0.85s ease both;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* grain texture overlay */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  animation: grain-shift 8s steps(10) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(
+    to top,
+    rgba(46,26,16,0.88) 0%,
+    rgba(46,26,16,0.45) 45%,
+    transparent 100%
+  );
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 32px;
+  gap: 5px;
+}
+
+.hero-logo {
+  font-family: 'Alex Brush', cursive;
+  font-size: 66px;
+  color: var(--crema);
+  line-height: 1;
+  animation: fadeInUp 1s 0.3s ease both;
+}
+
+.hero-tagline {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(251,246,242,0.65);
+  animation: fadeInUp 1s 0.5s ease both;
+}
+
+/* ---- SOCIAL STRIP ---- */
+.social-strip {
+  background: var(--crema);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0 18px;
+  animation: fadeInUp 0.9s 0.65s ease both;
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--nude);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.22s, transform 0.18s;
+}
+.social-btn:hover { background: var(--cobre); transform: scale(1.08); }
+.social-btn:hover svg { fill: var(--crema); }
+.social-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--topo);
+  transition: fill 0.22s;
+}
+
+/* ---- DIVIDER ---- */
+.divider {
+  height: 1px;
+  background: var(--rosa-arena);
+  margin: 0 22px;
+  opacity: 0.55;
+}
+
+/* ---- SECTION WRAPPER ---- */
+.section {
+  padding: 28px 20px;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rosa-arena);
+  opacity: 0.6;
+}
+
+/* ---- NEXT FLY ACADEMY ---- */
+.nfa-card {
+  background: var(--nude);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(46,26,16,0.09);
+}
+
+.nfa-banner {
+  width: 100%;
+  height: 148px;
+  background: linear-gradient(140deg, var(--espresso) 0%, #4a2e1e 60%, var(--topo) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.nfa-banner::before {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,133,90,0.18);
+  top: -80px;
+  right: -60px;
+}
+.nfa-banner::after {
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 1px solid rgba(166,176,160,0.12);
+  bottom: -50px;
+  left: -30px;
+}
+
+.nfa-logo {
+  font-family: 'Alex Brush', cursive;
+  font-size: 40px;
+  color: var(--nude);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.nfa-sub {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.nfa-body { padding: 20px 20px 22px; }
+
+.nfa-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px;
+  color: var(--espresso);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.nfa-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--topo);
+  line-height: 1.68;
+  margin-bottom: 18px;
+}
+
+/* ---- BUTTONS ---- */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-solid {
+  background: var(--cobre);
+  color: var(--crema);
+}
+.btn-solid:hover {
+  background: #a96b43;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(196,133,90,0.28);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--topo);
+  border: 1.5px solid var(--rosa-arena);
+}
+.btn-outline:hover {
+  border-color: var(--cobre);
+  color: var(--cobre);
+  transform: translateY(-1px);
+}
+
+/* ---- RETO SECTION ---- */
+.reto-wrap {
+  background: var(--nude);
+  padding: 36px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reto-wrap::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,133,90,0.1);
+}
+.reto-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -70px; left: -70px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  border: 1px solid rgba(166,176,160,0.12);
+}
+
+.reto-inner { position: relative; z-index: 1; }
+
+.coming-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--crema);
+  border: 1px solid var(--rosa-arena);
+  border-radius: 100px;
+  padding: 5px 14px 5px 10px;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--topo);
+  margin-bottom: 18px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--salvia);
+  flex-shrink: 0;
+  animation: pulse-dot 1.9s ease-in-out infinite;
+}
+
+.reto-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 27px;
+  font-weight: 600;
+  color: var(--espresso);
+  line-height: 1.22;
+  margin-bottom: 12px;
+}
+.reto-title em {
+  font-style: italic;
+  color: var(--cobre);
+}
+
+.reto-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--topo);
+  line-height: 1.72;
+  margin-bottom: 24px;
+}
+
+/* ---- GUÍA GRATUITA ---- */
+.guia-wrap {
+  background: var(--espresso);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.guia-photo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  filter: brightness(0.88);
+}
+
+.guia-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    transparent 20%,
+    rgba(46,26,16,0.75) 100%
+  );
+}
+
+.guia-body {
+  background: var(--espresso);
+  padding: 28px 20px 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.guia-eyebrow {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 10px;
+}
+
+.guia-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--crema);
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.guia-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(251,246,242,0.55);
+  line-height: 1.68;
+  margin-bottom: 22px;
+}
+
+.guia-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guia-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(251,246,242,0.07);
+  border: 1px solid rgba(251,246,242,0.18);
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--crema);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.guia-input::placeholder { color: rgba(251,246,242,0.3); }
+.guia-input:focus { border-color: var(--cobre); }
+
+/* ---- BLOG ---- */
+.blog-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  box-shadow: 0 4px 24px rgba(46,26,16,0.07);
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.blog-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 36px rgba(46,26,16,0.13);
+}
+
+.blog-top {
+  background: linear-gradient(135deg, var(--crema) 0%, var(--nude) 100%);
+  padding: 24px 22px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.blog-icon-box {
+  width: 44px;
+  height: 44px;
+  background: var(--cobre);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.blog-icon-box svg { width: 20px; height: 20px; fill: var(--crema); }
+
+.blog-cat {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 5px;
+}
+.blog-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--espresso);
+  line-height: 1.3;
+}
+
+.blog-bottom {
+  padding: 14px 22px 20px;
+  border-top: 1px solid var(--nude);
+}
+.blog-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--topo);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.blog-cta {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cobre);
+}
+
+/* ---- FOOTER ---- */
+.footer {
+  background: var(--espresso);
+  padding: 40px 20px 52px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-logo {
+  font-family: 'Alex Brush', cursive;
+  font-size: 46px;
+  color: var(--nude);
+  line-height: 1;
+}
+
+.footer-divider {
+  width: 32px;
+  height: 1px;
+  background: rgba(212,190,176,0.25);
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,190,176,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.22s, border-color 0.22s;
+}
+.footer-icon:hover { background: var(--cobre); border-color: var(--cobre); }
+.footer-icon:hover svg { fill: var(--crema); }
+.footer-icon svg { width: 15px; height: 15px; fill: var(--topo); transition: fill 0.22s; }
+
+.footer-copy {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: rgba(212,190,176,0.28);
+}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <img class="hero-img"
+         src="./photos/hero.jpg"
+         alt="Anny Gómez">
+    <div class="hero-grain"></div>
+    <div class="hero-gradient">
+      <div class="hero-logo">Anny Gómez</div>
+      <div class="hero-tagline">Fe · Hábitos · Familia</div>
+    </div>
+  </section>
+
+  <!-- Social strip -->
+  <div class="social-strip">
+    <a href="#" class="social-btn" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="#" class="social-btn" aria-label="TikTok">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+    </a>
+    <a href="#" class="social-btn" aria-label="YouTube">
+      <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+    </a>
+  </div>
+
+  <!-- ===== NEXT FLY ACADEMY ===== -->
+  <div class="divider"></div>
+  <section class="section fade-in">
+    <div class="section-label">Academia Digital</div>
+    <div class="nfa-card">
+      <div class="nfa-banner">
+        <div class="nfa-logo">Next Fly Academy</div>
+        <div class="nfa-sub">Educación · Emprendimiento</div>
+      </div>
+      <div class="nfa-body">
+        <div class="nfa-title">Transforma tu negocio digital</div>
+        <div class="nfa-desc">Aprende a construir y escalar tu negocio con las herramientas y estrategias correctas. Una academia diseñada para emprendedoras que van en serio.</div>
+        <a href="#" class="btn btn-solid">Conoce más →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RETO 7 DÍAS ===== -->
+  <div class="reto-wrap fade-in">
+    <div class="reto-inner">
+      <div class="coming-badge">
+        <span class="pulse-dot"></span>
+        Próximamente
+      </div>
+      <div class="reto-title">Reto · <em>7 Días para<br>Volver a Ti</em></div>
+      <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con fe y disciplina como guía.</div>
+      <a href="#" class="btn btn-outline">Avísame cuando esté listo</a>
+    </div>
+  </div>
+
+  <!-- ===== GUÍA GRATUITA ===== -->
+  <div class="guia-wrap fade-in">
+    <img class="guia-photo"
+         src="./photos/guia.jpg"
+         alt="Guía gratuita">
+    <div class="guia-overlay"></div>
+    <div class="guia-body">
+      <div class="guia-eyebrow">Regalo para ti</div>
+      <div class="guia-title">Descarga tu<br>Guía Gratuita</div>
+      <div class="guia-desc">Recursos prácticos para organizar tu vida con propósito, fe y disciplina. Sin costo, directo a tu correo.</div>
+      <div class="guia-form">
+        <input class="guia-input" type="email" placeholder="tu@correo.com">
+        <button class="btn btn-solid">Quiero mi guía</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BLOG ===== -->
+  <section class="section fade-in">
+    <div class="section-label">Blog</div>
+    <a href="#" class="blog-card">
+      <div class="blog-top">
+        <div class="blog-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+        <div>
+          <div class="blog-cat">Fe · Organización · Hábitos</div>
+          <div class="blog-title">Artículos que inspiran y transforman</div>
+        </div>
+      </div>
+      <div class="blog-bottom">
+        <div class="blog-desc">Encuentra recursos sobre fe, organización y crecimiento personal. Escrito desde la experiencia real — porque la teoría sin práctica no cambia vidas.</div>
+        <div class="blog-cta">Leer artículos →</div>
+      </div>
+    </a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer fade-in">
+    <div class="footer-logo">Anny Gómez</div>
+    <div class="footer-divider"></div>
+    <div class="footer-social">
+      <a href="#" class="footer-icon" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="#" class="footer-icon" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+      </a>
+      <a href="#" class="footer-icon" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+      </a>
+    </div>
+    <div class="footer-copy">© 2026 Anny Gómez · Todos los derechos reservados</div>
+  </footer>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
