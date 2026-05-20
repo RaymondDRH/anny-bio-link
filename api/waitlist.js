@@ -9,13 +9,12 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/waitlist`, {
+    const response = await fetch(`${process.env.SUPABASE_URL}/rest/v1/anny_waitlist`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': process.env.SUPABASE_ANON_KEY,
         'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`,
-        'Content-Profile': 'anny',
         'Prefer': 'return=minimal',
       },
       body: JSON.stringify({ name: name.trim(), email: email.trim() }),
