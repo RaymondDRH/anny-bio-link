@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
-const GEMINI_KEY = 'AIzaSyCM2lgfy_gwdnxJ11jTOWTlciMimKn36lo';
-const GHOST_ADMIN_KEY = '6a0d68f1d3d2550001c48b89:854adab634b2073718c5160e84ea84fedbc97188f59c2198cd3011bb0e0c209b';
+const GEMINI_KEY = process.env.GEMINI_API_KEY;
+const GHOST_ADMIN_KEY = process.env.GHOST_ADMIN_KEY;
 const GHOST_URL = 'https://blog.annygomez.com';
 const API_SECRET = process.env.IMAGE_API_SECRET || 'anny-img-2026';
 
