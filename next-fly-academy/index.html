@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Next Fly Academy — Despega tu Marca y Gana Online</title>
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -402,12 +403,26 @@ body {
 .price-currency { font-size: 22px; color: var(--gold); vertical-align: top; padding-top: 8px; display: inline-block; }
 .price-note { font-size: 11px; font-weight: 300; color: var(--text); margin-top: 8px; }
 
-/* ---- FOOTER ---- */
-.nfa-footer { background: #1A0509; padding: 28px 22px; text-align: center; }
-.nfa-footer-logo { font-family: 'Alex Brush', cursive; font-size: 34px; color: var(--gold); margin-bottom: 6px; }
-.nfa-footer-back { font-size: 11px; color: rgba(245,237,216,0.35); text-decoration: none; letter-spacing: 0.06em; }
-.nfa-footer-back:hover { color: var(--gold); }
-.nfa-footer-copy { font-size: 9px; color: rgba(245,237,216,0.22); letter-spacing: 0.06em; margin-top: 8px; }
+.cta-motivacional {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(245,237,216,0.45);
+  line-height: 1.75;
+  margin-top: 32px;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-copy {
+  font-size: 9px;
+  color: rgba(245,237,216,0.18);
+  letter-spacing: 0.06em;
+  margin-top: 28px;
+  padding-bottom: 40px;
+}
 
 /* ---- ANIMATIONS ---- */
 @keyframes fadeInUp {
@@ -440,6 +455,145 @@ body {
 }
 
 .secure-note svg { width: 13px; height: 13px; fill: rgba(245,237,216,0.3); }
+
+/* ---- PAYMENT MODAL ---- */
+.payment-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(26, 5, 9, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.payment-overlay.active { display: flex; }
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.payment-modal {
+  background: #4A1625;
+  border: 1px solid rgba(196,154,60,0.22);
+  border-radius: 24px;
+  padding: 32px 24px 28px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  animation: modalIn 0.38s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  color: rgba(245,237,216,0.55);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s;
+  padding-bottom: 1px;
+}
+
+.modal-close:hover { background: rgba(255,255,255,0.14); color: var(--cream); }
+
+.modal-eyebrow {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.modal-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.modal-price-note {
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(245,237,216,0.38);
+  margin-bottom: 0;
+}
+
+.modal-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(196,154,60,0.15);
+  margin: 20px 0;
+}
+
+#payment-element { margin-bottom: 18px; min-height: 40px; }
+
+.modal-submit {
+  width: 100%;
+  padding: 15px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--bg);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.2s, opacity 0.2s;
+  margin-bottom: 10px;
+}
+
+.modal-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
+.modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.modal-error {
+  color: #FF8A80;
+  font-size: 12px;
+  text-align: center;
+  min-height: 18px;
+  margin-bottom: 6px;
+}
+
+.modal-secure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10px;
+  color: rgba(245,237,216,0.28);
+  letter-spacing: 0.04em;
+}
+
+.modal-secure svg { width: 12px; height: 12px; fill: rgba(245,237,216,0.28); }
 </style>
 </head>
 <body>
@@ -460,7 +614,7 @@ body {
       <div class="price-badge-amount"><span>$</span>497 <small style="font-size:16px;font-family:'Poppins',sans-serif;font-weight:300;color:var(--text)">USD</small></div>
       <div class="price-badge-note">Pago único · Acceso inmediato</div>
     </div>
-    <button class="btn btn-gold anim anim-d4" onclick="goToCheckout(this)">
+    <button class="btn btn-gold anim anim-d4" onclick="openPaymentModal(this)">
       <span class="btn-label">¡Quiero mi boleto ahora! →</span>
       <span class="btn-loading">Procesando…</span>
     </button>
@@ -615,7 +769,7 @@ body {
       <div class="price-amount"><span class="price-currency">$</span>497 <small style="font-size:18px;font-family:'Poppins',sans-serif;font-weight:300;color:var(--text)">USD</small></div>
       <div class="price-note">Pago único · Acceso inmediato · Sin mensualidades</div>
     </div>
-    <button class="btn btn-gold fade-in" onclick="goToCheckout(this)">
+    <button class="btn btn-gold fade-in" onclick="openPaymentModal(this)">
       <span class="btn-label">¡Aborda ahora y despega! →</span>
       <span class="btn-loading">Procesando…</span>
     </button>
@@ -623,15 +777,38 @@ body {
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
       Pago 100% seguro · Procesado por Stripe
     </div>
+
+    <p class="cta-motivacional fade-in">
+      "Las mujeres que hoy son exitosas también tuvieron un momento de decisión.<br>Este es el tuyo."
+    </p>
+    <div class="cta-copy fade-in">© 2026 · annygomez.com</div>
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
-<footer class="nfa-footer">
-  <div class="nfa-footer-logo">Anny Gómez</div>
-  <a href="/" class="nfa-footer-back">← Volver al inicio</a>
-  <div class="nfa-footer-copy">© 2026 · annygomez.com · Todos los derechos reservados</div>
-</footer>
+<!-- ===== PAYMENT MODAL ===== -->
+<div id="payment-overlay" class="payment-overlay" onclick="handleOverlayClick(event)">
+  <div class="payment-modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
+    <div class="modal-eyebrow">Academia Digital</div>
+    <div class="modal-title">Next Fly Academy</div>
+    <div class="modal-price">
+      <span style="font-size:18px;color:var(--gold);vertical-align:top;padding-top:9px;display:inline-block">$</span>497
+      <span style="font-size:15px;font-family:'Poppins',sans-serif;font-weight:300;color:rgba(245,237,216,0.4)">USD</span>
+    </div>
+    <div class="modal-price-note">Pago único · Sin mensualidades</div>
+    <div class="modal-divider"></div>
+    <div id="payment-element"></div>
+    <div id="modal-error" class="modal-error"></div>
+    <button id="modal-submit" class="modal-submit" onclick="submitPayment()">
+      <span id="modal-submit-label">Pagar $497 →</span>
+      <span id="modal-submit-loading" style="display:none">Procesando…</span>
+    </button>
+    <div class="modal-secure">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      Pago 100% seguro · Procesado por Stripe
+    </div>
+  </div>
+</div>
 
 <script>
   const observer = new IntersectionObserver((entries) => {
@@ -645,7 +822,13 @@ body {
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  async function goToCheckout(btn) {
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  let stripeInstance  = null;
+  let elementsInstance = null;
+  let paymentElInstance = null;
+
+  async function openPaymentModal(btn) {
     const label   = btn.querySelector('.btn-label');
     const loading = btn.querySelector('.btn-loading');
     btn.disabled = true;
@@ -653,22 +836,113 @@ body {
     loading.style.display = 'inline';
 
     try {
-      const res  = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await res.json();
+      const [configData, checkoutData] = await Promise.all([
+        fetch('/api/config').then(r => r.json()),
+        fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(r => r.json()),
+      ]);
 
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error(data.error || 'Error desconocido');
-      }
+      if (!configData.publishableKey) throw new Error('Config error');
+      if (!checkoutData.clientSecret)  throw new Error(checkoutData.error || 'Error desconocido');
+
+      stripeInstance   = Stripe(configData.publishableKey);
+      elementsInstance = stripeInstance.elements({
+        clientSecret: checkoutData.clientSecret,
+        appearance: {
+          theme: 'night',
+          variables: {
+            colorPrimary:         '#C49A3C',
+            colorBackground:      '#2A0A12',
+            colorText:            '#F5EDD8',
+            colorDanger:          '#FF8A80',
+            colorTextPlaceholder: 'rgba(245,237,216,0.32)',
+            fontFamily:           'Poppins, system-ui, sans-serif',
+            fontSizeBase:         '14px',
+            borderRadius:         '10px',
+            spacingUnit:          '3px',
+          },
+          rules: {
+            '.Input': {
+              backgroundColor: '#2A0A12',
+              border:          '1px solid rgba(196,154,60,0.22)',
+              color:           '#F5EDD8',
+              padding:         '11px 14px',
+            },
+            '.Input:focus': {
+              border:     '1px solid rgba(196,154,60,0.55)',
+              boxShadow:  '0 0 0 3px rgba(196,154,60,0.1)',
+            },
+            '.Label': {
+              color:         'rgba(245,237,216,0.6)',
+              fontSize:      '10px',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              fontWeight:    '500',
+            },
+            '.Tab': {
+              backgroundColor: '#2A0A12',
+              border:          '1px solid rgba(196,154,60,0.15)',
+              color:           'rgba(245,237,216,0.55)',
+            },
+            '.Tab--selected': {
+              backgroundColor: 'rgba(196,154,60,0.1)',
+              borderColor:     'rgba(196,154,60,0.45)',
+              color:           '#F5EDD8',
+            },
+            '.Tab:hover': { color: '#F5EDD8', borderColor: 'rgba(196,154,60,0.3)' },
+          },
+        },
+      });
+
+      paymentElInstance = elementsInstance.create('payment');
+      paymentElInstance.mount('#payment-element');
+
+      document.getElementById('payment-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+
     } catch (err) {
-      alert('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
+      alert('Hubo un error al iniciar el pago. Por favor intenta de nuevo.');
+    } finally {
       btn.disabled = false;
       label.style.display   = 'inline';
       loading.style.display = 'none';
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('payment-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+    if (paymentElInstance) { paymentElInstance.unmount(); paymentElInstance = null; }
+    elementsInstance = null;
+    const btn = document.getElementById('modal-submit');
+    btn.disabled = false;
+    document.getElementById('modal-submit-label').style.display  = 'inline';
+    document.getElementById('modal-submit-loading').style.display = 'none';
+    document.getElementById('modal-error').textContent = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('payment-overlay')) closeModal();
+  }
+
+  async function submitPayment() {
+    const btn = document.getElementById('modal-submit');
+    btn.disabled = true;
+    document.getElementById('modal-submit-label').style.display  = 'none';
+    document.getElementById('modal-submit-loading').style.display = 'inline';
+    document.getElementById('modal-error').textContent = '';
+
+    const { error } = await stripeInstance.confirmPayment({
+      elements: elementsInstance,
+      confirmParams: {
+        return_url: 'https://annygomez.com/next-fly-academy/success.html',
+      },
+    });
+
+    if (error) {
+      document.getElementById('modal-error').textContent = error.message;
+      btn.disabled = false;
+      document.getElementById('modal-submit-label').style.display  = 'inline';
+      document.getElementById('modal-submit-loading').style.display = 'none';
     }
   }
 </script>

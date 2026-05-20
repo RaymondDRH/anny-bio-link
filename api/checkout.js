@@ -6,30 +6,17 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'Next Fly Academy',
-              description: 'Tu boleto para despegar tu marca y ganar dinero online',
-            },
-            unit_amount: 49700, // $497.00 in cents
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      billing_address_collection: 'required',
-      success_url: 'https://annygomez.com/next-fly-academy/success.html',
-      cancel_url: 'https://annygomez.com/next-fly-academy/',
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 49700,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+      description: 'Next Fly Academy',
+      metadata: { product: 'next-fly-academy' },
     });
 
-    res.status(200).json({ url: session.url });
+    res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error('Stripe error:', error.message);
-    res.status(500).json({ error: 'Error al crear la sesión de pago' });
+    res.status(500).json({ error: 'Error al procesar el pago' });
   }
 };
