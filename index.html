@@ -48,6 +48,13 @@ body {
   50%       { opacity: 0.35; transform: scale(0.8); }
 }
 
+@keyframes btn-tap {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.28); }
+  65%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
 @keyframes grain-shift {
   0%   { transform: translate(0, 0); }
   10%  { transform: translate(-2%, -2%); }
@@ -64,10 +71,10 @@ body {
 
 .fade-in {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
+  transform: translateY(32px) scale(0.96);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-.fade-in.visible { opacity: 1; transform: none; }
+.fade-in.visible { opacity: 1; transform: translateY(0) scale(1); }
 
 /* ---- HERO ---- */
 .hero {
@@ -157,9 +164,9 @@ body {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: background 0.22s, transform 0.18s;
+  transition: background 0.22s;
 }
-.social-btn:hover { background: var(--cobre); transform: scale(1.08); }
+.social-btn:hover { background: var(--cobre); }
 .social-btn:hover svg { fill: var(--crema); }
 .social-btn svg {
   width: 15px;
@@ -167,6 +174,8 @@ body {
   fill: var(--topo);
   transition: fill 0.22s;
 }
+.social-btn.tapped,
+.footer-icon.tapped { animation: btn-tap 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
 
 /* ---- CARDS AREA ---- */
 .cards-area {
@@ -491,7 +500,7 @@ body {
 
 /* ---- FOOTER ---- */
 .footer {
-  background: linear-gradient(to bottom, var(--crema) 0%, var(--nude) 28%);
+  background: linear-gradient(to bottom, var(--nude) 0%, #FEFCFA 100%);
   padding: 40px 20px 52px;
   text-align: center;
   display: flex;
@@ -533,6 +542,7 @@ body {
 .footer-icon:hover { background: var(--cobre); border-color: var(--cobre); }
 .footer-icon:hover svg { fill: var(--crema); }
 .footer-icon svg { width: 15px; height: 15px; fill: var(--topo); transition: fill 0.22s; }
+.footer-icon { transition: background 0.22s, border-color 0.22s; }
 
 .footer-copy {
   font-size: 9px;
@@ -554,7 +564,7 @@ body {
     <div class="hero-grain"></div>
     <div class="hero-gradient">
       <div class="hero-logo">Anny Gómez</div>
-      <div class="hero-tagline">Fe · Hábitos · Propósito</div>
+      <div class="hero-tagline">Fé · Hábitos · Propósito</div>
     </div>
   </section>
 
@@ -627,7 +637,7 @@ body {
       <img class="nfa-banner" src="./next%20fly%20banner.jpeg" alt="NextFlight Academy">
       <div class="nfa-body">
         <div class="nfa-title">Transforma tu negocio digital</div>
-        <div class="nfa-desc">Aprende a construir y escalar tu negocio con las herramientas y estrategias correctas. Una academia diseñada para emprendedoras que van en serio.</div>
+        <div class="nfa-desc">Aprende a usar las redes sociales estratégicamente para maximizar tu presencia en línea. A través de módulos interactivos, construye y haz crecer tu comunidad. Ideal para emprendedores y creadores de contenido que quieren destacar en el mundo digital.</div>
         <a href="#" class="btn btn-solid">Conoce más →</a>
       </div>
     </div>
@@ -655,16 +665,27 @@ body {
 </div>
 
 <script>
+  // Scroll animations — staggered per card
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Bounce on tap — social buttons both strips
+  document.querySelectorAll('.social-btn, .footer-icon').forEach(btn => {
+    btn.addEventListener('click', function () {
+      this.classList.remove('tapped');
+      void this.offsetWidth;
+      this.classList.add('tapped');
+      this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
+    });
+  });
 </script>
 
 </body>
