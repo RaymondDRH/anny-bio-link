@@ -941,7 +941,9 @@ body {
         },
       });
 
-      paymentElInstance = elementsInstance.create('payment');
+      paymentElInstance = elementsInstance.create('payment', {
+        wallets: { link: 'never' },
+      });
       paymentElInstance.mount('#payment-element');
 
       document.getElementById('payment-overlay').classList.add('active');
