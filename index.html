@@ -709,9 +709,19 @@ body {
       </div>
       <div class="guia-card-bottom">
         <div class="guia-desc">Recursos prácticos para organizar tu vida con fe y disciplina. Sin costo, directo a tu correo.</div>
-        <div class="guia-form">
-          <input class="guia-input" type="email" placeholder="tu@correo.com">
-          <button class="btn btn-solid">Quiero mi guía</button>
+        <div id="guia-form-wrap">
+          <div class="guia-form">
+            <input id="guia-name" class="guia-input" type="text" placeholder="Tu nombre" autocomplete="name">
+            <input id="guia-email" class="guia-input" type="email" placeholder="tu@correo.com" autocomplete="email">
+            <button class="btn btn-solid" onclick="submitLeads(this)">
+              <span class="guia-label">Quiero mi guía</span>
+              <span class="guia-loading" style="display:none">Enviando…</span>
+            </button>
+          </div>
+          <div id="guia-error" class="wl-error"></div>
+        </div>
+        <div id="guia-success" style="display:none" class="wl-success">
+          ¡Listo! Revisa tu correo — tu guía está en camino.
         </div>
       </div>
     </div>
@@ -770,6 +780,46 @@ body {
       this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
     });
   });
+
+  async function submitLeads(btn) {
+    const name  = document.getElementById('guia-name').value.trim();
+    const email = document.getElementById('guia-email').value.trim();
+    const error = document.getElementById('guia-error');
+    error.textContent = '';
+
+    if (!name || !email) {
+      error.textContent = 'Por favor completa tu nombre y correo.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.querySelector('.guia-label').style.display   = 'none';
+    btn.querySelector('.guia-loading').style.display = 'inline';
+
+    try {
+      const res  = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById('guia-form-wrap').style.display = 'none';
+        document.getElementById('guia-success').style.display   = 'block';
+      } else {
+        error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
+        btn.disabled = false;
+        btn.querySelector('.guia-label').style.display   = 'inline';
+        btn.querySelector('.guia-loading').style.display = 'none';
+      }
+    } catch {
+      error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
+      btn.disabled = false;
+      btn.querySelector('.guia-label').style.display   = 'inline';
+      btn.querySelector('.guia-loading').style.display = 'none';
+    }
+  }
 
   async function submitWaitlist(btn) {
     const name  = document.getElementById('wl-name').value.trim();
