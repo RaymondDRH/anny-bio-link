@@ -357,11 +357,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease, margin-bottom 0.3s ease;
+  transition: max-height 0.4s ease, opacity 0.35s ease, margin-bottom 0.4s ease;
 }
 .waitlist-fields.expanded {
   max-height: 200px;
@@ -676,7 +676,7 @@ body {
           <input id="wl-name" type="text" placeholder="Tu nombre" class="wl-input" autocomplete="name">
           <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
         </div>
-        <button class="btn btn-cobre" id="wl-btn" onclick="handleWaitlist(this)">
+        <button type="button" class="btn btn-cobre" id="wl-btn" onclick="handleWaitlist(this)">
           <span class="wl-label">Avísame cuando esté listo</span>
           <span class="wl-loading" style="display:none">Guardando…</span>
         </button>
