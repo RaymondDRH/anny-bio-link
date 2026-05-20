@@ -459,24 +459,25 @@ body {
 .guia-input::placeholder { color: rgba(140,106,88,0.4); }
 .guia-input:focus { border-color: var(--cobre); }
 
-/* ---- BLOG — salvia ---- */
+/* ---- BLOG — blanco + acento salvia ---- */
 .blog-card {
-  background: #EEF0EC;
+  background: white;
   border-radius: 20px;
   overflow: hidden;
   text-decoration: none;
   display: block;
-  box-shadow: 0 4px 24px rgba(46,26,16,0.07);
+  box-shadow: 0 4px 24px rgba(46,26,16,0.09);
+  border-top: 3px solid var(--salvia);
   transition: transform 0.22s, box-shadow 0.22s;
 }
 .blog-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 36px rgba(46,26,16,0.12);
+  box-shadow: 0 10px 36px rgba(46,26,16,0.13);
 }
 
 .blog-top {
-  background: linear-gradient(135deg, #EEF0EC 0%, rgba(166,176,160,0.4) 100%);
-  padding: 24px 22px 20px;
+  background: white;
+  padding: 22px 22px 18px;
   display: flex;
   align-items: flex-start;
   gap: 14px;
