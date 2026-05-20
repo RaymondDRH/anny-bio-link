@@ -37,6 +37,11 @@ body {
   box-shadow: 0 0 60px rgba(46,26,16,0.18);
 }
 
+@media (max-width: 430px) {
+  body { background: var(--crema); }
+  .phone-frame { box-shadow: none; max-width: 100%; }
+}
+
 /* ---- ANIMATIONS ---- */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(22px); }
