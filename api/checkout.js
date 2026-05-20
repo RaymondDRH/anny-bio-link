@@ -17,6 +17,6 @@ module.exports = async (req, res) => {
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error('Stripe error:', error.message);
-    res.status(500).json({ error: 'Error al procesar el pago' });
+    res.status(500).json({ error: error.message });
   }
 };
