@@ -945,20 +945,13 @@ body {
       paymentElInstance = elementsInstance.create('payment', {
         wallets: { link: 'never' },
       });
-
-      paymentElInstance.on('loaderror', (event) => {
-        console.error('loaderror:', event.error);
-        document.getElementById('modal-error').textContent = 'Error Stripe: ' + (event.error?.message || JSON.stringify(event.error));
-      });
-
       paymentElInstance.mount('#payment-element');
 
       document.getElementById('payment-overlay').classList.add('active');
       document.body.style.overflow = 'hidden';
 
     } catch (err) {
-      console.error('openPaymentModal catch:', err);
-      alert('Error: ' + err.message);
+      alert('Hubo un error al iniciar el pago. Por favor intenta de nuevo.');
     } finally {
       btn.disabled = false;
       label.style.display   = 'inline';
