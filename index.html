@@ -391,40 +391,49 @@ body {
 
 /* ---- GUÍA GRATUITA ---- */
 .guia-wrap {
-  background: var(--nude);
-  padding: 0;
+  padding: 8px 20px 32px;
+  background: var(--crema);
+}
+
+.guia-card {
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(46,26,16,0.08);
+  border: 1px solid var(--nude);
+}
+
+.guia-card-top {
+  background: linear-gradient(140deg, var(--crema) 0%, var(--nude) 100%);
+  padding: 28px 24px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-.guia-photo {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  object-position: center 15%;
-  display: block;
-  filter: brightness(1);
-}
-
-.guia-overlay {
+.guia-card-top::after {
+  content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 220px;
-  background: linear-gradient(
-    to bottom,
-    transparent 55%,
-    rgba(232,217,205,0.6) 100%
-  );
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,133,90,0.12);
+  bottom: -50px; right: -30px;
 }
 
-.guia-body {
-  background: var(--nude);
-  padding: 24px 20px 36px;
-  position: relative;
-  z-index: 1;
+.guia-icon-box {
+  width: 48px; height: 48px;
+  background: var(--cobre);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
+.guia-icon-box svg { width: 22px; height: 22px; fill: var(--crema); }
+
+.guia-card-meta { flex: 1; }
 
 .guia-eyebrow {
   font-size: 9px;
@@ -432,15 +441,19 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--cobre);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .guia-title {
   font-family: 'Playfair Display', serif;
-  font-size: 24px;
+  font-size: 20px;
   color: var(--espresso);
   line-height: 1.25;
-  margin-bottom: 10px;
+}
+
+.guia-card-bottom {
+  padding: 18px 24px 24px;
+  border-top: 1px solid var(--nude);
 }
 
 .guia-desc {
@@ -448,7 +461,7 @@ body {
   font-weight: 300;
   color: var(--topo);
   line-height: 1.68;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
 }
 
 .guia-form {
@@ -470,7 +483,7 @@ body {
   outline: none;
   transition: border-color 0.2s;
 }
-.guia-input::placeholder { color: rgba(140,106,88,0.45); }
+.guia-input::placeholder { color: rgba(140,106,88,0.4); }
 .guia-input:focus { border-color: var(--cobre); }
 
 /* ---- BLOG ---- */
@@ -655,21 +668,27 @@ body {
   </div>
 
   <!-- ===== GUÍA GRATUITA ===== -->
-  <div class="guia-wrap fade-in">
-    <img class="guia-photo"
-         src="./photos/guia.jpg"
-         alt="Guía gratuita">
-    <div class="guia-overlay"></div>
-    <div class="guia-body">
-      <div class="guia-eyebrow">Regalo para ti</div>
-      <div class="guia-title">Descarga tu<br>Guía Gratuita</div>
-      <div class="guia-desc">Recursos prácticos para organizar tu vida con propósito, fe y disciplina. Sin costo, directo a tu correo.</div>
-      <div class="guia-form">
-        <input class="guia-input" type="email" placeholder="tu@correo.com">
-        <button class="btn btn-solid">Quiero mi guía</button>
+  <section class="guia-wrap fade-in">
+    <div class="section-label">Regalo para ti</div>
+    <div class="guia-card">
+      <div class="guia-card-top">
+        <div class="guia-icon-box">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h10v2H7zm0-3h10v2H7zm0 6h7v2H7z"/></svg>
+        </div>
+        <div class="guia-card-meta">
+          <div class="guia-eyebrow">Descarga gratis</div>
+          <div class="guia-title">Tu Guía para Organizar tu Vida con Propósito</div>
+        </div>
+      </div>
+      <div class="guia-card-bottom">
+        <div class="guia-desc">Recursos prácticos para organizar tu vida con fe y disciplina. Sin costo, directo a tu correo.</div>
+        <div class="guia-form">
+          <input class="guia-input" type="email" placeholder="tu@correo.com">
+          <button class="btn btn-solid">Quiero mi guía</button>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- ===== BLOG ===== -->
   <section class="section fade-in">
