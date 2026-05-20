@@ -900,7 +900,7 @@ body {
       document.body.style.overflow = 'hidden';
 
     } catch (err) {
-      alert('Hubo un error al iniciar el pago. Por favor intenta de nuevo.');
+      alert('DEBUG: ' + err.message);
     } finally {
       btn.disabled = false;
       label.style.display   = 'inline';
