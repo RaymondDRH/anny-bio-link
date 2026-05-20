@@ -674,13 +674,31 @@
       box-shadow: none;
       margin: 0;
       page-break-after: always;
+      break-after: page;
       width: 210mm;
       min-height: 297mm;
     }
-    .page:last-child { page-break-after: avoid; }
+    .page:last-child { page-break-after: avoid; break-after: avoid; }
     .cover { min-height: 297mm; }
-    .tracker-checkbox { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .tracker-checkbox.checked { background: var(--cobre) !important; }
+    .pillar-card,
+    .phase-card,
+    .verse-box,
+    .insight-box,
+    .pull-quote,
+    .grace-box,
+    .science-card,
+    .tracker-week,
+    .tracker-write-line {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .section-title,
+    .pillar-title,
+    .phase-title {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 
   @page {
