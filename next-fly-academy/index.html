@@ -273,9 +273,9 @@ body {
   border: 3px solid var(--gold);
   margin: 0 auto 22px;
   display: block;
-  background-image: url('/photos/hero.jpg');
-  background-size: 210%;
-  background-position: 48% 22%;
+  background-image: url('/photos/anny-firma.jpeg');
+  background-size: cover;
+  background-position: center top;
 }
 
 .capitana-bio {
@@ -948,7 +948,11 @@ body {
       paymentElInstance.mount('#payment-element');
 
       document.getElementById('payment-overlay').classList.add('active');
+      const scrollY = window.scrollY;
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
 
     } catch (err) {
       alert('Hubo un error al iniciar el pago. Por favor intenta de nuevo.');
@@ -961,7 +965,12 @@ body {
 
   function closeModal() {
     document.getElementById('payment-overlay').classList.remove('active');
+    const scrollY = parseInt(document.body.style.top || '0') * -1;
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
     if (paymentElInstance) { paymentElInstance.destroy(); paymentElInstance = null; }
     if (elementsInstance) { elementsInstance = null; }
     document.getElementById('payment-element').innerHTML = '';
