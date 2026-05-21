@@ -387,17 +387,17 @@ html { scroll-behavior: smooth; }
 
 /* Blog card desktop */
 .d-card-blog-link { text-decoration: none; color: inherit; }
-.d-card-blog { background: #fff; padding: 20px 24px; border: 1px solid rgba(46,26,16,0.06); display: flex; align-items: center; gap: 18px; }
-.d-card-blog .d-blog-icon { width: 46px; height: 46px; border-radius: 14px; flex: 0 0 auto; background: rgba(196,133,90,0.10); display: grid; place-items: center; color: var(--cobre); }
+.d-card-blog { background: var(--salvia); padding: 20px 24px; border: 1px solid rgba(166,176,160,0.30); display: flex; align-items: center; gap: 18px; }
+.d-card-blog .d-blog-icon { width: 46px; height: 46px; border-radius: 14px; flex: 0 0 auto; background: rgba(255,255,255,0.30); display: grid; place-items: center; color: var(--espresso); }
 .d-card-blog .d-blog-icon svg { width: 20px; height: 20px; }
 .d-card-blog .d-blog-body { flex: 1; min-width: 0; }
-.d-card-blog .d-label { margin-bottom: 4px; display: block; text-transform: uppercase; }
+.d-card-blog .d-label { margin-bottom: 4px; display: block; text-transform: uppercase; color: var(--espresso); opacity: 0.65; }
 .d-card-blog h3 { font-family: var(--font-serif); font-size: 17px; font-weight: 500; color: var(--espresso); line-height: 1.25; }
-.d-blog-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--cobre); font-size: 12px; font-weight: 400; transition: gap .25s ease, color .25s ease; }
-.d-card-blog-link:hover .d-blog-cta { gap: 10px; color: var(--cobre-deep); }
-.d-chev { width: 30px; height: 30px; border-radius: 50%; background: var(--crema); border: 1px solid var(--rosa-arena); display: grid; place-items: center; color: var(--cobre); flex: 0 0 auto; transition: background .25s ease, color .25s ease, transform .25s ease; }
+.d-blog-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--espresso); font-size: 12px; font-weight: 500; transition: gap .25s ease; }
+.d-card-blog-link:hover .d-blog-cta { gap: 10px; }
+.d-chev { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.40); border: 1px solid rgba(46,26,16,0.15); display: grid; place-items: center; color: var(--espresso); flex: 0 0 auto; transition: background .25s ease, color .25s ease, transform .25s ease; }
 .d-chev svg { width: 13px; height: 13px; }
-.d-card-blog-link:hover .d-chev { background: var(--cobre); color: var(--crema); transform: translateX(2px); }
+.d-card-blog-link:hover .d-chev { background: var(--espresso); color: var(--crema); transform: translateX(2px); }
 
 /* Guía card desktop */
 .d-card-guia { background: var(--nude); }
