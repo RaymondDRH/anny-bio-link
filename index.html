@@ -174,8 +174,10 @@ html { scroll-behavior: smooth; }
 }
 .btn:active { transform: scale(0.96); box-shadow: none; filter: brightness(0.92); }
 .btn-solid  { background: var(--cobre); color: var(--crema); }
+.btn-nfa    { background: linear-gradient(135deg, #C49A3C 0%, #DDB860 100%); color: #330C15; }
 @media (hover: hover) and (pointer: fine) {
   .btn-solid:hover { background: #a96b43; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(196,133,90,0.28); }
+  .btn-nfa:hover   { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
 }
 
 /* Reto card */
@@ -361,7 +363,9 @@ html { scroll-behavior: smooth; }
 .d-card-nfa .d-body .d-label .icon { background: rgba(251,246,242,0.10); color: var(--cobre); }
 .d-card-nfa h2 { color: var(--crema); font-size: 22px; }
 .d-card-nfa .d-desc { color: rgba(251,246,242,0.70); margin: 10px 0 20px; font-size: 13px; }
-.d-card-nfa .d-btn-primary { align-self: flex-start; }
+.d-btn-nfa { background: linear-gradient(135deg, #C49A3C 0%, #DDB860 100%); color: #330C15; box-shadow: 0 10px 22px -10px rgba(196,154,60,0.45); }
+.d-btn-nfa:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
+.d-card-nfa .d-btn-nfa { align-self: flex-start; }
 
 /* Reto card desktop */
 .d-card-reto { background: var(--crema); border: 1px solid var(--rosa-arena); }
@@ -507,7 +511,7 @@ html { scroll-behavior: smooth; }
       <div class="nfa-body">
         <div class="nfa-title">Tu boleto para despegar tu marca y ganar online</div>
         <div class="nfa-desc">Aprende a usar las redes sociales estratégicamente para maximizar tu presencia en línea. A través de módulos interactivos, construye y haz crecer tu comunidad.</div>
-        <a href="/next-fly-academy/" class="btn btn-solid">¡Quiero abordar! →</a>
+        <a href="/next-fly-academy/" class="btn btn-nfa">¡Quiero abordar! →</a>
       </div>
     </div>
 
@@ -625,9 +629,9 @@ html { scroll-behavior: smooth; }
         <img src="./next%20fly%20banner.jpeg" alt="Next Fly Academy">
       </div>
       <div class="d-body">
-        <h2>Tu boleto para despegar tu marca y ganar online</h2>
-        <p class="d-desc">Aprende a usar las redes sociales estratégicamente para maximizar tu presencia en línea. A través de módulos interactivos, construye y haz crecer tu comunidad.</p>
-        <span class="d-btn d-btn-primary">¡Quiero abordar! <span class="arrow">→</span></span>
+        <h2>Despega tu marca y gana online</h2>
+        <p class="d-desc">Construye tu negocio digital con estrategia, propósito y las herramientas correctas.</p>
+        <span class="d-btn d-btn-nfa">¡Quiero abordar! <span class="arrow">→</span></span>
       </div>
     </a>
 
