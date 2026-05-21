@@ -633,6 +633,26 @@ body {
 }
 
 .modal-secure svg { width: 12px; height: 12px; fill: rgba(245,237,216,0.28); }
+
+.modal-no-refund {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 12px 0 16px;
+  cursor: pointer;
+  font-size: 12px;
+  color: rgba(245,237,216,0.65);
+  line-height: 1.4;
+}
+.modal-no-refund input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin-top: 1px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+.modal-no-refund strong { color: rgba(245,237,216,0.9); }
 </style>
 </head>
 <body>
@@ -845,9 +865,17 @@ body {
         <label class="modal-field-label" for="buyer-email">Correo electrónico</label>
         <input type="email" id="buyer-email" class="modal-field-input" placeholder="tu@correo.com" autocomplete="email">
       </div>
+      <div class="modal-field">
+        <label class="modal-field-label" for="buyer-phone">Número de teléfono</label>
+        <input type="tel" id="buyer-phone" class="modal-field-input" placeholder="+1 (555) 000-0000" autocomplete="tel">
+      </div>
     </div>
     <div id="payment-element"></div>
     <div id="modal-error" class="modal-error"></div>
+    <label class="modal-no-refund">
+      <input type="checkbox" id="no-refund-check">
+      <span>Entiendo que es un producto digital y <strong>no tiene reembolso</strong></span>
+    </label>
     <button id="modal-submit" class="modal-submit" onclick="submitPayment()">
       <span id="modal-submit-label">Pagar $497 →</span>
       <span id="modal-submit-loading" style="display:none">Procesando…</span>
@@ -981,6 +1009,8 @@ body {
     document.getElementById('modal-error').textContent = '';
     document.getElementById('buyer-name').value  = '';
     document.getElementById('buyer-email').value = '';
+    document.getElementById('buyer-phone').value = '';
+    document.getElementById('no-refund-check').checked = false;
   }
 
   function handleOverlayClick(e) {
@@ -988,11 +1018,17 @@ body {
   }
 
   async function submitPayment() {
-    const name  = document.getElementById('buyer-name').value.trim();
-    const email = document.getElementById('buyer-email').value.trim();
+    const name    = document.getElementById('buyer-name').value.trim();
+    const email   = document.getElementById('buyer-email').value.trim();
+    const phone   = document.getElementById('buyer-phone').value.trim();
+    const noRefund = document.getElementById('no-refund-check').checked;
 
-    if (!name || !email) {
-      document.getElementById('modal-error').textContent = 'Por favor completá tu nombre y correo electrónico.';
+    if (!name || !email || !phone) {
+      document.getElementById('modal-error').textContent = 'Por favor completa todos los campos.';
+      return;
+    }
+    if (!noRefund) {
+      document.getElementById('modal-error').textContent = 'Debes aceptar la política de no reembolso para continuar.';
       return;
     }
 
@@ -1008,7 +1044,7 @@ body {
         return_url: 'https://annygomez.com/next-fly-academy/success.html',
         receipt_email: email,
         payment_method_data: {
-          billing_details: { name, email },
+          billing_details: { name, email, phone },
         },
       },
     });
