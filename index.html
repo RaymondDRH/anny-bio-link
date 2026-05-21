@@ -213,15 +213,14 @@ html { scroll-behavior: smooth; }
 .wl-success { font-size: 13px; color: var(--topo); font-weight: 400; line-height: 1.6; padding: 14px; background: var(--crema); border-radius: 12px; border: 1px solid var(--rosa-arena); text-align: center; }
 
 /* Blog card — V3 Script Watermark */
-.blog-card { display: block; text-decoration: none; color: inherit; position: relative; background: var(--nude); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -22px rgba(46,26,16,0.22); min-height: 260px; transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.blog-card { display: block; text-decoration: none; color: inherit; position: relative; background: var(--salvia); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -22px rgba(46,26,16,0.22); min-height: 260px; transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 @media (hover: hover) and (pointer: fine) { .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px -18px rgba(46,26,16,0.28); } }
-.blog-watermark { position: absolute; top: -8px; left: 6px; right: 0; font-family: 'Alex Brush', cursive; font-size: 130px; line-height: 1; color: #FBF6F2; pointer-events: none; text-shadow: 0 6px 0 rgba(46,26,16,0.02); }
-.blog-underline { position: absolute; top: 72px; left: 28px; opacity: 0.7; }
-.blog-page { position: relative; padding: 96px 26px 26px; }
-.blog-eyebrow { font-size: 10.5px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--topo); margin-bottom: 12px; }
-.blog-title { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; line-height: 1.2; color: var(--espresso); letter-spacing: -0.01em; margin: 0; }
-.blog-cta { margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--cobre); color: var(--espresso); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
-.blog-cta-arrow { color: var(--cobre); font-size: 16px; line-height: 1; }
+.blog-watermark { position: absolute; top: 10px; left: 6px; right: 0; font-family: 'Alex Brush', cursive; font-size: 130px; line-height: 1; color: rgba(251,246,242,0.45); pointer-events: none; }
+.blog-page { position: relative; padding: 106px 26px 26px; }
+.blog-eyebrow { font-size: 10.5px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(251,246,242,0.75); margin-bottom: 12px; }
+.blog-title { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; line-height: 1.2; color: #FBF6F2; letter-spacing: -0.01em; margin: 0; }
+.blog-cta { margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(251,246,242,0.6); color: #FBF6F2; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+.blog-cta-arrow { font-size: 16px; line-height: 1; }
 
 /* Guía card */
 .guia-card { background: #F2E8E1; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.08); }
@@ -468,11 +467,6 @@ html { scroll-behavior: smooth; }
 
     <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-card fade-in">
       <div class="blog-watermark">Blog</div>
-      <svg class="blog-underline" viewBox="0 0 200 16" width="200" height="16" fill="none" stroke="#C4855A" stroke-width="1.2" stroke-linecap="round">
-        <path d="M2 8 L80 8"/>
-        <path d="M120 8 L198 8"/>
-        <circle cx="100" cy="8" r="3" fill="#C4855A" stroke="none"/>
-      </svg>
       <div class="blog-page">
         <div class="blog-eyebrow">Mi Blog</div>
         <h3 class="blog-title">Artículos <em style="color:var(--cobre)">·</em> Reflexiones y Recursos</h3>
