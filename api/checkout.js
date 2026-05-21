@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 49700,
+      amount: 100,
       currency: 'usd',
       automatic_payment_methods: { enabled: true },
       description: 'Next Fly Academy',
