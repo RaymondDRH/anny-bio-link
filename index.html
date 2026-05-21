@@ -6,22 +6,22 @@
 <title>Anny Gómez — Fé · Hábitos · Propósito</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="description" content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal. Recursos, guías y comunidad para mujeres que quieren vivir con propósito.">
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://annygomez.com/">
-<meta property="og:title"       content="Anny Gómez — Fé · Hábitos · Propósito">
-<meta property="og:description" content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal.">
-<meta property="og:image"       content="https://annygomez.com/photos/hero.jpg">
+<meta property="og:type"         content="website">
+<meta property="og:url"          content="https://annygomez.com/">
+<meta property="og:title"        content="Anny Gómez — Fé · Hábitos · Propósito">
+<meta property="og:description"  content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal.">
+<meta property="og:image"        content="https://annygomez.com/photos/hero.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"       content="es_ES">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="Anny Gómez — Fé · Hábitos · Propósito">
 <meta name="twitter:description" content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal.">
 <meta name="twitter:image"       content="https://annygomez.com/photos/hero.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   Tokens
-   ============================================================ */
+/* ── SHARED TOKENS ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --crema:      #FBF6F2;
   --nude:       #E8D9CD;
@@ -31,740 +31,612 @@
   --espresso:   #2E1A10;
   --topo:       #8C6A58;
   --salvia:     #A6B0A0;
-
-  --r-md: 14px;
-  --r-lg: 22px;
-  --r-xl: 28px;
-
   --font-script: "Alex Brush", cursive;
   --font-serif:  "Playfair Display", Georgia, serif;
   --font-sans:   "Poppins", -apple-system, sans-serif;
 }
+html { scroll-behavior: smooth; }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── LAYOUT VISIBILITY ── */
+.mobile-view  { display: block; }
+.desktop-view { display: none; }
 
-html, body {
+@media (min-width: 960px) {
+  .mobile-view  { display: none; }
+  .desktop-view { display: grid; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE LAYOUT  (< 960px) — layout original
+   ════════════════════════════════════════════════════════════ */
+.mobile-view {
+  font-family: 'Poppins', sans-serif;
   background: var(--crema);
-  color: var(--espresso);
-  font-family: var(--font-sans);
-  font-weight: 300;
-  line-height: 1.55;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
   -webkit-font-smoothing: antialiased;
 }
-body { min-height: 100vh; }
 
-/* ============================================================
-   Shell — two-column layout
-   ============================================================ */
-.shell {
-  display: grid;
+.phone-frame {
+  width: 100%;
+  max-width: 100%;
+  background: var(--crema);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+  .mobile-view { background: #EDEAE6; }
+  .phone-frame { max-width: 390px; box-shadow: 0 0 60px rgba(46,26,16,0.18); }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.8); }
+}
+@keyframes btn-tap {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.28); }
+  65%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+@keyframes grain-shift {
+  0%   { transform: translate(0,0); }     10%  { transform: translate(-2%,-2%); }
+  20%  { transform: translate(2%,2%); }   30%  { transform: translate(-1%,1%); }
+  40%  { transform: translate(1%,-1%); }  50%  { transform: translate(-2%,1%); }
+  60%  { transform: translate(2%,-2%); }  70%  { transform: translate(0,2%); }
+  80%  { transform: translate(-1%,0); }   90%  { transform: translate(1%,1%); }
+  100% { transform: translate(0,0); }
+}
+@keyframes wlFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(32px) scale(0.96);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,0.61,0.36,1);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Hero */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 440px;
+  max-height: 600px;
+  overflow: hidden;
+  animation: fadeInUp 0.85s ease both;
+}
+.hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04; animation: grain-shift 8s steps(10) infinite; pointer-events: none; z-index: 1;
+}
+.hero-gradient {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
+  background: linear-gradient(to top, rgba(46,26,16,0.88) 0%, rgba(46,26,16,0.45) 45%, transparent 100%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  padding-bottom: 32px; gap: 5px;
+}
+.hero-logo {
+  font-family: 'Alex Brush', cursive; font-size: 66px; color: var(--crema);
+  line-height: 1; animation: fadeInUp 1s 0.3s ease both;
+}
+.hero-tagline {
+  font-size: 10px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(251,246,242,0.65); animation: fadeInUp 1s 0.5s ease both;
+}
+.hero-social {
+  display: flex; justify-content: center; gap: 14px; margin-top: 14px;
+  animation: fadeInUp 1s 0.65s ease both;
+}
+.hero-social-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(251,246,242,0.18); border: 1px solid rgba(251,246,242,0.3);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: background 0.22s, transform 0.15s ease;
+}
+.hero-social-btn:active { transform: scale(0.9); }
+.hero-social-btn:hover  { background: rgba(251,246,242,0.32); }
+.hero-social-btn svg    { width: 14px; height: 14px; fill: var(--crema); }
+.hero-social-btn.tapped,
+.footer-icon.tapped     { animation: btn-tap 0.42s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+
+/* Cards area */
+.cards-area { padding: 20px 16px 0; display: flex; flex-direction: column; gap: 18px; }
+
+/* NFA card */
+.nfa-card { background: var(--espresso); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.18); position: relative; }
+.nfa-banner { width: 100%; height: 180px; object-fit: cover; object-position: center; display: block; }
+.nfa-body { padding: 20px 20px 24px; position: relative; z-index: 1; }
+.nfa-title { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--crema); margin-bottom: 8px; line-height: 1.25; }
+.nfa-desc  { font-size: 13px; font-weight: 300; color: rgba(251,246,242,0.55); line-height: 1.68; margin-bottom: 18px; }
+
+/* Buttons */
+.btn {
+  display: block; width: 100%; padding: 14px 20px;
+  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase; text-align: center; text-decoration: none;
+  border-radius: 12px; border: none; cursor: pointer;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s, color 0.2s;
+}
+.btn:active { transform: scale(0.96); box-shadow: none; filter: brightness(0.92); }
+.btn-solid  { background: var(--cobre); color: var(--crema); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-solid:hover { background: #a96b43; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(196,133,90,0.28); }
+}
+
+/* Reto card */
+.reto-card {
+  background: var(--nude); border-radius: 20px; padding: 28px 22px;
+  box-shadow: 0 4px 24px rgba(46,26,16,0.08); position: relative; overflow: hidden;
+}
+.reto-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; border:1px solid rgba(196,133,90,0.1); }
+.reto-card::after  { content:''; position:absolute; bottom:-70px; left:-70px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(166,176,160,0.12); }
+.coming-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--crema); border: 1px solid var(--rosa-arena); border-radius: 100px;
+  padding: 5px 14px 5px 10px; font-size: 9px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--topo); margin-bottom: 18px;
+}
+.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--salvia); flex-shrink: 0; animation: pulse-dot 1.9s ease-in-out infinite; }
+.reto-title { font-family: 'Playfair Display', serif; font-size: 27px; font-weight: 600; color: var(--espresso); line-height: 1.22; margin-bottom: 12px; }
+.reto-title em { font-style: italic; color: var(--cobre); }
+.reto-desc { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.72; margin-bottom: 24px; }
+
+/* Waitlist form */
+#waitlist-form-wrap, #waitlist-success { position: relative; z-index: 1; }
+.waitlist-fields { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.waitlist-fields.expanded { display: flex; animation: wlFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
+.wl-input {
+  width: 100%; padding: 12px 16px; border-radius: 12px;
+  border: 1px solid var(--rosa-arena); background: var(--crema);
+  font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--espresso); outline: none;
+}
+.wl-input:focus { border-color: var(--cobre); }
+.wl-input::placeholder { color: var(--topo); opacity: 0.6; }
+.wl-error  { font-size: 12px; color: #b94a4a; margin-top: 8px; min-height: 16px; }
+.wl-success { font-size: 13px; color: var(--topo); font-weight: 400; line-height: 1.6; padding: 14px; background: var(--crema); border-radius: 12px; border: 1px solid var(--rosa-arena); text-align: center; }
+
+/* Blog card */
+.blog-card { background: white; border-radius: 20px; overflow: hidden; text-decoration: none; display: block; box-shadow: 0 4px 24px rgba(46,26,16,0.09); border-top: 3px solid var(--salvia); transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+@media (hover: hover) and (pointer: fine) { .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(46,26,16,0.13); } }
+.blog-top { background: #EEF0EC; padding: 22px 22px 18px; display: flex; align-items: flex-start; gap: 14px; }
+.blog-icon-box { width: 44px; height: 44px; background: var(--salvia); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.blog-icon-box svg { width: 20px; height: 20px; fill: var(--crema); }
+.blog-cat   { font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--salvia); margin-bottom: 5px; }
+.blog-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--espresso); line-height: 1.3; }
+.blog-bottom { padding: 14px 22px 20px; border-top: 1px solid rgba(166,176,160,0.3); }
+.blog-desc  { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.65; margin-bottom: 12px; }
+.blog-cta   { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--salvia); }
+
+/* Guía card */
+.guia-card { background: #F2E8E1; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.08); }
+.guia-card-top { background: linear-gradient(140deg, #F7EEE8 0%, var(--rosa-arena) 100%); padding: 28px 24px 22px; display: flex; align-items: flex-start; gap: 14px; position: relative; overflow: hidden; }
+.guia-card-top::after { content:''; position:absolute; width:140px; height:140px; border-radius:50%; border:1px solid rgba(196,133,90,0.15); bottom:-50px; right:-30px; }
+.guia-icon-box { width: 48px; height: 48px; background: var(--cobre); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.guia-icon-box svg { width: 22px; height: 22px; fill: var(--crema); }
+.guia-card-meta { flex: 1; }
+.guia-eyebrow { font-size: 9px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobre); margin-bottom: 6px; }
+.guia-title   { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--espresso); line-height: 1.25; }
+.guia-card-bottom { padding: 18px 24px 24px; border-top: 1px solid rgba(196,133,90,0.15); }
+.guia-desc  { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.68; margin-bottom: 18px; }
+.guia-form  { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.guia-form.expanded { display: flex; animation: wlFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
+.guia-input { width: 100%; padding: 13px 16px; background: var(--crema); border: 1px solid var(--rosa-arena); border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 300; color: var(--espresso); outline: none; transition: border-color 0.2s; }
+.guia-input::placeholder { color: rgba(140,106,88,0.4); }
+.guia-input:focus { border-color: var(--cobre); }
+
+/* Footer mobile */
+.footer { background: linear-gradient(to bottom, #FEFCFA 0%, var(--nude) 100%); padding: 40px 20px 52px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.footer-logo   { font-family: 'Alex Brush', cursive; font-size: 46px; color: var(--cobre); line-height: 1; }
+.footer-divider { width: 32px; height: 1px; background: var(--rosa-arena); opacity: 0.6; }
+.footer-social  { display: flex; gap: 12px; }
+.footer-icon   { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--rosa-arena); display: flex; align-items: center; justify-content: center; text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.22s, border-color 0.22s, transform 0.15s ease; }
+.footer-icon:active { transform: scale(0.9); }
+.footer-icon:hover  { background: var(--cobre); border-color: var(--cobre); }
+.footer-icon:hover svg { fill: var(--crema); }
+.footer-icon svg { width: 15px; height: 15px; fill: var(--topo); transition: fill 0.22s; }
+.footer-copy { font-size: 9px; font-weight: 400; letter-spacing: 0.08em; color: var(--espresso); opacity: 0.5; }
+
+
+/* ════════════════════════════════════════════════════════════
+   DESKTOP LAYOUT  (≥ 960px) — Claude Design 40/60 split
+   ════════════════════════════════════════════════════════════ */
+.desktop-view {
   grid-template-columns: 40% 60%;
   min-height: 100vh;
   width: 100%;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  color: var(--espresso);
+  font-weight: 300;
+  line-height: 1.55;
 }
 
-/* ---- LEFT: sticky hero ---- */
-.hero-col {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+/* LEFT: hero */
+.d-hero-col {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
   background: linear-gradient(135deg, #d9bfa9 0%, #b78a6e 60%, #8c5e44 100%);
 }
-
-.hero-col img.hero-photo {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+.d-hero-col img.d-hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.d-hero-col::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background: linear-gradient(180deg, rgba(46,26,16,0) 45%, rgba(46,26,16,0.78) 100%),
+              linear-gradient(180deg, rgba(46,26,16,0.15) 0%, rgba(46,26,16,0) 20%);
 }
-
-.hero-col::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(46,26,16,0) 45%, rgba(46,26,16,0.78) 100%),
-    linear-gradient(180deg, rgba(46,26,16,0.15) 0%, rgba(46,26,16,0) 20%);
-  pointer-events: none;
-  z-index: 2;
+.d-hero-mark {
+  position: absolute; top: 36px; left: 36px; z-index: 3;
+  color: var(--crema); font-family: var(--font-sans); font-size: 10px;
+  letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.65;
+  writing-mode: vertical-rl; transform: rotate(180deg);
 }
-
-.hero-mark {
-  position: absolute;
-  top: 36px;
-  left: 36px;
-  z-index: 3;
-  color: var(--crema);
-  font-family: var(--font-sans);
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  opacity: 0.65;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
+.d-hero-text {
+  position: absolute; left: 0; right: 0; bottom: 56px;
+  z-index: 3; text-align: center; padding: 0 48px; color: var(--crema);
 }
-
-.hero-text {
-  position: absolute;
-  left: 0; right: 0; bottom: 56px;
-  z-index: 3;
-  text-align: center;
-  padding: 0 48px;
-  color: var(--crema);
+.d-hero-logo {
+  font-family: var(--font-script); font-size: 104px; line-height: 0.9; color: var(--crema);
+  text-shadow: 0 2px 24px rgba(46,26,16,0.35); font-weight: 400;
+  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.15s forwards;
 }
-
-.hero-logo {
-  font-family: var(--font-script);
-  font-size: 104px;
-  line-height: 0.9;
-  color: var(--crema);
-  text-shadow: 0 2px 24px rgba(46,26,16,0.35);
-  font-weight: 400;
-  opacity: 0;
-  transform: translateY(14px);
-  animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.15s forwards;
+.d-hero-tagline {
+  margin-top: 14px; font-family: var(--font-sans); font-weight: 300; font-size: 11px;
+  letter-spacing: 0.42em; text-transform: uppercase; color: var(--crema);
+  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.35s forwards;
 }
-
-.hero-tagline {
-  margin-top: 14px;
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 11px;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--crema);
-  opacity: 0;
-  transform: translateY(14px);
-  animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.35s forwards;
+.d-hero-tagline .dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; vertical-align: middle; margin: 0 10px 2px; opacity: 0.7; }
+.d-hero-socials {
+  margin-top: 28px; display: flex; justify-content: center; gap: 14px;
+  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.55s forwards;
 }
-
-.hero-tagline .dot {
-  display: inline-block;
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  vertical-align: middle;
-  margin: 0 10px 2px;
-  opacity: 0.7;
-}
-
-.hero-socials {
-  margin-top: 28px;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  opacity: 0;
-  transform: translateY(14px);
-  animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.55s forwards;
-}
-
-.hero-socials a {
-  width: 42px; height: 42px;
-  display: grid; place-items: center;
-  color: var(--crema);
-  border: 1px solid rgba(251,246,242,0.35);
-  border-radius: 50%;
-  text-decoration: none;
-  transition: transform .25s ease, background .25s ease, border-color .25s ease;
-}
-.hero-socials a:hover {
-  background: rgba(251,246,242,0.14);
-  border-color: var(--crema);
-  transform: translateY(-2px);
-}
-.hero-socials svg { width: 18px; height: 18px; }
-
+.d-hero-socials a { width: 42px; height: 42px; display: grid; place-items: center; color: var(--crema); border: 1px solid rgba(251,246,242,0.35); border-radius: 50%; text-decoration: none; transition: transform .25s ease, background .25s ease, border-color .25s ease; }
+.d-hero-socials a:hover { background: rgba(251,246,242,0.14); border-color: var(--crema); transform: translateY(-2px); }
+.d-hero-socials svg { width: 18px; height: 18px; }
 @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
 
-/* ---- RIGHT: scrollable cards ---- */
-.cards-col {
-  background: var(--crema);
-  position: relative;
-  padding: 88px 56px 88px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 26px;
+/* RIGHT: scrollable cards */
+.d-cards-col {
+  background: var(--crema); position: relative;
+  padding: 88px 56px 88px; display: flex; flex-direction: column; align-items: center; gap: 26px;
 }
-
-.cards-col::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
+.d-cards-col::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.05; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  z-index: 0;
 }
-
-.cards-col > * { position: relative; z-index: 1; width: 100%; max-width: 520px; }
+.d-cards-col > * { position: relative; z-index: 1; width: 100%; max-width: 520px; }
 
 /* Greeting */
-.greeting { text-align: left; margin-bottom: 4px; }
+.d-greeting { text-align: left; margin-bottom: 4px; }
+.d-greeting .eyebrow { font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--topo); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
+.d-greeting .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--cobre); display: inline-block; }
+.d-greeting h1 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.2; color: var(--espresso); font-style: italic; }
+.d-greeting h1 em { font-style: italic; color: var(--cobre); }
+.d-greeting p { margin-top: 10px; font-size: 14px; color: var(--topo); line-height: 1.65; }
 
-.greeting .eyebrow {
-  font-size: 10px;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--topo);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.greeting .eyebrow::before {
-  content: "";
-  width: 28px; height: 1px;
-  background: var(--cobre);
-  display: inline-block;
-}
-.greeting h1 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1.2;
-  color: var(--espresso);
-  font-style: italic;
-}
-.greeting h1 em { font-style: italic; color: var(--cobre); }
-.greeting p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--topo);
-  line-height: 1.65;
-}
-
-/* ============================================================
-   Generic CARD
-   ============================================================ */
-.card {
-  background: var(--nude);
-  border-radius: var(--r-xl);
-  padding: 30px;
+/* Generic card */
+.d-card {
+  background: var(--nude); border-radius: 28px; padding: 30px;
   border: 1px solid rgba(196,133,90,0.10);
   box-shadow: 0 1px 2px rgba(46,26,16,0.04), 0 14px 36px -22px rgba(46,26,16,0.18);
   transition: transform .35s ease, box-shadow .35s ease;
 }
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 24px 46px -22px rgba(46,26,16,0.26);
-}
+.d-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 24px 46px -22px rgba(46,26,16,0.26); }
 
-.card .label {
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--topo);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.card .label .icon {
-  width: 28px; height: 28px;
-  display: grid; place-items: center;
-  border-radius: 8px;
-  background: rgba(196,133,90,0.14);
-  color: var(--cobre);
-}
-.card .label .icon svg { width: 13px; height: 13px; }
+.d-label { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--topo); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.d-label .icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: rgba(196,133,90,0.14); color: var(--cobre); }
+.d-label .icon svg { width: 13px; height: 13px; }
 
-.card h2 {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 28px;
-  line-height: 1.18;
-  color: var(--espresso);
-  letter-spacing: -0.01em;
-}
-.card .desc {
-  font-size: 14px;
-  color: var(--topo);
-  margin: 12px 0 22px;
-  line-height: 1.6;
-}
+.d-card h2 { font-family: var(--font-serif); font-weight: 500; font-size: 28px; line-height: 1.18; color: var(--espresso); letter-spacing: -0.01em; }
+.d-card .d-desc { font-size: 14px; color: var(--topo); margin: 12px 0 22px; line-height: 1.6; }
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 13px 24px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform .25s ease, box-shadow .3s ease, background .3s ease, color .3s ease;
-}
-.btn .arrow { display: inline-block; transition: transform .3s ease; }
-.btn:hover .arrow { transform: translateX(4px); }
+/* Desktop buttons */
+.d-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 13px 24px; border-radius: 999px; border: 1px solid transparent; font-family: var(--font-sans); font-weight: 400; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .3s ease, background .3s ease, color .3s ease; }
+.d-btn .arrow { display: inline-block; transition: transform .3s ease; }
+.d-btn:hover .arrow { transform: translateX(4px); }
+.d-btn-primary { background: var(--cobre); color: var(--crema); box-shadow: 0 10px 22px -10px rgba(196,133,90,0.55); }
+.d-btn-primary:hover { background: var(--cobre-deep); transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(196,133,90,0.65); }
 
-.btn-primary {
-  background: var(--cobre);
-  color: var(--crema);
-  box-shadow: 0 10px 22px -10px rgba(196,133,90,0.55);
-}
-.btn-primary:hover, .btn-primary:focus-visible {
-  background: var(--cobre-deep);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px -10px rgba(196,133,90,0.65);
-  outline: none;
-}
+/* NFA card desktop */
+.d-card-nfa { background: var(--espresso); color: var(--crema); border: none; padding: 0; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; min-height: 240px; text-decoration: none; }
+.d-card-nfa:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 26px 50px -24px rgba(46,26,16,0.45); }
+.d-card-nfa .d-media { position: relative; background: radial-gradient(circle at 25% 30%, rgba(255,255,255,0.15), transparent 55%), linear-gradient(135deg, #c79477 0%, #875238 100%); overflow: hidden; }
+.d-card-nfa .d-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.d-card-nfa .d-media .pill { position: absolute; top: 14px; left: 14px; z-index: 4; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: rgba(251,246,242,0.90); color: var(--espresso); font-weight: 400; backdrop-filter: blur(4px); }
+.d-card-nfa .d-body { padding: 28px; display: flex; flex-direction: column; justify-content: center; }
+.d-card-nfa .d-body .d-label { color: rgba(251,246,242,0.58); }
+.d-card-nfa .d-body .d-label .icon { background: rgba(251,246,242,0.10); color: var(--cobre); }
+.d-card-nfa h2 { color: var(--crema); font-size: 22px; }
+.d-card-nfa .d-desc { color: rgba(251,246,242,0.70); margin: 10px 0 20px; font-size: 13px; }
+.d-card-nfa .d-btn-primary { align-self: flex-start; }
 
-/* ============================================================
-   1. NEXT FLY ACADEMY (dark card)
-   ============================================================ */
-.card-nfa {
-  background: var(--espresso);
-  color: var(--crema);
-  border: none;
-  padding: 0;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: stretch;
-  min-height: 240px;
-  text-decoration: none;
-}
-.card-nfa:hover {
-  box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 26px 50px -24px rgba(46,26,16,0.45);
-}
+/* Reto card desktop */
+.d-card-reto { background: var(--crema); border: 1px solid var(--rosa-arena); }
+.d-badge { display: inline-flex; align-items: center; gap: 9px; padding: 6px 14px; background: rgba(166,176,160,0.16); border: 1px solid rgba(166,176,160,0.45); border-radius: 999px; color: #5e6b58; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; margin-bottom: 18px; }
+.d-pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--salvia); position: relative; flex-shrink: 0; }
+.d-pulse-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; background: var(--salvia); opacity: 0.5; animation: dpulse 2s ease-out infinite; }
+@keyframes dpulse { 0% { transform: scale(0.6); opacity: 0.6; } 70% { transform: scale(2.2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
+.d-card-reto h2 { font-style: italic; font-weight: 400; }
+.d-card-reto h2 .div { color: var(--cobre); font-style: normal; margin: 0 6px; }
 
-.card-nfa .media {
-  position: relative;
-  background: radial-gradient(circle at 25% 30%, rgba(255,255,255,0.15), transparent 55%),
-              linear-gradient(135deg, #c79477 0%, #875238 100%);
-  overflow: hidden;
-}
-.card-nfa .media img {
-  position: absolute;
-  inset: 0; width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.card-nfa .media .pill {
-  position: absolute;
-  top: 14px; left: 14px;
-  z-index: 4;
-  font-size: 9px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  padding: 5px 12px;
-  border-radius: 999px;
-  background: rgba(251,246,242,0.90);
-  color: var(--espresso);
-  font-weight: 400;
-  backdrop-filter: blur(4px);
-}
-.card-nfa .body {
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.card-nfa .body .label { color: rgba(251,246,242,0.58); }
-.card-nfa .body .label .icon { background: rgba(251,246,242,0.10); color: var(--cobre); }
-.card-nfa h2 { color: var(--crema); font-size: 22px; }
-.card-nfa .desc { color: rgba(251,246,242,0.70); margin: 10px 0 20px; font-size: 13px; }
-.card-nfa .btn-primary { align-self: flex-start; }
+/* Desktop form fields */
+.d-wl-fields, .d-guia-fields { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.d-wl-fields.expanded, .d-guia-fields.expanded { display: flex; }
+.d-input { width: 100%; padding: 12px 18px; border-radius: 999px; border: 1px solid rgba(46,26,16,0.12); background: #fff; color: var(--espresso); font-family: var(--font-sans); font-size: 14px; font-weight: 300; outline: none; transition: border-color .3s; }
+.d-input:focus { border-color: var(--cobre); }
+.d-input::placeholder { color: rgba(46,26,16,0.40); }
+.d-err  { font-size: 12px; color: #c0392b; margin-top: 6px; }
+.d-ok   { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--cobre-deep); margin-top: 8px; }
 
-/* ============================================================
-   2. RETO 7 DÍAS
-   ============================================================ */
-.card-reto {
-  background: var(--crema);
-  border: 1px solid var(--rosa-arena);
-}
+/* Blog card desktop */
+.d-card-blog-link { text-decoration: none; color: inherit; }
+.d-card-blog { background: #fff; padding: 20px 24px; border: 1px solid rgba(46,26,16,0.06); display: flex; align-items: center; gap: 18px; }
+.d-card-blog .d-blog-icon { width: 46px; height: 46px; border-radius: 14px; flex: 0 0 auto; background: rgba(196,133,90,0.10); display: grid; place-items: center; color: var(--cobre); }
+.d-card-blog .d-blog-icon svg { width: 20px; height: 20px; }
+.d-card-blog .d-blog-body { flex: 1; min-width: 0; }
+.d-card-blog .d-label { margin-bottom: 4px; display: block; text-transform: uppercase; }
+.d-card-blog h3 { font-family: var(--font-serif); font-size: 17px; font-weight: 500; color: var(--espresso); line-height: 1.25; }
+.d-blog-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--cobre); font-size: 12px; font-weight: 400; transition: gap .25s ease, color .25s ease; }
+.d-card-blog-link:hover .d-blog-cta { gap: 10px; color: var(--cobre-deep); }
+.d-chev { width: 30px; height: 30px; border-radius: 50%; background: var(--crema); border: 1px solid var(--rosa-arena); display: grid; place-items: center; color: var(--cobre); flex: 0 0 auto; transition: background .25s ease, color .25s ease, transform .25s ease; }
+.d-chev svg { width: 13px; height: 13px; }
+.d-card-blog-link:hover .d-chev { background: var(--cobre); color: var(--crema); transform: translateX(2px); }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 6px 14px;
-  background: rgba(166,176,160,0.16);
-  border: 1px solid rgba(166,176,160,0.45);
-  border-radius: 999px;
-  color: #5e6b58;
-  font-size: 10px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
+/* Guía card desktop */
+.d-card-guia { background: var(--nude); }
+.d-email-form { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
+.d-email-form .d-input { flex: 1; min-width: 0; }
+.d-email-form .d-btn { flex: 0 0 auto; white-space: nowrap; }
 
-.pulse-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--salvia);
-  position: relative;
-  flex-shrink: 0;
-}
-.pulse-dot::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: var(--salvia);
-  opacity: 0.5;
-  animation: pulse 2s ease-out infinite;
-}
-@keyframes pulse {
-  0%   { transform: scale(0.6); opacity: 0.6; }
-  70%  { transform: scale(2.2); opacity: 0; }
-  100% { transform: scale(2.2); opacity: 0; }
-}
+/* Mini-footer desktop */
+.d-foot { margin-top: 20px; text-align: center; padding-top: 24px; border-top: 1px solid rgba(46,26,16,0.08); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--topo); }
+.d-foot .verse { font-family: var(--font-serif); font-style: italic; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--topo); margin-bottom: 14px; display: block; }
 
-.card-reto h2 { font-style: italic; font-weight: 400; }
-.card-reto h2 .div { color: var(--cobre); font-style: normal; margin: 0 6px; }
-
-/* Waitlist form */
-.wl-fields {
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.wl-fields.expanded { display: flex; }
-.wl-input, .guia-input {
-  width: 100%;
-  padding: 12px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(46,26,16,0.12);
-  background: #fff;
-  color: var(--espresso);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 300;
-  outline: none;
-  transition: border-color .3s;
-}
-.wl-input:focus, .guia-input:focus { border-color: var(--cobre); }
-.wl-error { font-size: 12px; color: #c0392b; margin-top: 6px; }
-.wl-success {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 14px;
-  color: var(--cobre-deep);
-  margin-top: 8px;
-}
-
-/* ============================================================
-   3. Blog — small white card
-   ============================================================ */
-.card-blog-link { text-decoration: none; color: inherit; }
-
-.card-blog {
-  background: #fff;
-  padding: 20px 24px;
-  border: 1px solid rgba(46,26,16,0.06);
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.card-blog .blog-icon {
-  width: 46px; height: 46px;
-  border-radius: 14px;
-  flex: 0 0 auto;
-  background: rgba(196,133,90,0.10);
-  display: grid; place-items: center;
-  color: var(--cobre);
-}
-.card-blog .blog-icon svg { width: 20px; height: 20px; }
-.card-blog .blog-body { flex: 1; min-width: 0; }
-.card-blog .label {
-  margin-bottom: 4px;
-  display: block;
-  color: var(--topo);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-.card-blog h3 {
-  font-family: var(--font-serif);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--espresso);
-  line-height: 1.25;
-}
-.card-blog .blog-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  color: var(--cobre);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  transition: gap .25s ease, color .25s ease;
-}
-.card-blog-link:hover .blog-cta { gap: 10px; color: var(--cobre-deep); }
-
-.card-blog .chev {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  background: var(--crema);
-  border: 1px solid var(--rosa-arena);
-  display: grid; place-items: center;
-  color: var(--cobre);
-  flex: 0 0 auto;
-  transition: background .25s ease, color .25s ease, transform .25s ease;
-}
-.card-blog .chev svg { width: 13px; height: 13px; }
-.card-blog-link:hover .chev {
-  background: var(--cobre);
-  color: var(--crema);
-  transform: translateX(2px);
-}
-
-/* ============================================================
-   4. Guía gratuita
-   ============================================================ */
-.card-guia { background: var(--nude); }
-
-.guia-fields {
-  display: none;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.guia-fields.expanded { display: flex; }
-
-/* ============================================================
-   Mini-footer
-   ============================================================ */
-.foot {
-  margin-top: 20px;
-  text-align: center;
-  padding-top: 24px;
-  border-top: 1px solid rgba(46,26,16,0.08);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--topo);
-}
-.foot .verse {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 13px;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--topo);
-  margin-bottom: 14px;
-  display: block;
-}
-
-/* ============================================================
-   Scroll reveals
-   ============================================================ */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .8s cubic-bezier(.22,.7,.25,1), transform .8s cubic-bezier(.22,.7,.25,1);
-  will-change: opacity, transform;
-}
+/* Desktop scroll reveals */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.22,.7,.25,1), transform .8s cubic-bezier(.22,.7,.25,1); will-change: opacity, transform; }
 .reveal.is-in { opacity: 1; transform: translateY(0); }
 
-/* ============================================================
-   Responsive — single column under 960px
-   ============================================================ */
-@media (max-width: 960px) {
-  .shell { grid-template-columns: 1fr; }
-
-  .hero-col {
-    position: relative;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    max-height: 90vh;
-  }
-  .hero-logo { font-size: 80px; }
-  .hero-text { bottom: 32px; padding: 0 24px; }
-
-  .cards-col { padding: 48px 20px 72px; }
-  .cards-col > * { max-width: 100%; }
-
-  .card-nfa { grid-template-columns: 1fr; }
-  .card-nfa .media { aspect-ratio: 16 / 9; min-height: 0; }
-  .card-nfa .media img { position: static; width: 100%; height: 200px; object-fit: cover; }
-}
-
-@media (max-width: 480px) {
-  .hero-logo { font-size: 68px; }
-  .cards-col { padding: 36px 16px 64px; gap: 18px; }
-  .card { padding: 24px; }
-  .card-nfa .body { padding: 22px; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .001ms !important;
-    transition-duration: .001ms !important;
-  }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
 </style>
 </head>
 <body>
 
-<main class="shell">
+<!-- ════════════════════════════════════════
+     MOBILE (< 960px)
+     ════════════════════════════════════════ -->
+<div class="mobile-view">
+<div class="phone-frame">
 
-  <!-- ============================================================
-       LEFT — Sticky hero photo
-       ============================================================ -->
-  <aside class="hero-col" aria-label="Anny Gómez">
-    <img class="hero-photo" src="./photos/hero.jpg" alt="Anny Gómez">
-    <div class="hero-mark">Anny · Gómez · 2026</div>
-    <div class="hero-text">
+  <section class="hero">
+    <img class="hero-img" src="./photos/hero.jpg" alt="Anny Gómez">
+    <div class="hero-grain"></div>
+    <div class="hero-gradient">
       <div class="hero-logo">Anny Gómez</div>
-      <div class="hero-tagline">
+      <div class="hero-tagline">Fé · Hábitos · Propósito</div>
+      <div class="hero-social">
+        <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="hero-social-btn" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="hero-social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="cards-area">
+
+    <div class="reto-card fade-in">
+      <div class="coming-badge"><span class="pulse-dot"></span>Próximamente</div>
+      <div class="reto-title">Reto · <em>7 Días para<br>Volver a Ti</em></div>
+      <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</div>
+      <div id="waitlist-form-wrap">
+        <div class="waitlist-fields" id="wl-fields">
+          <input id="wl-name"  type="text"  placeholder="Tu nombre" class="wl-input" autocomplete="name">
+          <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
+        </div>
+        <button type="button" class="btn btn-solid" id="wl-btn" onclick="handleWaitlist(this)">
+          <span class="wl-label">Avísame cuando esté listo</span>
+          <span class="wl-loading" style="display:none">Guardando…</span>
+        </button>
+        <div id="wl-error" class="wl-error"></div>
+      </div>
+      <div id="waitlist-success" style="display:none" class="wl-success">¡Listo! Te avisamos cuando el reto abra sus puertas.</div>
+    </div>
+
+    <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-card fade-in">
+      <div class="blog-top">
+        <div class="blog-icon-box"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+        <div>
+          <div class="blog-cat">Fé · Organización · Hábitos</div>
+          <div class="blog-title">Artículos que inspiran y transforman</div>
+        </div>
+      </div>
+      <div class="blog-bottom">
+        <div class="blog-desc">Encuentra recursos sobre Fé, organización y crecimiento personal. Escrito desde la experiencia real.</div>
+        <div class="blog-cta">Leer artículos →</div>
+      </div>
+    </a>
+
+    <div class="guia-card fade-in">
+      <div class="guia-card-top">
+        <div class="guia-icon-box"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h10v2H7zm0-3h10v2H7zm0 6h7v2H7z"/></svg></div>
+        <div class="guia-card-meta">
+          <div class="guia-eyebrow">Descarga gratis</div>
+          <div class="guia-title">Tu Guía para Organizar tu Vida con Propósito</div>
+        </div>
+      </div>
+      <div class="guia-card-bottom">
+        <div class="guia-desc">Recursos prácticos para organizar tu vida con Fé y disciplina. Sin costo, directo a tu correo.</div>
+        <div id="guia-form-wrap">
+          <div class="guia-form" id="guia-fields">
+            <input id="guia-name"  class="guia-input" type="text"  placeholder="Tu nombre" autocomplete="name">
+            <input id="guia-email" class="guia-input" type="email" placeholder="tu@correo.com" autocomplete="email">
+          </div>
+          <button type="button" class="btn btn-solid" onclick="handleLeads(this)">
+            <span class="guia-label">Quiero mi guía</span>
+            <span class="guia-loading" style="display:none">Enviando…</span>
+          </button>
+          <div id="guia-error" class="wl-error"></div>
+        </div>
+        <div id="guia-success" style="display:none" class="wl-success">¡Listo! Revisa tu correo — tu guía está en camino.</div>
+      </div>
+    </div>
+
+    <div class="nfa-card fade-in">
+      <img class="nfa-banner" src="./next%20fly%20banner.jpeg" alt="NextFlight Academy">
+      <div class="nfa-body">
+        <div class="nfa-title">Tu boleto para despegar tu marca y ganar online</div>
+        <div class="nfa-desc">Aprende a usar las redes sociales estratégicamente para maximizar tu presencia en línea. A través de módulos interactivos, construye y haz crecer tu comunidad.</div>
+        <a href="/next-fly-academy/" class="btn btn-solid">¡Quiero abordar! →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer fade-in" style="margin-top:32px">
+    <div class="footer-logo">Anny Gómez</div>
+    <div class="footer-divider"></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="footer-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="footer-icon" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg></a>
+      <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="footer-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+    </div>
+    <div class="footer-copy">© 2026 Anny Gómez · Todos los derechos reservados</div>
+  </footer>
+
+</div>
+</div><!-- /mobile-view -->
+
+
+<!-- ════════════════════════════════════════
+     DESKTOP (≥ 960px) — Claude Design 40/60
+     ════════════════════════════════════════ -->
+<main class="desktop-view">
+
+  <aside class="d-hero-col" aria-label="Anny Gómez">
+    <img class="d-hero-photo" src="./photos/hero.jpg" alt="Anny Gómez">
+    <div class="d-hero-mark">Anny · Gómez · 2026</div>
+    <div class="d-hero-text">
+      <div class="d-hero-logo">Anny Gómez</div>
+      <div class="d-hero-tagline">
         Fé <span class="dot"></span> Hábitos <span class="dot"></span> Propósito
       </div>
-      <nav class="hero-socials" aria-label="Redes sociales">
+      <nav class="d-hero-socials" aria-label="Redes sociales">
         <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
         </a>
         <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/>
-            <path d="M15 3c0 2.5 2 4.5 4.5 4.5"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M15 3c0 2.5 2 4.5 4.5 4.5"/></svg>
         </a>
         <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/>
-            <path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor"/></svg>
         </a>
       </nav>
     </div>
   </aside>
 
-  <!-- ============================================================
-       RIGHT — Scrollable cards
-       ============================================================ -->
-  <section class="cards-col">
+  <section class="d-cards-col">
 
-    <div class="greeting reveal">
+    <div class="d-greeting reveal">
       <div class="eyebrow">Bienvenida</div>
       <h1>Me alegra que estés <em>aquí.</em></h1>
       <p>Encuentra mis recursos, retos y reflexiones — pensados para ayudarte a vivir con propósito.</p>
     </div>
 
-    <!-- 1. NEXT FLY ACADEMY -->
-    <a href="/next-fly-academy/" class="card card-nfa reveal">
-      <div class="media">
+    <!-- NFA -->
+    <a href="/next-fly-academy/" class="d-card d-card-nfa reveal">
+      <div class="d-media">
         <img src="./next%20fly%20banner.jpeg" alt="Next Fly Academy">
         <span class="pill">Afiliado</span>
       </div>
-      <div class="body">
-        <div class="label">
-          <span class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L14.5 9H22L16 13.5L18.5 21L12 16.5L5.5 21L8 13.5L2 9H9.5Z"/>
-            </svg>
-          </span>
+      <div class="d-body">
+        <div class="d-label">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 9H22L16 13.5L18.5 21L12 16.5L5.5 21L8 13.5L2 9H9.5Z"/></svg></span>
           Recomendado
         </div>
         <h2>Next Fly Academy</h2>
-        <p class="desc">Aprende a construir tu negocio digital con las herramientas correctas — paso a paso, con propósito.</p>
-        <span class="btn btn-primary">Conoce más <span class="arrow">→</span></span>
+        <p class="d-desc">Aprende a construir tu negocio digital con las herramientas correctas — paso a paso, con propósito.</p>
+        <span class="d-btn d-btn-primary">Conoce más <span class="arrow">→</span></span>
       </div>
     </a>
 
-    <!-- 2. RETO 7 DÍAS -->
-    <article class="card card-reto reveal">
-      <div class="badge">
-        <span class="pulse-dot" aria-hidden="true"></span>
-        Próximamente
-      </div>
+    <!-- Reto -->
+    <article class="d-card d-card-reto reveal">
+      <div class="d-badge"><span class="d-pulse-dot"></span>Próximamente</div>
       <h2>Reto <span class="div">·</span> <em>7 Días para Volver a Ti</em></h2>
-      <p class="desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</p>
-
-      <div id="waitlist-form-wrap">
-        <div class="wl-fields" id="wl-fields">
-          <input id="wl-name"  type="text"  placeholder="Tu nombre" class="wl-input" autocomplete="name">
-          <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
+      <p class="d-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</p>
+      <div id="d-waitlist-form-wrap">
+        <div class="d-wl-fields" id="d-wl-fields">
+          <input id="d-wl-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
+          <input id="d-wl-email" type="email" placeholder="Tu correo" class="d-input" autocomplete="email">
         </div>
-        <button type="button" class="btn btn-primary" id="wl-btn" onclick="handleWaitlist(this)">
-          <span class="wl-label">Avísame cuando esté listo</span>
-          <span class="wl-loading" style="display:none">Guardando…</span>
+        <button type="button" class="d-btn d-btn-primary" onclick="dHandleWaitlist(this)">
+          <span class="d-wl-label">Avísame cuando esté listo</span>
+          <span class="d-wl-loading" style="display:none">Guardando…</span>
           <span class="arrow">→</span>
         </button>
-        <div id="wl-error" class="wl-error"></div>
+        <div id="d-wl-error" class="d-err"></div>
       </div>
-      <div id="waitlist-success" style="display:none" class="wl-success">
-        ¡Listo! Te avisamos cuando el reto abra sus puertas.
-      </div>
+      <div id="d-waitlist-success" style="display:none" class="d-ok">¡Listo! Te avisamos cuando el reto abra sus puertas.</div>
     </article>
 
-    <!-- 3. BLOG -->
-    <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="card-blog-link reveal">
-      <article class="card card-blog">
-        <div class="blog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.5 3.5c-4 0-9 1-12 5s-3 8-3 12"/>
-            <path d="M20.5 3.5C18 9 13 14 5.5 17"/>
-            <path d="M11 11h6"/><path d="M8 14h6"/>
-          </svg>
-        </div>
-        <div class="blog-body">
-          <span class="label">Blog · Fé · Hábitos</span>
+    <!-- Blog -->
+    <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-card-blog-link reveal">
+      <article class="d-card d-card-blog">
+        <div class="d-blog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 3.5c-4 0-9 1-12 5s-3 8-3 12"/><path d="M20.5 3.5C18 9 13 14 5.5 17"/><path d="M11 11h6"/><path d="M8 14h6"/></svg></div>
+        <div class="d-blog-body">
+          <span class="d-label">Blog · Fé · Hábitos</span>
           <h3>Artículos · Reflexiones y Recursos</h3>
-          <span class="blog-cta">Leer artículos <span class="arrow">→</span></span>
+          <span class="d-blog-cta">Leer artículos <span class="arrow">→</span></span>
         </div>
-        <span class="chev" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 6L15 12L9 18"/>
-          </svg>
-        </span>
+        <span class="d-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></span>
       </article>
     </a>
 
-    <!-- 4. GUÍA GRATUITA -->
-    <article class="card card-guia reveal">
-      <div class="label">
-        <span class="icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/>
-          </svg>
-        </span>
+    <!-- Guía -->
+    <article class="d-card d-card-guia reveal">
+      <div class="d-label">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg></span>
         Gratis
       </div>
       <h2>Guía Gratuita · Descarga</h2>
-      <p class="desc">Recursos prácticos para organizar tu vida con propósito y Fé — descarga inmediata.</p>
-
-      <div id="guia-form-wrap">
-        <div class="guia-fields" id="guia-fields">
-          <input id="guia-name"  type="text"  placeholder="Tu nombre" class="guia-input" autocomplete="name">
-          <input id="guia-email" type="email" placeholder="tu@correo.com" class="guia-input" autocomplete="email">
+      <p class="d-desc">Recursos prácticos para organizar tu vida con propósito y Fé — descarga inmediata.</p>
+      <div id="d-guia-form-wrap">
+        <div class="d-guia-fields" id="d-guia-fields">
+          <input id="d-guia-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
+          <input id="d-guia-email" type="email" placeholder="tu@correo.com" class="d-input" autocomplete="email">
         </div>
-        <button type="button" class="btn btn-primary" onclick="handleLeads(this)">
-          <span class="guia-label">Quiero mi guía</span>
-          <span class="guia-loading" style="display:none">Enviando…</span>
+        <button type="button" class="d-btn d-btn-primary" onclick="dHandleLeads(this)">
+          <span class="d-guia-label">Quiero mi guía</span>
+          <span class="d-guia-loading" style="display:none">Enviando…</span>
           <span class="arrow">→</span>
         </button>
-        <div id="guia-error" class="wl-error"></div>
+        <div id="d-guia-error" class="d-err"></div>
       </div>
-      <div id="guia-success" style="display:none" class="wl-success">
-        ¡Listo! Revisa tu correo — tu guía está en camino.
-      </div>
+      <div id="d-guia-success" style="display:none" class="d-ok">¡Listo! Revisa tu correo — tu guía está en camino.</div>
     </article>
 
-    <!-- Mini-footer -->
-    <footer class="foot reveal">
+    <footer class="d-foot reveal">
       <span class="verse">"Todo lo puedo en Cristo que me fortalece."</span>
       © 2026 Anny Gómez · Todos los derechos reservados
     </footer>
@@ -774,101 +646,107 @@ body { min-height: 100vh; }
 </main>
 
 <script>
-(function () {
-  'use strict';
+document.addEventListener('touchstart', function(){}, { passive: true });
 
-  // Scroll reveals
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
-  const inVP = (el) => { const r = el.getBoundingClientRect(); return r.top < window.innerHeight * 0.93 && r.bottom > 0; };
-  const trigger = (el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; el.classList.add('is-in'); };
+/* ── MOBILE: scroll animations ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  reveals.forEach((el, i) => { if (inVP(el)) trigger(el, i); });
+document.querySelectorAll('.hero-social-btn, .footer-icon').forEach(btn => {
+  btn.addEventListener('click', function () {
+    this.classList.remove('tapped'); void this.offsetWidth; this.classList.add('tapped');
+    this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
+  });
+});
 
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { trigger(e.target, reveals.indexOf(e.target)); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    reveals.forEach((el) => { if (!el.classList.contains('is-in')) io.observe(el); });
-  } else {
-    reveals.forEach((el, i) => trigger(el, i));
-  }
-
-  setTimeout(() => reveals.forEach((el, i) => { if (!el.classList.contains('is-in')) trigger(el, i); }), 600);
-
-  document.addEventListener('touchstart', function(){}, { passive: true });
-})();
-
-// ---- Guía gratuita ----
+/* ── MOBILE: forms ── */
 function handleLeads(btn) {
   const fields = document.getElementById('guia-fields');
   if (!fields.classList.contains('expanded')) {
     fields.classList.add('expanded');
-    btn.querySelector('.guia-label').textContent = 'Enviar';
+    btn.querySelector('.guia-label').textContent = 'Enviar →';
     setTimeout(() => document.getElementById('guia-name').focus(), 50);
     return;
   }
-  submitLeads(btn);
+  submitForm(btn, { nameId:'guia-name', emailId:'guia-email', errorId:'guia-error', wrapId:'guia-form-wrap', successId:'guia-success', labelClass:'guia-label', loadingClass:'guia-loading', endpoint:'/api/leads' });
 }
-
-async function submitLeads(btn) {
-  const name  = document.getElementById('guia-name').value.trim();
-  const email = document.getElementById('guia-email').value.trim();
-  const error = document.getElementById('guia-error');
-  error.textContent = '';
-  if (!name || !email) { error.textContent = 'Por favor completa tu nombre y correo.'; return; }
-  btn.disabled = true;
-  btn.querySelector('.guia-label').style.display   = 'none';
-  btn.querySelector('.guia-loading').style.display = 'inline';
-  try {
-    const res  = await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email }) });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById('guia-form-wrap').style.display = 'none';
-      document.getElementById('guia-success').style.display   = 'block';
-    } else { throw new Error(); }
-  } catch {
-    error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
-    btn.disabled = false;
-    btn.querySelector('.guia-label').style.display   = 'inline';
-    btn.querySelector('.guia-loading').style.display = 'none';
-  }
-}
-
-// ---- Reto waitlist ----
 function handleWaitlist(btn) {
   const fields = document.getElementById('wl-fields');
   if (!fields.classList.contains('expanded')) {
     fields.classList.add('expanded');
-    btn.querySelector('.wl-label').textContent = 'Enviar';
+    btn.querySelector('.wl-label').textContent = 'Enviar →';
     setTimeout(() => document.getElementById('wl-name').focus(), 50);
     return;
   }
-  submitWaitlist(btn);
+  submitForm(btn, { nameId:'wl-name', emailId:'wl-email', errorId:'wl-error', wrapId:'waitlist-form-wrap', successId:'waitlist-success', labelClass:'wl-label', loadingClass:'wl-loading', endpoint:'/api/waitlist' });
 }
 
-async function submitWaitlist(btn) {
-  const name  = document.getElementById('wl-name').value.trim();
-  const email = document.getElementById('wl-email').value.trim();
-  const error = document.getElementById('wl-error');
+/* ── DESKTOP: scroll reveals ── */
+(function () {
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  const inVP = (el) => { const r = el.getBoundingClientRect(); return r.top < window.innerHeight * 0.93 && r.bottom > 0; };
+  const trigger = (el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; el.classList.add('is-in'); };
+  reveals.forEach((el, i) => { if (inVP(el)) trigger(el, i); });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { trigger(e.target, reveals.indexOf(e.target)); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    reveals.forEach((el) => { if (!el.classList.contains('is-in')) io.observe(el); });
+  } else { reveals.forEach((el, i) => trigger(el, i)); }
+  setTimeout(() => reveals.forEach((el, i) => { if (!el.classList.contains('is-in')) trigger(el, i); }), 600);
+})();
+
+/* ── DESKTOP: forms ── */
+function dHandleLeads(btn) {
+  const fields = document.getElementById('d-guia-fields');
+  if (!fields.classList.contains('expanded')) {
+    fields.classList.add('expanded');
+    btn.querySelector('.d-guia-label').textContent = 'Enviar';
+    setTimeout(() => document.getElementById('d-guia-name').focus(), 50);
+    return;
+  }
+  submitForm(btn, { nameId:'d-guia-name', emailId:'d-guia-email', errorId:'d-guia-error', wrapId:'d-guia-form-wrap', successId:'d-guia-success', labelClass:'d-guia-label', loadingClass:'d-guia-loading', endpoint:'/api/leads' });
+}
+function dHandleWaitlist(btn) {
+  const fields = document.getElementById('d-wl-fields');
+  if (!fields.classList.contains('expanded')) {
+    fields.classList.add('expanded');
+    btn.querySelector('.d-wl-label').textContent = 'Enviar';
+    setTimeout(() => document.getElementById('d-wl-name').focus(), 50);
+    return;
+  }
+  submitForm(btn, { nameId:'d-wl-name', emailId:'d-wl-email', errorId:'d-wl-error', wrapId:'d-waitlist-form-wrap', successId:'d-waitlist-success', labelClass:'d-wl-label', loadingClass:'d-wl-loading', endpoint:'/api/waitlist' });
+}
+
+/* ── Shared submit ── */
+async function submitForm(btn, cfg) {
+  const name  = document.getElementById(cfg.nameId).value.trim();
+  const email = document.getElementById(cfg.emailId).value.trim();
+  const error = document.getElementById(cfg.errorId);
   error.textContent = '';
   if (!name || !email) { error.textContent = 'Por favor completa tu nombre y correo.'; return; }
   btn.disabled = true;
-  btn.querySelector('.wl-label').style.display   = 'none';
-  btn.querySelector('.wl-loading').style.display = 'inline';
+  btn.querySelector('.' + cfg.labelClass).style.display   = 'none';
+  btn.querySelector('.' + cfg.loadingClass).style.display = 'inline';
   try {
-    const res  = await fetch('/api/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email }) });
+    const res  = await fetch(cfg.endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,email}) });
     const data = await res.json();
     if (data.success || data.alreadyRegistered) {
-      document.getElementById('waitlist-form-wrap').style.display = 'none';
-      document.getElementById('waitlist-success').style.display   = 'block';
+      document.getElementById(cfg.wrapId).style.display    = 'none';
+      document.getElementById(cfg.successId).style.display = 'block';
     } else { throw new Error(); }
   } catch {
     error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
     btn.disabled = false;
-    btn.querySelector('.wl-label').style.display   = 'inline';
-    btn.querySelector('.wl-loading').style.display = 'none';
+    btn.querySelector('.' + cfg.labelClass).style.display   = 'inline';
+    btn.querySelector('.' + cfg.loadingClass).style.display = 'none';
   }
 }
 </script>
