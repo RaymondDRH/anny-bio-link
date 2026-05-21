@@ -213,16 +213,19 @@ html { scroll-behavior: smooth; }
 .wl-success { font-size: 13px; color: var(--topo); font-weight: 400; line-height: 1.6; padding: 14px; background: var(--crema); border-radius: 12px; border: 1px solid var(--rosa-arena); text-align: center; }
 
 /* Blog card */
-.blog-card { background: white; border-radius: 20px; overflow: hidden; text-decoration: none; display: block; box-shadow: 0 4px 24px rgba(46,26,16,0.09); border-top: 3px solid var(--salvia); transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.blog-card { background: var(--crema); border-radius: 20px; overflow: hidden; text-decoration: none; display: flex; box-shadow: 0 4px 24px rgba(46,26,16,0.09); border: 1px solid rgba(196,133,90,0.10); transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; min-height: 170px; }
 @media (hover: hover) and (pointer: fine) { .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(46,26,16,0.13); } }
-.blog-top { background: #EEF0EC; padding: 22px 22px 18px; display: flex; align-items: flex-start; gap: 14px; }
-.blog-icon-box { width: 44px; height: 44px; background: var(--salvia); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.blog-icon-box svg { width: 20px; height: 20px; fill: var(--crema); }
-.blog-cat   { font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--salvia); margin-bottom: 5px; }
-.blog-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--espresso); line-height: 1.3; }
-.blog-bottom { padding: 14px 22px 20px; border-top: 1px solid rgba(166,176,160,0.3); }
-.blog-desc  { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.65; margin-bottom: 12px; }
-.blog-cta   { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--salvia); }
+.blog-spine { width: 38px; flex-shrink: 0; background: var(--salvia); display: flex; align-items: center; justify-content: center; position: relative; }
+.blog-spine-text { font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; color: var(--crema); writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 0.05em; white-space: nowrap; }
+.blog-spine-dot { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: rgba(251,246,242,0.5); }
+.blog-content { flex: 1; padding: 18px 18px 16px; display: flex; flex-direction: column; justify-content: space-between; }
+.blog-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.blog-vol { font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--topo); }
+.blog-year { font-size: 9px; letter-spacing: 0.20em; color: var(--topo); }
+.blog-star { font-size: 14px; color: var(--salvia); margin-bottom: 10px; display: block; }
+.blog-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 500; color: var(--espresso); line-height: 1.3; margin-bottom: 8px; }
+.blog-desc  { font-size: 12px; font-style: italic; color: var(--topo); line-height: 1.55; margin-bottom: 14px; }
+.blog-cta   { font-size: 9.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobre); }
 
 /* Guía card */
 .guia-card { background: #F2E8E1; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.08); }
@@ -468,15 +471,20 @@ html { scroll-behavior: smooth; }
     </div>
 
     <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-card fade-in">
-      <div class="blog-top">
-        <div class="blog-icon-box"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
-        <div>
-          <div class="blog-cat">Fé · Organización · Hábitos</div>
-          <div class="blog-title">Artículos que inspiran y transforman</div>
-        </div>
+      <div class="blog-spine">
+        <span class="blog-spine-text">Mi Blog</span>
+        <span class="blog-spine-dot"></span>
       </div>
-      <div class="blog-bottom">
-        <div class="blog-desc">Encuentra recursos sobre Fé, organización y crecimiento personal. Escrito desde la experiencia real.</div>
+      <div class="blog-content">
+        <div>
+          <div class="blog-meta">
+            <span class="blog-vol">Vol. 01</span>
+            <span class="blog-year">2026</span>
+          </div>
+          <span class="blog-star">✳</span>
+          <div class="blog-title">Artículos · Reflexiones y Recursos</div>
+          <div class="blog-desc">Pensamientos sobre fe, hábitos y propósito.</div>
+        </div>
         <div class="blog-cta">Leer artículos →</div>
       </div>
     </a>
