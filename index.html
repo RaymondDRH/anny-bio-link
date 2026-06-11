@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Anny Gómez — Fé · Hábitos · Propósito</title>
+<title>Anny Gómez — Fe · Hábitos · Propósito</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta name="description" content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal. Recursos, guías y comunidad para mujeres que quieren vivir con propósito.">
+<meta name="description" content="Creadora de contenido enfocada en Fe, hábitos y crecimiento personal. Recursos, guías y comunidad para mujeres que quieren vivir con propósito.">
 <meta property="og:type"         content="website">
 <meta property="og:url"          content="https://annygomez.com/">
-<meta property="og:title"        content="Anny Gómez — Fé · Hábitos · Propósito">
-<meta property="og:description"  content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal.">
+<meta property="og:title"        content="Anny Gómez — Fe · Hábitos · Propósito">
+<meta property="og:description"  content="Creadora de contenido enfocada en Fe, hábitos y crecimiento personal.">
 <meta property="og:image"        content="https://annygomez.com/photos/hero.jpg">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale"       content="es_ES">
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Anny Gómez — Fé · Hábitos · Propósito">
-<meta name="twitter:description" content="Creadora de contenido enfocada en Fé, hábitos y crecimiento personal.">
+<meta name="twitter:title"       content="Anny Gómez — Fe · Hábitos · Propósito">
+<meta name="twitter:description" content="Creadora de contenido enfocada en Fe, hábitos y crecimiento personal.">
 <meta name="twitter:image"       content="https://annygomez.com/photos/hero.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -212,15 +212,28 @@ html { scroll-behavior: smooth; }
 .wl-error  { font-size: 12px; color: #b94a4a; margin-top: 8px; min-height: 16px; }
 .wl-success { font-size: 13px; color: var(--topo); font-weight: 400; line-height: 1.6; padding: 14px; background: var(--crema); border-radius: 12px; border: 1px solid var(--rosa-arena); text-align: center; }
 
-/* Blog card — V3 Script Watermark */
-.blog-card { display: block; text-decoration: none; color: inherit; position: relative; background: var(--salvia); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -22px rgba(46,26,16,0.22); min-height: 260px; transition: transform 0.22s, box-shadow 0.22s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-@media (hover: hover) and (pointer: fine) { .blog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px -18px rgba(46,26,16,0.28); } }
+/* Blog card — unified with subscribe */
+.blog-card { display: block; position: relative; background: var(--salvia); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -22px rgba(46,26,16,0.22); }
 .blog-watermark { position: absolute; top: 10px; left: 6px; right: 0; font-family: 'Alex Brush', cursive; font-size: 130px; line-height: 1; color: rgba(251,246,242,0.45); pointer-events: none; }
-.blog-page { position: relative; padding: 106px 26px 26px; }
+.blog-page { position: relative; padding: 106px 26px 22px; }
 .blog-eyebrow { font-size: 10.5px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(251,246,242,0.75); margin-bottom: 12px; }
 .blog-title { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; line-height: 1.2; color: #FBF6F2; letter-spacing: -0.01em; margin: 0; }
-.blog-cta { margin-top: 22px; display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding-bottom: 6px; border-bottom: 1px solid rgba(251,246,242,0.6); color: #FBF6F2; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; }
-.blog-cta-arrow { font-size: 16px; line-height: 1; }
+.blog-cta { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(46,26,16,0.18); border-radius: 10px; color: #FBF6F2; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background .2s; -webkit-tap-highlight-color: transparent; }
+.blog-cta:hover { background: rgba(46,26,16,0.30); }
+.blog-cta-arrow { font-size: 14px; line-height: 1; }
+.blog-sub-sep { height: 1px; background: rgba(251,246,242,0.25); margin: 0 26px; }
+.blog-sub-section { position: relative; padding: 18px 26px 24px; }
+.blog-sub-eyebrow { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(251,246,242,0.75); margin-bottom: 12px; }
+.blog-subscribe-form { display: flex; flex-direction: column; gap: 10px; }
+.blog-sub-btn { width: 100%; justify-content: center; }
+.blog-sub-input { flex: 1; min-width: 0; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(251,246,242,0.3); background: rgba(251,246,242,0.92); font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--espresso); outline: none; transition: border-color .2s; }
+.blog-sub-input:focus { border-color: var(--crema); }
+.blog-sub-input::placeholder { color: rgba(46,26,16,0.40); }
+.blog-sub-btn { flex: 0 0 auto; padding: 11px 18px; border-radius: 12px; border: none; background: rgba(46,26,16,0.55); color: #FBF6F2; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 400; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; }
+.blog-sub-btn:active { transform: scale(0.97); }
+.blog-sub-btn:hover { background: rgba(46,26,16,0.72); }
+.blog-sub-error { font-size: 11.5px; color: rgba(251,246,242,0.85); margin-top: 6px; min-height: 14px; }
+.blog-sub-ok { font-size: 13px; color: rgba(251,246,242,0.90); margin-top: 4px; font-style: italic; font-family: 'Playfair Display', serif; }
 
 /* Guía card */
 .guia-card { background: #F2E8E1; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.08); }
@@ -383,19 +396,32 @@ html { scroll-behavior: smooth; }
 .d-err  { font-size: 12px; color: #c0392b; margin-top: 6px; }
 .d-ok   { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--cobre-deep); margin-top: 8px; }
 
-/* Blog card desktop */
-.d-card-blog-link { text-decoration: none; color: inherit; }
-.d-card-blog { background: var(--salvia); padding: 22px 26px; border: 1px solid rgba(166,176,160,0.30); display: flex; align-items: center; gap: 20px; }
-.d-card-blog .d-blog-icon { width: 48px; height: 48px; border-radius: 14px; flex: 0 0 auto; background: rgba(46,26,16,0.18); display: grid; place-items: center; color: #fff; }
-.d-card-blog .d-blog-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
-.d-card-blog .d-blog-body { flex: 1; min-width: 0; }
-.d-card-blog .d-label { margin-bottom: 6px; display: block; text-transform: uppercase; font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.70); }
-.d-card-blog h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 500; color: #fff; line-height: 1.25; margin-bottom: 10px; }
-.d-blog-cta { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(46,26,16,0.18); border-radius: 8px; color: #fff; font-size: 11.5px; font-weight: 400; letter-spacing: 0.06em; transition: gap .25s ease, background .25s ease; }
-.d-card-blog-link:hover .d-blog-cta { gap: 12px; background: rgba(46,26,16,0.28); }
-.d-chev { width: 32px; height: 32px; border-radius: 50%; background: rgba(46,26,16,0.18); border: none; display: grid; place-items: center; color: #fff; flex: 0 0 auto; transition: background .25s ease, transform .25s ease; }
+
+/* Blog card desktop — unified */
+.d-card-blog { background: var(--salvia); border: 1px solid rgba(166,176,160,0.30); padding: 0; overflow: hidden; }
+.d-card-blog:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 24px 46px -22px rgba(46,26,16,0.26); }
+.d-blog-top { display: flex; align-items: center; gap: 20px; padding: 22px 26px 20px; }
+.d-blog-icon { width: 48px; height: 48px; border-radius: 14px; flex: 0 0 auto; background: rgba(46,26,16,0.18); display: grid; place-items: center; color: #fff; }
+.d-blog-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.d-blog-body { flex: 1; min-width: 0; }
+.d-blog-body .d-label { margin-bottom: 6px; display: block; text-transform: uppercase; font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.70); }
+.d-blog-body h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 500; color: #fff; line-height: 1.25; margin-bottom: 10px; }
+.d-blog-cta { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(46,26,16,0.18); border-radius: 8px; color: #fff; font-size: 11.5px; font-weight: 400; letter-spacing: 0.06em; text-decoration: none; transition: gap .25s ease, background .25s ease; }
+.d-blog-cta:hover { gap: 12px; background: rgba(46,26,16,0.28); }
+.d-chev { width: 32px; height: 32px; border-radius: 50%; background: rgba(46,26,16,0.18); display: grid; place-items: center; color: #fff; flex: 0 0 auto; text-decoration: none; transition: background .25s ease, transform .25s ease; }
 .d-chev svg { width: 13px; height: 13px; }
-.d-card-blog-link:hover .d-chev { background: rgba(46,26,16,0.32); transform: translateX(3px); }
+.d-chev:hover { background: rgba(46,26,16,0.32); transform: translateX(3px); }
+.d-blog-sub-sep { height: 1px; background: rgba(251,246,242,0.20); margin: 0 26px; }
+.d-blog-sub-bottom { padding: 18px 26px 22px; }
+.d-blog-sub-bottom strong { display: block; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 12px; font-weight: 400; }
+.d-blog-sub-form { display: flex; gap: 8px; }
+.d-blog-sub-form .d-input { flex: 1; min-width: 0; background: rgba(251,246,242,0.92); border-color: rgba(251,246,242,0.3); font-size: 13px; padding: 10px 16px; }
+.d-blog-sub-form .d-input::placeholder { color: rgba(46,26,16,0.40); }
+.d-blog-sub-form .d-input:focus { border-color: var(--crema); }
+.d-btn-blog-sub { flex: 0 0 auto; background: rgba(46,26,16,0.55); color: #FBF6F2; padding: 10px 20px; border-radius: 12px; border: none; font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; font-weight: 400; }
+.d-btn-blog-sub:hover { background: rgba(46,26,16,0.72); transform: translateY(-1px); }
+.d-blog-sub-err { font-size: 11.5px; color: rgba(251,246,242,0.85); margin-top: 6px; }
+.d-blog-sub-ok { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: rgba(251,246,242,0.90); }
 
 /* Guía card desktop */
 .d-card-guia { background: var(--nude); }
@@ -430,7 +456,7 @@ html { scroll-behavior: smooth; }
     <div class="hero-grain"></div>
     <div class="hero-gradient">
       <div class="hero-logo">Anny Gómez</div>
-      <div class="hero-tagline">Fé · Hábitos · Propósito</div>
+      <div class="hero-tagline">Fe · Hábitos · Propósito</div>
       <div class="hero-social">
         <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -450,7 +476,7 @@ html { scroll-behavior: smooth; }
     <div class="reto-card fade-in">
       <div class="coming-badge"><span class="pulse-dot"></span>Próximamente</div>
       <div class="reto-title">Reto · <em>7 Días para<br>Volver a Ti</em></div>
-      <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</div>
+      <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fe y disciplina como guía.</div>
       <div id="waitlist-form-wrap">
         <div class="waitlist-fields" id="wl-fields">
           <input id="wl-name"  type="text"  placeholder="Tu nombre" class="wl-input" autocomplete="name">
@@ -465,14 +491,29 @@ html { scroll-behavior: smooth; }
       <div id="waitlist-success" style="display:none" class="wl-success">¡Listo! Te avisamos cuando el reto abra sus puertas.</div>
     </div>
 
-    <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-card fade-in">
+    <div class="blog-card fade-in">
       <div class="blog-watermark">Blog</div>
       <div class="blog-page">
         <div class="blog-eyebrow">Mi Blog</div>
         <h3 class="blog-title">Artículos · Reflexiones y Recursos</h3>
-        <div class="blog-cta">Leer artículos <span class="blog-cta-arrow">→</span></div>
+        <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-cta">Leer artículos <span class="blog-cta-arrow">→</span></a>
       </div>
-    </a>
+      <div class="blog-sub-sep"></div>
+      <div class="blog-sub-section">
+        <div class="blog-sub-eyebrow">Recibe cada artículo en tu correo</div>
+        <div id="blog-sub-wrap">
+          <div class="blog-subscribe-form">
+            <input id="blog-sub-email" type="email" placeholder="tu@correo.com" class="blog-sub-input" autocomplete="email">
+            <button type="button" class="blog-sub-btn" onclick="handleBlogSubscribe(this)">
+              <span class="blog-sub-label">Quiero recibirlos</span>
+              <span class="blog-sub-loading" style="display:none">Enviando…</span>
+            </button>
+          </div>
+          <div id="blog-sub-error" class="blog-sub-error"></div>
+        </div>
+        <div id="blog-sub-ok" style="display:none" class="blog-sub-ok">¡Listo! Ya estás suscrita.</div>
+      </div>
+    </div>
 
     <div class="guia-card fade-in">
       <div class="guia-card-top">
@@ -483,7 +524,7 @@ html { scroll-behavior: smooth; }
         </div>
       </div>
       <div class="guia-card-bottom">
-        <div class="guia-desc">Recursos prácticos para organizar tu vida con Fé y disciplina. Sin costo, directo a tu correo.</div>
+        <div class="guia-desc">Recursos prácticos para organizar tu vida con Fe y disciplina. Sin costo, directo a tu correo.</div>
         <div id="guia-form-wrap">
           <div class="guia-form" id="guia-fields">
             <input id="guia-name"  class="guia-input" type="text"  placeholder="Tu nombre" autocomplete="name">
@@ -536,7 +577,7 @@ html { scroll-behavior: smooth; }
     <div class="d-hero-text">
       <div class="d-hero-logo">Anny Gómez</div>
       <div class="d-hero-tagline">
-        Fé <span class="dot"></span> Hábitos <span class="dot"></span> Propósito
+        Fe <span class="dot"></span> Hábitos <span class="dot"></span> Propósito
       </div>
       <nav class="d-hero-socials" aria-label="Redes sociales">
         <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" aria-label="Instagram">
@@ -564,7 +605,7 @@ html { scroll-behavior: smooth; }
     <article class="d-card d-card-reto reveal">
       <div class="d-badge"><span class="d-pulse-dot"></span>Próximamente</div>
       <h2>Reto <span class="div">·</span> <em>7 Días para Volver a Ti</em></h2>
-      <p class="d-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fé y disciplina como guía.</p>
+      <p class="d-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fe y disciplina como guía.</p>
       <div id="d-waitlist-form-wrap">
         <div class="d-wl-fields" id="d-wl-fields">
           <input id="d-wl-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
@@ -581,17 +622,32 @@ html { scroll-behavior: smooth; }
     </article>
 
     <!-- Blog -->
-    <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-card-blog-link reveal">
-      <article class="d-card d-card-blog">
+    <article class="d-card d-card-blog reveal">
+      <div class="d-blog-top">
         <div class="d-blog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 3.5c-4 0-9 1-12 5s-3 8-3 12"/><path d="M20.5 3.5C18 9 13 14 5.5 17"/><path d="M11 11h6"/><path d="M8 14h6"/></svg></div>
         <div class="d-blog-body">
           <span class="d-label">Mi Blog</span>
           <h3>Artículos · Reflexiones y Recursos</h3>
-          <span class="d-blog-cta">Leer artículos <span class="arrow">→</span></span>
+          <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-blog-cta">Leer artículos <span class="arrow">→</span></a>
         </div>
-        <span class="d-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></span>
-      </article>
-    </a>
+        <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></a>
+      </div>
+      <div class="d-blog-sub-sep"></div>
+      <div class="d-blog-sub-bottom">
+        <strong>Recibe cada artículo en tu correo</strong>
+        <div id="d-blog-sub-wrap">
+          <div class="d-blog-sub-form">
+            <input id="d-blog-sub-email" type="email" placeholder="tu@correo.com" class="d-input" autocomplete="email">
+            <button type="button" class="d-btn-blog-sub" onclick="dHandleBlogSubscribe(this)">
+              <span class="d-blog-sub-label">Quiero recibirlos</span>
+              <span class="d-blog-sub-loading" style="display:none">Enviando…</span>
+            </button>
+          </div>
+          <div id="d-blog-sub-err" class="d-blog-sub-err"></div>
+        </div>
+        <div id="d-blog-sub-ok" style="display:none" class="d-blog-sub-ok">¡Listo! Ya estás suscrita.</div>
+      </div>
+    </article>
 
     <!-- Guía -->
     <article class="d-card d-card-guia reveal">
@@ -600,7 +656,7 @@ html { scroll-behavior: smooth; }
         Gratis
       </div>
       <h2>Guía Gratuita · Descarga</h2>
-      <p class="d-desc">Recursos prácticos para organizar tu vida con propósito y Fé — descarga inmediata.</p>
+      <p class="d-desc">Recursos prácticos para organizar tu vida con propósito y Fe — descarga inmediata.</p>
       <div id="d-guia-form-wrap">
         <div class="d-guia-fields" id="d-guia-fields">
           <input id="d-guia-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
@@ -715,6 +771,52 @@ function dHandleWaitlist(btn) {
     return;
   }
   submitForm(btn, { nameId:'d-wl-name', emailId:'d-wl-email', errorId:'d-wl-error', wrapId:'d-waitlist-form-wrap', successId:'d-waitlist-success', labelClass:'d-wl-label', loadingClass:'d-wl-loading', endpoint:'/api/waitlist' });
+}
+
+/* ── Blog subscribe ── */
+async function handleBlogSubscribe(btn) {
+  const email = document.getElementById('blog-sub-email').value.trim();
+  const error = document.getElementById('blog-sub-error');
+  error.textContent = '';
+  if (!email) { error.textContent = 'Por favor ingresa tu correo.'; return; }
+  btn.disabled = true;
+  btn.querySelector('.blog-sub-label').style.display  = 'none';
+  btn.querySelector('.blog-sub-loading').style.display = 'inline';
+  try {
+    const res  = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('blog-sub-wrap').style.display = 'none';
+      document.getElementById('blog-sub-ok').style.display   = 'block';
+    } else { throw new Error(data.error || ''); }
+  } catch(e) {
+    error.textContent = e.message || 'Hubo un error. Intenta de nuevo.';
+    btn.disabled = false;
+    btn.querySelector('.blog-sub-label').style.display  = 'inline';
+    btn.querySelector('.blog-sub-loading').style.display = 'none';
+  }
+}
+async function dHandleBlogSubscribe(btn) {
+  const email = document.getElementById('d-blog-sub-email').value.trim();
+  const error = document.getElementById('d-blog-sub-err');
+  error.textContent = '';
+  if (!email) { error.textContent = 'Por favor ingresa tu correo.'; return; }
+  btn.disabled = true;
+  btn.querySelector('.d-blog-sub-label').style.display  = 'none';
+  btn.querySelector('.d-blog-sub-loading').style.display = 'inline';
+  try {
+    const res  = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('d-blog-sub-wrap').style.display = 'none';
+      document.getElementById('d-blog-sub-ok').style.display   = 'block';
+    } else { throw new Error(data.error || ''); }
+  } catch(e) {
+    error.textContent = e.message || 'Hubo un error. Intenta de nuevo.';
+    btn.disabled = false;
+    btn.querySelector('.d-blog-sub-label').style.display  = 'inline';
+    btn.querySelector('.d-blog-sub-loading').style.display = 'none';
+  }
 }
 
 /* ── Shared submit ── */
