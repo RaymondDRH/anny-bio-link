@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: msg || 'Error al suscribirse' });
     }
 
-    sendWelcomeEmail(email.trim()).catch(err =>
+    await sendWelcomeEmail(email.trim()).catch(err =>
       console.error('[subscribe] Welcome email error:', err)
     );
 
