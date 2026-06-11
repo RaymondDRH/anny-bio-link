@@ -2,6 +2,7 @@ const crypto = require('crypto');
 
 const GHOST_KEY = process.env.GHOST_ADMIN_KEY;
 const GHOST_URL = 'https://blog.annygomez.com/ghost/api/admin';
+const RESEND_KEY = process.env.RESEND_API_KEY;
 
 function ghostToken() {
   const [id, secret] = GHOST_KEY.split(':');
@@ -12,6 +13,24 @@ function ghostToken() {
   return `${header}.${payload}.${sig}`;
 }
 
+const WELCOME_HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif;color:#2E1A10}.wrap{max-width:560px;margin:0 auto;background:#fff}.header{background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD}.logo{font-family:Georgia,serif;font-size:28px;color:#2E1A10;letter-spacing:0.04em}.tagline{font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px}.body{padding:40px 40px 32px}.greeting{font-size:22px;color:#2E1A10;margin:0 0 20px}p{font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px}.divider{border:none;border-top:1px solid #E8D9CD;margin:28px 0}.expect{background:#FBF6F2;border-radius:8px;padding:24px 28px;margin:24px 0}.expect h3{margin:0 0 14px;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:#8C6A58}.expect ul{margin:0;padding:0 0 0 18px}.expect li{font-size:14px;color:#4a3020;line-height:1.8;margin-bottom:4px}.cta-wrap{text-align:center;margin:32px 0 24px}.cta{display:inline-block;background:#C4855A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:4px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase}.footer{background:#FBF6F2;padding:24px 40px;text-align:center;border-top:1px solid #E8D9CD}.footer p{font-size:12px;color:#8C6A58;margin:0;line-height:1.6}.footer a{color:#8C6A58}</style></head><body><div class="wrap"><div class="header"><div class="logo">Anny G&oacute;mez</div><div class="tagline">Fe &middot; H&aacute;bitos &middot; Prop&oacute;sito</div></div><div class="body"><p class="greeting">&iexcl;Bienvenida a la comunidad!</p><p>Qu&eacute; alegr&iacute;a tenerte aqu&iacute;. Cada viernes vas a recibir una reflexi&oacute;n sobre Fe, h&aacute;bitos y prop&oacute;sito &mdash; pensada para mujeres que quieren crecer con intenci&oacute;n.</p><p>No es spam. No son listas de consejos vac&iacute;os. Es lo que vivo, aprendo y practico cada semana.</p><div class="expect"><h3>Qu&eacute; esperar</h3><ul><li>Una reflexi&oacute;n semanal cada viernes</li><li>Recursos pr&aacute;cticos de Fe y organizaci&oacute;n</li><li>Acceso anticipado a gu&iacute;as y retos</li></ul></div><p>Mientras tanto, te invito a leer el blog:</p><div class="cta-wrap"><a class="cta" href="https://blog.annygomez.com">Leer el blog</a></div><hr class="divider"><p style="font-size:13px;color:#8C6A58">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div><div class="footer"><p>Recibiste este correo porque te suscribiste en <a href="https://annygomez.com">annygomez.com</a><br>&copy; 2026 Anny G&oacute;mez &middot; Todos los derechos reservados</p></div></div></body></html>`;
+
+async function sendWelcomeEmail(email) {
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${RESEND_KEY}`,
+    },
+    body: JSON.stringify({
+      from: 'Anny Gómez <hola@annygomez.com>',
+      to: [email],
+      subject: '¡Bienvenida! Tu primera reflexión llega el viernes ✦',
+      html: WELCOME_HTML,
+    }),
+  });
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -19,8 +38,7 @@ module.exports = async (req, res) => {
   if (!email?.trim()) return res.status(400).json({ error: 'El correo es requerido' });
 
   try {
-    // Ghost envía el email de bienvenida nativo con send_email=true&email_type=welcome
-    const response = await fetch(`${GHOST_URL}/members/?send_email=true&email_type=welcome`, {
+    const response = await fetch(`${GHOST_URL}/members/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,6 +56,10 @@ module.exports = async (req, res) => {
       }
       return res.status(500).json({ error: msg || 'Error al suscribirse' });
     }
+
+    sendWelcomeEmail(email.trim()).catch(err =>
+      console.error('[subscribe] Welcome email error:', err)
+    );
 
     res.json({ success: true });
   } catch (err) {
