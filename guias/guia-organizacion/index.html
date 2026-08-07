@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organiza tu vida con intención — Anny Gómez</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --crema:      #FBF6F2;
+    --nude:       #E8D9CD;
+    --rosa:       #D4BEB0;
+    --cobre:      #C4855A;
+    --cobre-lt:   #D9A07A;
+    --espresso:   #2E1A10;
+    --topo:       #8C6A58;
+    --salvia:     #A6B0A0;
+  }
+
+  html { background: #e8e0d8; }
+  body { font-family: 'Poppins', sans-serif; color: var(--espresso); background: #e8e0d8; padding: 0 0 40px; }
+
+  /* ── SAVE BANNER ── */
+  .save-banner {
+    background: var(--espresso); color: var(--crema);
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .save-banner p { font-size: 13px; font-weight: 300; line-height: 1.5; flex: 1; }
+  .save-banner strong { color: var(--cobre-lt); font-weight: 500; }
+  .save-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--cobre); color: var(--crema); border: none; border-radius: 10px;
+    padding: 10px 20px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.06em; cursor: pointer; white-space: nowrap; text-decoration: none; transition: background 0.2s;
+  }
+  .save-btn:hover { background: #a96b43; }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    max-width: 760px; width: calc(100% - 32px); background: var(--crema);
+    margin: 0 auto 28px; position: relative; overflow: hidden;
+    box-shadow: 0 8px 48px rgba(46,26,16,0.18); border-radius: 4px;
+  }
+
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; }
+
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px 12px; border-bottom: 1px solid var(--rosa);
+  }
+  .page-header .logo { font-family: 'Alex Brush', cursive; font-size: 24px; color: var(--topo); letter-spacing: 0.02em; }
+  .page-header .tagline { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rosa); font-weight: 400; }
+
+  .page-footer {
+    padding: 11px 28px; border-top: 1px solid var(--rosa);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-footer span { font-size: 11px; color: var(--rosa); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .page-body { padding: 32px 44px 32px; }
+
+  .section-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cobre); font-weight: 500; margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 600; color: var(--espresso); line-height: 1.2; margin-bottom: 10px; }
+  .section-divider { width: 36px; height: 2px; background: var(--cobre); border-radius: 2px; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--cobre); padding: 14px 20px; margin: 20px 0; background: var(--nude); border-radius: 0 10px 10px 0; }
+  .pull-quote p { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--espresso); line-height: 1.7; }
+
+  .verse-box { background: linear-gradient(135deg, var(--nude) 0%, var(--crema) 100%); border: 1px solid var(--rosa); border-radius: 12px; padding: 16px 20px; margin-top: 22px; text-align: center; }
+  .verse-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: var(--espresso); line-height: 1.75; margin-bottom: 8px; }
+  .verse-ref { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cobre); font-weight: 500; }
+
+  .body-text { font-size: 15px; font-weight: 300; color: var(--topo); line-height: 1.85; margin-bottom: 18px; }
+  .body-text strong { color: var(--espresso); font-weight: 500; }
+
+  .insight-box { background: var(--espresso); border-radius: 12px; padding: 18px 22px; margin: 22px 0; }
+  .insight-box p { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--crema); line-height: 1.7; text-align: center; }
+
+  /* PORTADA */
+  .cover { background: linear-gradient(160deg, #FBF6F2 0%, #EFE3D6 45%, #E8D9CD 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 540px; text-align: center; padding: 60px 48px; }
+  .cover-orb-1 { width: 320px; height: 320px; border: 1px solid rgba(196,133,90,0.1); top: -80px; right: -80px; }
+  .cover-orb-2 { width: 200px; height: 200px; border: 1px solid rgba(166,176,160,0.15); bottom: 60px; left: -60px; }
+  .cover-orb-3 { width: 120px; height: 120px; border: 1px solid rgba(196,133,90,0.08); bottom: 100px; right: 40px; }
+  .cover-eyebrow { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--salvia); font-weight: 400; margin-bottom: 32px; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--espresso); line-height: 1.18; margin-bottom: 16px; max-width: 360px; }
+  .cover-subtitle { font-size: 16px; font-weight: 300; color: var(--topo); letter-spacing: 0.04em; margin-bottom: 40px; line-height: 1.65; }
+  .cover-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; width: 260px; }
+  .cover-divider-line { flex: 1; height: 1px; background: var(--cobre); opacity: 0.5; }
+  .cover-divider-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobre); }
+  .cover-author { font-family: 'Alex Brush', cursive; font-size: 52px; color: var(--cobre); margin-bottom: 10px; line-height: 1; }
+  .cover-tagline { font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--topo); font-weight: 400; margin-bottom: 52px; }
+  .cover-verse { max-width: 320px; border-top: 1px solid var(--rosa); padding-top: 22px; }
+  .cover-verse p { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: var(--topo); line-height: 1.75; margin-bottom: 8px; }
+  .cover-verse span { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cobre); font-weight: 500; }
+
+  .letter-drop-cap::first-letter { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--cobre); float: left; line-height: 0.78; margin-right: 8px; margin-top: 6px; }
+  .signature { font-family: 'Alex Brush', cursive; font-size: 36px; color: var(--cobre); margin-top: 20px; margin-bottom: 4px; }
+  .signature-title { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--topo); }
+
+  /* PASOS (estilo pillar) */
+  .step-card { border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; position: relative; overflow: hidden; background: rgba(196,133,90,0.08); }
+  .step-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; background: var(--cobre); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-number { width: 40px; height: 40px; border-radius: 50%; background: var(--cobre); color: var(--crema); font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 600; color: var(--espresso); }
+  .step-desc { font-size: 14.5px; font-weight: 300; color: var(--topo); line-height: 1.75; margin-bottom: 12px; }
+  .step-desc strong { color: var(--espresso); font-weight: 500; }
+  .step-key { font-size: 14px; font-style: italic; font-family: 'Playfair Display', serif; color: var(--espresso); padding: 10px 14px; background: rgba(255,255,255,0.55); border-radius: 8px; }
+
+  /* CHECKLIST */
+  .check-list { list-style: none; margin: 8px 0 4px; }
+  .check-list li { font-size: 15px; font-weight: 300; color: var(--topo); padding: 9px 0 9px 34px; position: relative; line-height: 1.5; border-bottom: 1px solid rgba(212,190,176,0.4); }
+  .check-list li:last-child { border-bottom: none; }
+  .check-box { position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--rosa); background: var(--crema); cursor: pointer; transition: all .2s; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-box.checked { background: var(--cobre); border-color: var(--cobre); }
+  .check-box.checked::after { content: '✓'; color: #fff; font-size: 13px; position: absolute; top: 1px; left: 5px; }
+  .check-list li strong { color: var(--espresso); font-weight: 500; }
+
+  .reto-box { background: linear-gradient(135deg, var(--nude) 0%, var(--crema) 100%); border: 1px solid var(--rosa); border-radius: 12px; padding: 20px 22px; margin: 18px 0; }
+  .reto-box .reto-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobre); font-weight: 600; margin-bottom: 8px; }
+  .reto-box .reto-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--espresso); margin-bottom: 10px; }
+
+  .write-line { margin-bottom: 16px; }
+  .write-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--topo); font-weight: 500; margin-bottom: 6px; }
+  .write-input { border: none; border-bottom: 1.5px solid var(--rosa); background: transparent; width: 100%; padding: 6px 0; font-family: 'Poppins', sans-serif; font-size: 15px; color: var(--espresso); outline: none; }
+
+  .closing { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--rosa); text-align: center; }
+  .closing-quote { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--espresso); line-height: 1.7; margin-bottom: 6px; }
+  .closing-author { font-family: 'Alex Brush', cursive; font-size: 26px; color: var(--cobre); }
+
+  @media (max-width: 600px) {
+    .page { width: calc(100% - 16px); border-radius: 2px; }
+    .page-header { padding: 12px 20px 10px; }
+    .page-header .tagline { display: none; }
+    .page-body { padding: 24px 20px 24px; }
+    .page-footer { padding: 10px 20px; }
+    .page-footer span:nth-child(2) { display: none; }
+    .cover { padding: 44px 24px; min-height: auto; }
+    .cover-title { font-size: 30px; }
+    .cover-subtitle { font-size: 14px; }
+    .cover-author { font-size: 42px; }
+    .section-title { font-size: 24px; }
+    .step-title { font-size: 18px; }
+    .insight-box p, .pull-quote p { font-size: 16px; }
+  }
+
+  @media print {
+    html { background: white; }
+    body { background: white; padding: 0; }
+    .save-banner { display: none; }
+    .page { box-shadow: none; border-radius: 0; margin: 0; page-break-after: always; break-after: page; width: 210mm; min-height: 297mm; }
+    .page:last-child { page-break-after: avoid; break-after: avoid; }
+    .cover { min-height: 297mm; }
+    .page-footer { position: absolute; bottom: 0; left: 0; right: 0; }
+    .page-body { padding-bottom: 60px; }
+    .step-card, .verse-box, .insight-box, .pull-quote, .reto-box, .write-line { break-inside: avoid; page-break-inside: avoid; }
+    .section-title, .step-title { break-after: avoid; page-break-after: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { size: A4; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="save-banner">
+  <p>Lee esta guía en pantalla o <strong>guárdala en PDF</strong> (se abrirá la opción de imprimir → guardar como PDF)</p>
+  <button class="save-btn" onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Guardar en PDF
+  </button>
+</div>
+
+<div id="guia-content">
+
+<!-- ═══ PAGE 1 — PORTADA ═══ -->
+<div class="page">
+  <div class="cover">
+    <span class="orb cover-orb-1"></span>
+    <span class="orb cover-orb-2"></span>
+    <span class="orb cover-orb-3"></span>
+
+    <p class="cover-eyebrow">Recurso gratuito &nbsp;·&nbsp; Anny Gómez</p>
+
+    <h1 class="cover-title">Organiza tu vida con intención</h1>
+    <p class="cover-subtitle">Un sistema simple para ordenar<br>tu espacio y tu mente — sin agobio</p>
+
+    <div class="cover-divider">
+      <div class="cover-divider-line"></div>
+      <div class="cover-divider-dot"></div>
+      <div class="cover-divider-line"></div>
+    </div>
+
+    <div class="cover-author">Anny Gómez</div>
+    <p class="cover-tagline">Orden &nbsp;·&nbsp; Intención &nbsp;·&nbsp; Propósito</p>
+
+    <div class="cover-verse">
+      <p>"Hágase todo decentemente y con orden."</p>
+      <span>1 Corintios 14:40</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE 2 — CARTA DE ANNY ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Organiza tu vida con intención</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Introducción</p>
+    <h2 class="section-title">No eres desordenada</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text letter-drop-cap">Durante años me sentí un desastre. La casa hecha un caos, la mente llena de pendientes, la sensación de que por más que corría nunca alcanzaba. Y me echaba la culpa: "soy desordenada, así soy yo".</p>
+
+    <p class="body-text">Hasta que entendí algo que lo cambió todo: <strong>no era desordenada. Simplemente nunca me habían enseñado un sistema.</strong> Y nadie nace sabiendo.</p>
+
+    <p class="body-text">El orden no es un don con el que algunas tienen suerte. <strong>Se construye con intención</strong> — con decisiones pequeñas, repetidas, que poco a poco le devuelven la calma a tu vida.</p>
+
+    <p class="body-text">Esta guía es el sistema que a mí me ordenó por dentro y por fuera. No necesitas más tiempo ni más fuerza de voluntad. Necesitas claridad y un primer paso.</p>
+
+    <div class="pull-quote">
+      <p>"El desorden no es quien eres. Es solo un montón de decisiones que todavía no has tomado."</p>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <p style="font-size:11px;font-weight:300;color:var(--topo)">Con cariño,</p>
+      <div class="signature">Anny Gómez</div>
+      <p class="signature-title">@annygomezleal &nbsp;·&nbsp; annygomez.com</p>
+    </div>
+
+    <div class="verse-box">
+      <p class="verse-text">"Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora."</p>
+      <p class="verse-ref">Eclesiastés 3:1</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Orden · Intención · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 3 — EL SISTEMA (3 PASOS) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Organiza tu vida con intención</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">El sistema</p>
+    <h2 class="section-title">Ordena en 3 pasos</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text" style="margin-bottom:20px">No tienes que organizar toda tu vida hoy. Solo seguir estos tres pasos, en este orden. Funcionan igual para tu espacio, tu agenda o tu mente.</p>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Vacía</h3>
+      </div>
+      <p class="step-desc">Saca <strong>todo</strong> lo que tienes en la mente a un solo lugar: una libreta, una nota, una lista. Pendientes, ideas, preocupaciones, tareas. Todo afuera. La mente no es para almacenar, es para crear.</p>
+      <div class="step-key">"No puedes ordenar lo que sigue dando vueltas en tu cabeza."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Decide</h3>
+      </div>
+      <p class="step-desc">Mira tu lista y decide, una por una: <strong>¿qué es y cuándo?</strong> Hazlo ahora, agéndalo, delégalo o suéltalo. El desorden casi siempre son decisiones que postergamos. Decidir es ordenar.</p>
+      <div class="step-key">"Una decisión tomada es un peso menos que cargar."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Ordena con propósito</h3>
+      </div>
+      <p class="step-desc">Dale un lugar a lo que importa y <strong>suelta lo demás</strong>. Organizar no es tener todo perfecto ni acumular más sistemas: es hacer espacio — en tu casa y en tu día — para lo que de verdad tiene valor para ti.</p>
+      <div class="step-key">"Ordenar es elegir. Cada sí a lo importante es un no a lo que sobra."</div>
+    </div>
+
+    <div class="insight-box">
+      <p>"El orden externo nace del orden interno. Cuando ordenas con intención, tu mente también respira."</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Orden · Intención · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 4 — EL RETO DE 5 MINUTOS ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Organiza tu vida con intención</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Empieza hoy</p>
+    <h2 class="section-title">El reto de 5 minutos</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text">El orden no llega el día que tengas "tiempo". Llega cuando empiezas pequeño, hoy. Pon un cronómetro en <strong>5 minutos</strong> y haz solo esto:</p>
+
+    <div class="reto-box">
+      <p class="reto-label">Reto express</p>
+      <p class="reto-title">Elige UN espacio pequeño</p>
+      <p class="body-text" style="margin:0">Un cajón, tu mesa de noche, el fondo de tu bolso, las notas de tu teléfono. Uno solo. Aplica los 3 pasos: vacíalo, decide qué se queda, y dale orden con propósito. Cuando termine el cronómetro, mira cómo te sientes.</p>
+    </div>
+
+    <p class="body-text" style="margin-bottom:10px"><strong>Áreas para tu próxima semana</strong> (marca por dónde vas):</p>
+    <ul class="check-list">
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Mi mente</strong> — vaciar pendientes en una sola lista</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Mi día</strong> — elegir las 3 prioridades de mañana</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Mi espacio</strong> — un cajón o superficie a la vez</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Mi teléfono</strong> — silenciar lo que roba tu paz</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Mi semana</strong> — 15 minutos el domingo para planear</li>
+    </ul>
+
+    <div class="verse-box">
+      <p class="verse-text">"Encomienda al Señor tus obras, y tus pensamientos serán afirmados."</p>
+      <p class="verse-ref">Proverbios 16:3</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Orden · Intención · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 5 — CIERRE ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Organiza tu vida con intención</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Para llevar contigo</p>
+    <h2 class="section-title">Tu vida, en orden</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text">Recuerda esto cada vez que sientas el caos volver:</p>
+
+    <ul class="check-list" style="margin-bottom:20px">
+      <li style="padding-left:0;border:none"><strong>1.</strong> &nbsp;No eres desordenada — solo necesitas un sistema.</li>
+      <li style="padding-left:0;border:none"><strong>2.</strong> &nbsp;Vacía la mente, decide, y ordena con propósito.</li>
+      <li style="padding-left:0;border:none"><strong>3.</strong> &nbsp;El desorden son decisiones sin tomar. Decide.</li>
+      <li style="padding-left:0;border:none"><strong>4.</strong> &nbsp;Empieza pequeño, hoy, 5 minutos.</li>
+      <li style="padding-left:0;border:none"><strong>5.</strong> &nbsp;El orden se construye con intención, un paso a la vez.</li>
+    </ul>
+
+    <div class="write-line">
+      <p class="write-label">Mi primer espacio a ordenar hoy</p>
+      <input class="write-input" type="text">
+    </div>
+    <div class="write-line">
+      <p class="write-label">Cómo quiero sentirme cuando mi vida esté en orden</p>
+      <input class="write-input" type="text">
+    </div>
+
+    <div class="insight-box" style="margin-top:18px">
+      <p>"No necesitas una vida perfecta. Necesitas una vida con intención."</p>
+    </div>
+
+    <div class="closing">
+      <p class="closing-quote">Si esta guía te ayudó, cuéntamelo.<br>Te leo en Instagram.</p>
+      <div class="closing-author">Anny Gómez</div>
+      <p class="signature-title" style="margin-top:6px">@annygomezleal &nbsp;·&nbsp; annygomez.com</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Orden · Intención · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+</div><!-- /guia-content -->
+
+</body>
+</html>

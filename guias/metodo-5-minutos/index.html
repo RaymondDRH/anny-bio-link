@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>El Método de los Primeros 5 Minutos · Anny Gómez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --crema:#FBF8F3;
+    --crema-calido:#F6EFE4;
+    --rosa:#B76E79;
+    --rosa-soft:#D9A9AF;
+    --dorado:#A98B5B;
+    --dorado-soft:#CDB48A;
+    --arena:#E4D8C7;
+    --texto:#4A3B34;
+    --texto-suave:#8A7A6E;
+  }
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{
+    margin:0;background:#EDE6DB;color:var(--texto);
+    font-family:"Poppins",sans-serif;font-weight:300;line-height:1.85;
+    padding:32px 16px;
+  }
+  .page{
+    position:relative;width:100%;max-width:720px;margin:0 auto 34px;
+    background:var(--crema);
+    background-image:radial-gradient(circle at 20% 15%,rgba(169,139,91,.035),transparent 60%),radial-gradient(circle at 85% 90%,rgba(183,110,121,.04),transparent 55%);
+    border:1px solid rgba(169,139,91,.18);
+    border-radius:6px;
+    box-shadow:0 24px 60px -30px rgba(74,59,52,.45);
+    padding:76px 64px;
+    min-height:940px;
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .center{align-items:center;text-align:center;justify-content:center;}
+  /* Tipografía */
+  .seal{font-family:"Poppins",sans-serif;font-weight:500;font-size:11px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--dorado);}
+  h1{font-family:"Playfair Display",serif;font-weight:500;color:var(--rosa);
+    font-size:clamp(38px,7vw,58px);line-height:1.1;margin:0;}
+  h2{font-family:"Playfair Display",serif;font-weight:500;color:var(--rosa);
+    font-size:clamp(28px,5vw,40px);line-height:1.15;margin:2px 0 22px;}
+  .eyebrow{font-family:"Poppins",sans-serif;font-weight:600;font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--dorado);margin:0 0 4px;}
+  p{margin:0 0 16px;font-size:16px;color:var(--texto);}
+  .lead{font-size:17px;}
+  strong{font-weight:600;color:var(--texto);}
+  .soft{color:var(--texto-suave);}
+  /* Pull quote */
+  .pull{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;
+    color:var(--rosa);font-size:clamp(22px,4vw,29px);line-height:1.35;
+    text-align:center;margin:26px auto;max-width:90%;}
+  .pull.framed{border-top:1px solid var(--dorado-soft);border-bottom:1px solid var(--dorado-soft);
+    padding:20px 0;height:auto;}
+  /* firma */
+  .firma{font-family:"Dancing Script",cursive;font-weight:600;font-size:34px;color:var(--rosa);line-height:1;}
+  /* checklist */
+  .check{list-style:none;padding:0;margin:14px 0;}
+  .check li{position:relative;padding:7px 0 7px 34px;font-size:15.5px;color:var(--texto);line-height:1.6;}
+  .check li::before{content:"";position:absolute;left:0;top:10px;width:15px;height:15px;
+    border:1.4px solid var(--rosa-soft);border-radius:3px;background:rgba(255,255,255,.5);}
+  .check.gold li::before{border-color:var(--dorado-soft);}
+  .two-col{columns:2;column-gap:34px;}
+  .two-col li{break-inside:avoid;}
+  /* nota / caja */
+  .nota{background:var(--crema-calido);border:1px solid var(--dorado-soft);border-left:3px solid var(--dorado);
+    border-radius:8px;padding:20px 24px;margin:22px 0;}
+  .nota .t{font-family:"Playfair Display",serif;font-style:italic;color:var(--dorado);font-size:19px;margin-bottom:6px;}
+  .nota p{margin:0;font-size:14.5px;color:var(--texto-suave);}
+  /* pasos overview */
+  .steps{display:flex;gap:18px;margin:30px 0 8px;}
+  .step-mini{flex:1;text-align:center;padding:8px 6px;}
+  .step-mini .n{font-family:"Playfair Display",serif;font-size:46px;color:var(--dorado);line-height:1;}
+  .step-mini .st{font-family:"Playfair Display",serif;font-size:21px;color:var(--rosa);margin:6px 0 4px;}
+  .step-mini .tm{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--texto-suave);font-weight:500;}
+  .step-sep{align-self:center;color:var(--dorado-soft);font-size:20px;}
+  /* icon */
+  .ico{width:44px;height:44px;margin:0 auto 20px;display:block;color:var(--rosa);}
+  .ico.gold{color:var(--dorado);}
+  .ornament{width:64px;height:1px;background:var(--dorado-soft);margin:20px auto;position:relative;}
+  .ornament::after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    background:var(--crema);padding:0 8px;color:var(--dorado);font-size:12px;}
+  /* verse page */
+  .verse-ref{font-family:"Poppins",sans-serif;font-weight:600;font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--dorado);margin-bottom:14px;}
+  .verse{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;color:var(--rosa);
+    font-size:clamp(26px,5vw,38px);line-height:1.3;max-width:88%;margin:0 auto;position:relative;}
+  .verse .q{font-family:"Playfair Display",serif;font-size:90px;color:var(--dorado-soft);opacity:.5;
+    line-height:.4;display:block;height:34px;}
+  /* worksheet */
+  .field{margin:16px 0;}
+  .field .lbl{font-weight:500;font-size:14px;color:var(--texto);margin-bottom:8px;display:block;}
+  .lines{border:none;}
+  .line{height:0;border-bottom:1.2px solid var(--arena);margin:26px 0;}
+  .line.short{width:55%;display:inline-block;margin:0 0 0 10px;vertical-align:bottom;border-bottom:1.2px solid var(--arena);height:20px;}
+  .prio{display:flex;align-items:center;gap:14px;margin:18px 0;}
+  .prio .circle{flex:none;width:34px;height:34px;border-radius:50%;background:var(--rosa-soft);color:#fff;
+    display:grid;place-items:center;font-family:"Playfair Display",serif;font-size:18px;}
+  .prio .pline{flex:1;border-bottom:1.2px solid var(--arena);height:22px;}
+  .foot{margin-top:auto;padding-top:26px;text-align:center;}
+  .handle{font-family:"Poppins",sans-serif;font-weight:500;font-size:13px;letter-spacing:.12em;color:var(--dorado);}
+  .spacer{flex:1;}
+  @media (max-width:560px){
+    .page{padding:52px 30px;min-height:auto;}
+    .two-col{columns:1;}
+    .steps{flex-direction:column;gap:10px;}
+    .step-sep{transform:rotate(90deg);}
+  }
+  @media print{
+    body{background:#fff;padding:0;}
+    .page{box-shadow:none;border:none;border-radius:0;margin:0;max-width:none;
+      min-height:100vh;padding:22mm 20mm;page-break-after:always;}
+    @page{size:A4 portrait;margin:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1 · PORTADA -->
+<section class="page center">
+  <div class="spacer"></div>
+  <p class="seal">Colección "Viviendo con Intención" · Vol. 1</p>
+  <div style="height:34px"></div>
+  <svg class="ico gold" viewBox="0 0 48 48" fill="none" style="width:52px;height:52px">
+    <path d="M10 20h22v8a11 11 0 0 1-11 11h0A11 11 0 0 1 10 28v-8z" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M32 22h4a4 4 0 0 1 0 8h-4" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M16 8c-1 2 1 3 0 5M22 7c-1 2 1 3 0 5M28 8c-1 2 1 3 0 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M8 43h26" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+  <div style="height:20px"></div>
+  <h1>El Método de los<br>Primeros 5 Minutos</h1>
+  <div class="ornament"></div>
+  <p class="pull" style="margin-top:8px">Vacía tu mente.<br>Ordena tus prioridades.<br>Vive con intención.</p>
+  <div class="spacer"></div>
+  <p class="handle">@annygomezleal</p>
+</section>
+
+<!-- 2 · CARTA -->
+<section class="page">
+  <p class="eyebrow">Antes de empezar</p>
+  <h2>Una carta para ti</h2>
+  <div style="max-width:82%;margin:0 auto;">
+    <p class="lead">Hola, soy Anny. Y antes de entrar al método, quiero decirte algo que probablemente ya sabes, pero que necesitas volver a escuchar:</p>
+    <p class="pull">No estás fallando.<br>Solo te falta un sistema.</p>
+    <p>Si sientes que el día se te escapa entre las manos... si vives apagando incendios, olvidando cosas importantes, empezando proyectos que nunca terminas... no es porque no te importe. Es porque tu mente está cargando demasiado, y nadie te enseñó a soltarlo.</p>
+    <p>Esta guía no te va a pedir que hagas más. Te va a enseñar a <strong>vivir con más intención, en solo cinco minutos al día.</strong></p>
+    <p>¿Lista? Vamos a empezar.</p>
+    <div style="margin-top:26px">
+      <p style="margin:0;color:var(--texto-suave);font-size:14px">Con cariño,</p>
+      <p class="firma">Anny</p>
+    </div>
+  </div>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 3 · EL VERDADERO PROBLEMA -->
+<section class="page">
+  <p class="eyebrow">El verdadero problema</p>
+  <h2>No es falta de motivación</h2>
+  <p>Seguramente ya lo has intentado todo: apps de productividad, listas interminables, propósitos de año nuevo que duraron dos semanas. Y aun así, sigues sintiendo que nunca alcanza el tiempo.</p>
+  <p>Déjame decirte algo que cambia todo:</p>
+  <p class="pull framed">El problema no es tu disciplina. Es que no tienes un sistema para vaciar tu mente.</p>
+  <p>Tu mente fue diseñada para <strong>tener</strong> ideas, no para <strong>almacenarlas</strong> todas. Cuando la usas como bodega en lugar de como taller, esto es lo que aparece:</p>
+  <ul class="check">
+    <li>Ansiedad, sin saber exactamente por qué</li>
+    <li>Sensación constante de desorden</li>
+    <li>Fatiga mental, incluso sin haber hecho "tanto"</li>
+    <li>Dificultad para concentrarte en una sola cosa</li>
+    <li>La sensación de estar siempre corriendo detrás del día</li>
+  </ul>
+  <p style="margin-top:18px">El primer paso para recuperar la paz no es organizar mejor. <strong>Es sacar todo de tu cabeza.</strong></p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 4 · LA SOLUCIÓN -->
+<section class="page center">
+  <p class="eyebrow">La solución</p>
+  <h2>El Método de los<br>Primeros 5 Minutos</h2>
+  <p style="max-width:84%">Es exactamente lo que suena: cinco minutos, cada mañana <span class="soft">(o la noche anterior, si prefieres empezar el día ya con claridad)</span>, divididos en tres pasos simples.</p>
+  <div class="steps">
+    <div class="step-mini"><div class="n">01</div><div class="st">Vacía tu mente</div><div class="tm">2 minutos</div></div>
+    <div class="step-sep">→</div>
+    <div class="step-mini"><div class="n">02</div><div class="st">Prioriza</div><div class="tm">2 minutos</div></div>
+    <div class="step-sep">→</div>
+    <div class="step-mini"><div class="n">03</div><div class="st">Organiza</div><div class="tm">1 minuto</div></div>
+  </div>
+  <div class="ornament"></div>
+  <p style="max-width:82%">No necesitas ninguna app. No necesitas una libreta especial. Solo un papel, un lápiz y un cronómetro.</p>
+  <p class="pull" style="margin-top:6px">No necesitas hacer más.<br>Necesitas vivir con intención.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 5 · PASO 1 -->
+<section class="page">
+  <p class="eyebrow">Paso 1 · 2 minutos</p>
+  <h2>Vacía tu mente</h2>
+  <p>Pon un cronómetro de dos minutos. Toma un papel. Y escribe absolutamente <strong>todo</strong> lo que está dando vueltas en tu cabeza. Todo. Sin excepción.</p>
+  <ul class="check two-col">
+    <li>Pendientes del trabajo</li>
+    <li>Cosas de la casa</li>
+    <li>Llamadas que debes hacer</li>
+    <li>Compras</li>
+    <li>Ideas que se te ocurrieron en la ducha</li>
+    <li>Compromisos que se te olvidan</li>
+    <li>Proyectos a medias</li>
+    <li>Esa preocupación que no te deja dormir</li>
+  </ul>
+  <p style="margin-top:16px">Las reglas de este paso son simples:</p>
+  <ul class="check gold">
+    <li>No organices.</li>
+    <li>No analices.</li>
+    <li>No borres.</li>
+    <li>No decidas qué es importante todavía.</li>
+  </ul>
+  <p><strong>Solo escribe. Deja que salga.</strong></p>
+  <div class="nota">
+    <div class="t">¿Por qué funciona?</div>
+    <p>Cuando escribes algo, tu cerebro deja de tener que "sostenerlo" activamente. Es como soltar una maleta que llevabas cargando sin darte cuenta. Ese simple acto reduce la carga mental de inmediato.</p>
+  </div>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 6 · PASO 2 -->
+<section class="page">
+  <p class="eyebrow">Paso 2 · 2 minutos</p>
+  <h2>Prioriza</h2>
+  <p>Ahora lee tu lista completa. Respira. Y elige únicamente <strong>tres prioridades</strong>: las que de verdad importan hoy.</p>
+  <p class="pull framed">Cuando todo es prioridad, nada es prioridad.</p>
+  <p>Sé honesta contigo misma. No elijas lo urgente. Elige lo importante: lo que, si lo haces hoy, te hará sentir que el día valió la pena.</p>
+  <p style="margin-bottom:6px">Pregúntate:</p>
+  <ul class="check">
+    <li>¿Qué de esta lista realmente mueve la aguja?</li>
+    <li>¿Qué puedo delegar?</li>
+    <li>¿Qué puede esperar sin culpa?</li>
+  </ul>
+  <div style="display:flex;justify-content:center;gap:22px;margin:30px 0 6px">
+    <div class="prio" style="flex-direction:column;align-items:center;gap:8px"><div class="circle">1</div></div>
+    <div class="prio" style="flex-direction:column;align-items:center;gap:8px"><div class="circle">2</div></div>
+    <div class="prio" style="flex-direction:column;align-items:center;gap:8px"><div class="circle">3</div></div>
+  </div>
+  <p class="pull" style="margin-top:4px">Tres cosas. No cinco. No diez.<br>Tres.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 7 · PASO 3 -->
+<section class="page">
+  <p class="eyebrow">Paso 3 · 1 minuto</p>
+  <h2>Organiza</h2>
+  <p>Por último, dale un lugar a cada prioridad. Un momento específico del día. No las dejes flotando.</p>
+  <ul class="check gold">
+    <li>Asigna una hora aproximada a cada una de tus tres prioridades</li>
+    <li>Identifica qué te podría distraer y anticípalo</li>
+    <li>Decide con qué vas a empezar</li>
+  </ul>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin:34px 0;color:var(--texto-suave)">
+    <div style="text-align:center;flex:1"><div style="font-family:'Playfair Display',serif;color:var(--dorado);font-size:15px">Mañana</div></div>
+    <div style="flex:2;height:1.4px;background:var(--dorado-soft);position:relative">
+      <span style="position:absolute;left:8%;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--rosa)"></span>
+      <span style="position:absolute;left:48%;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--rosa)"></span>
+      <span style="position:absolute;left:88%;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--rosa)"></span>
+    </div>
+    <div style="text-align:center;flex:1"><div style="font-family:'Playfair Display',serif;color:var(--dorado);font-size:15px">Noche</div></div>
+  </div>
+  <p>Este último minuto es el que marca la diferencia entre empezar el día con ansiedad o empezarlo con claridad.</p>
+  <p class="pull">La paz también se organiza.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 8 · POR QUÉ FUNCIONA -->
+<section class="page center">
+  <p class="eyebrow">Por qué funciona</p>
+  <h2>Tu mente no fue<br>hecha para almacenar</h2>
+  <svg class="ico" viewBox="0 0 60 40" fill="none" style="width:120px;height:auto;margin:6px auto 20px">
+    <circle cx="16" cy="20" r="10" stroke="var(--rosa-soft)" stroke-width="1.3"/>
+    <path d="M16 20l-6-6M16 20l7-3M16 20l-4 7M16 20l6 5M16 20l-8 1" stroke="var(--rosa-soft)" stroke-width="1.1" stroke-linecap="round"/>
+    <path d="M32 20h6" stroke="var(--dorado-soft)" stroke-width="1.2"/>
+    <circle cx="46" cy="20" r="10" stroke="var(--dorado)" stroke-width="1.3"/>
+    <path d="M46 20l4-5" stroke="var(--dorado)" stroke-width="1.3" stroke-linecap="round"/>
+  </svg>
+  <p style="max-width:84%">No necesitas entender neurociencia para aplicar este método, pero vale la pena saber esto: tu mente es mucho mejor <strong>generando</strong> ideas que <strong>guardándolas.</strong></p>
+  <p style="max-width:84%">Cuando intentas recordar demasiadas cosas a la vez, tu cerebro gasta energía solo en "no olvidar", y le queda menos energía para pensar con claridad, crear o disfrutar el presente.</p>
+  <p style="max-width:84%">Por eso, cuando escribes algo, sientes alivio inmediato. No es magia: es que tu mente por fin puede soltar lo que sostenía.</p>
+  <p class="pull framed" style="margin-top:20px">Una mente clara toma mejores decisiones.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 9 · BASE MÁS PROFUNDA (VERSÍCULO) -->
+<section class="page center" style="background:linear-gradient(180deg,#F7F0E6,#F3EADC)">
+  <p class="eyebrow">Una base más profunda</p>
+  <h2>Administrar el tiempo<br>es un acto de fe</h2>
+  <p style="max-width:78%">Hay un versículo que sostiene todo este método:</p>
+  <div style="margin:14px 0 26px">
+    <p class="verse-ref">Salmos 90:12</p>
+    <p class="verse"><span class="q">“</span>Enséñanos a contar bien nuestros días, para que nuestro corazón adquiera sabiduría.</p>
+  </div>
+  <p style="max-width:80%">El tiempo que tienes hoy es un <strong>regalo, no una posesión.</strong> Y administrarlo con intención —en lugar de dejar que se te escurra entre pendientes y distracciones— es una forma de mayordomía: cuidar bien lo que se te ha confiado.</p>
+  <p style="max-width:80%">No se trata de llenar cada minuto. Se trata de vivir cada día siendo consciente de que <strong>importa.</strong></p>
+  <p class="pull">Cada día bien vivido<br>comienza con una decisión.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 10 · TRANSICIÓN WORKBOOK -->
+<section class="page center">
+  <div class="spacer"></div>
+  <p class="eyebrow">Ahora te toca a ti</p>
+  <h2>Tu hoja de trabajo</h2>
+  <p style="max-width:78%">Las siguientes páginas son tuyas. Imprímelas, guárdalas en tu teléfono o cópialas en tu cuaderno favorito: la idea es que las uses cada mañana, tantas veces como las necesites.</p>
+  <p style="max-width:78%">Este es el corazón de la guía. Aquí es donde la teoría se convierte en hábito.</p>
+  <div class="ornament"></div>
+  <p class="pull">Los pequeños hábitos<br>construyen grandes cambios.</p>
+  <div class="spacer"></div>
+  <p class="handle">@annygomezleal</p>
+</section>
+
+<!-- 11 · WORKBOOK MAÑANA -->
+<section class="page">
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg viewBox="0 0 24 24" fill="none" style="width:26px;height:26px;color:var(--dorado)">
+      <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M6.7 17.3l-2.1 2.1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+    <p class="eyebrow" style="margin:0">Hoja de trabajo reutilizable</p>
+  </div>
+  <h2>Mis Primeros 5 Minutos</h2>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--texto)">
+    <div style="flex:1;min-width:160px">Fecha: <span class="line short"></span></div>
+    <div style="flex:2;min-width:220px">Cómo quiero sentirme hoy: <span class="line short" style="width:60%"></span></div>
+  </div>
+  <p class="eyebrow" style="margin:22px 0 2px;color:var(--rosa)">Paso 1 · Vacía tu mente (2 min)</p>
+  <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
+  <p class="eyebrow" style="margin:20px 0 6px;color:var(--rosa)">Paso 2 · Mis tres prioridades</p>
+  <div class="prio"><div class="circle">1</div><div class="pline"></div></div>
+  <div class="prio"><div class="circle">2</div><div class="pline"></div></div>
+  <div class="prio"><div class="circle">3</div><div class="pline"></div></div>
+  <p class="eyebrow" style="margin:20px 0 6px;color:var(--rosa)">Paso 3 · Organiza</p>
+  <div style="font-size:14px;color:var(--texto)">¿A qué hora haré cada una?<div class="line"></div>
+  ¿Qué puedo delegar?<div class="line"></div>
+  ¿Qué puede esperar?<div class="line"></div></div>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 12 · WORKBOOK CIERRE -->
+<section class="page">
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg viewBox="0 0 24 24" fill="none" style="width:26px;height:26px;color:var(--dorado)">
+      <path d="M20 13.5A8 8 0 0 1 10.5 4a8 8 0 1 0 9.5 9.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    </svg>
+    <p class="eyebrow" style="margin:0">Hoja de trabajo · Continuación</p>
+  </div>
+  <h2>Cierre del día</h2>
+  <p class="eyebrow" style="margin:14px 0 4px;color:var(--rosa)">Mi versículo del día</p>
+  <div class="line"></div><div class="line"></div>
+  <p class="eyebrow" style="margin:22px 0 4px;color:var(--rosa)">Gratitud — hoy agradezco por...</p>
+  <div class="line"></div><div class="line"></div><div class="line"></div>
+  <p class="eyebrow" style="margin:22px 0 4px;color:var(--rosa)">Reflexión final del día</p>
+  <p class="soft" style="font-size:13.5px;margin:0 0 4px">¿Viví hoy con intención? ¿Qué aprendí?</p>
+  <div class="line"></div><div class="line"></div><div class="line"></div>
+  <p class="pull" style="margin-top:22px">El orden reduce el ruido mental.</p>
+  <div class="foot"><span class="handle">@annygomezleal</span></div>
+</section>
+
+<!-- 13 · PARA TERMINAR -->
+<section class="page center">
+  <div class="spacer"></div>
+  <p class="eyebrow">Para terminar</p>
+  <h2>Un pequeño paso,<br>cada día</h2>
+  <p style="max-width:80%">No necesitas transformar tu vida hoy. Solo necesitas estos cinco minutos, mañana.</p>
+  <p style="max-width:80%">Vacía tu mente. Prioriza lo importante. Organiza con calma. Y observa cómo, poco a poco, el caos se convierte en paz.</p>
+  <p class="pull framed">No necesitas hacer más.<br>Necesitas vivir con intención.</p>
+  <p style="max-width:80%">Sígueme en <strong>@annygomezleal</strong>, donde comparto lo que de verdad me funciona en mi propio camino de vivir con intención.</p>
+  <div style="margin-top:18px">
+    <p class="firma">Anny Gómez</p>
+    <p class="handle" style="margin-top:2px">@annygomezleal</p>
+  </div>
+  <div class="spacer"></div>
+</section>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Next Fly Academy — Despega tu Marca y Gana Online</title>
+<title>Next Flight Academy — Despega tu Marca y Gana Online</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://js.stripe.com/v3/"></script>
@@ -402,6 +402,7 @@ body {
 }
 
 .price-currency { font-size: 22px; color: var(--gold); vertical-align: top; padding-top: 8px; display: inline-block; }
+.price-old { text-decoration: line-through; opacity: .45; font-weight: 300; font-size: .5em; margin-right: 10px; vertical-align: middle; }
 .price-note { font-size: 11px; font-weight: 300; color: var(--text); margin-top: 8px; }
 
 .cta-motivacional {
@@ -659,7 +660,7 @@ body {
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-  <img class="hero-banner" src="../next%20fly%20banner.jpeg" alt="Next Fly Academy">
+  <img class="hero-banner" src="../next%20fly%20banner.jpeg" alt="Next Flight Academy">
   <div class="hero-body">
     <div class="hero-eyebrow anim">Academia Digital</div>
     <h1 class="hero-headline anim anim-d1">
@@ -671,7 +672,7 @@ body {
     <div class="price-badge anim anim-d3">
       <div class="price-badge-label">Inversión única</div>
       <div class="price-badge-amount"><span>$</span>697 <small style="font-size:16px;font-family:'Poppins',sans-serif;font-weight:300;color:var(--text)">USD</small></div>
-      <div class="price-badge-note">Pago único · Acceso inmediato</div>
+      <div class="price-badge-note">Pago único · Sin mensualidades</div>
     </div>
     <button class="btn btn-gold anim anim-d4" onclick="openPaymentModal(this)">
       <span class="btn-label">¡Quiero mi boleto ahora! →</span>
@@ -679,7 +680,7 @@ body {
     </button>
     <div class="secure-note anim anim-d4">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      Pago 100% seguro · Procesado por Stripe
+      Pago 100% seguro y encriptado
     </div>
   </div>
 </section>
@@ -799,7 +800,7 @@ body {
 
     <div class="testi-card fade-in">
       <div class="stars">★★★★★</div>
-      <p class="testi-text">"Gracias a Next Fly Academy pude lanzar mi primer producto digital en menos de 30 días. Anny te da todas las herramientas y el acompañamiento que necesitas para despegar de verdad."</p>
+      <p class="testi-text">"Gracias a Next Flight Academy pude lanzar mi primer producto digital en menos de 30 días. Anny te da todas las herramientas y el acompañamiento que necesitas para despegar de verdad."</p>
       <div class="testi-name">— María G., emprendedora digital</div>
     </div>
     <div class="testi-card fade-in">
@@ -824,9 +825,9 @@ body {
       Ya tienes tu pasaporte — solo te falta comprar tu boleto y subir al mejor viaje de tu vida. Haz check-in a tu nueva vida. ¡Aborda ahora y despega con nosotras!
     </p>
     <div class="price-display fade-in">
-      <div class="price-label">Precio único de lanzamiento</div>
+      <div class="price-label">Inversión única</div>
       <div class="price-amount"><span class="price-currency">$</span>697 <small style="font-size:18px;font-family:'Poppins',sans-serif;font-weight:300;color:var(--text)">USD</small></div>
-      <div class="price-note">Pago único · Acceso inmediato · Sin mensualidades</div>
+      <div class="price-note">Pago único · Sin mensualidades</div>
     </div>
     <button class="btn btn-gold fade-in" onclick="openPaymentModal(this)">
       <span class="btn-label">¡Aborda ahora y despega! →</span>
@@ -834,7 +835,7 @@ body {
     </button>
     <div class="secure-note fade-in">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      Pago 100% seguro · Procesado por Stripe
+      Pago 100% seguro y encriptado
     </div>
 
     <p class="cta-motivacional fade-in">
@@ -849,13 +850,27 @@ body {
   <div class="payment-modal">
     <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
     <div class="modal-eyebrow">Academia Digital</div>
-    <div class="modal-title">Next Fly Academy</div>
+    <div class="modal-title">Next Flight Academy</div>
     <div class="modal-price">
       <span style="font-size:18px;color:var(--gold);vertical-align:top;padding-top:9px;display:inline-block">$</span>697
       <span style="font-size:15px;font-family:'Poppins',sans-serif;font-weight:300;color:rgba(245,237,216,0.4)">USD</span>
     </div>
     <div class="modal-price-note">Pago único · Sin mensualidades</div>
     <div class="modal-divider"></div>
+
+    <!-- Métodos de 1 toque (no requieren formulario) -->
+    <div id="express-wrap" style="display:none">
+      <div id="express-checkout-element"></div>
+    </div>
+    <div id="paypal-buttons" style="margin-top:16px"></div>
+    <div id="paypal-paylater-msg" style="margin:12px 0 4px;text-align:center"></div>
+
+    <!-- Divisor: tarjeta -->
+    <div style="display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:rgba(245,237,216,0.42);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-family:'Poppins',sans-serif">
+      <span style="flex:1;height:1px;background:rgba(196,154,60,0.18)"></span>o paga con tarjeta<span style="flex:1;height:1px;background:rgba(196,154,60,0.18)"></span>
+    </div>
+
+    <!-- Pago con tarjeta (requiere datos) -->
     <div class="modal-fields">
       <div class="modal-field">
         <label class="modal-field-label" for="buyer-name">Nombre completo</label>
@@ -872,17 +887,14 @@ body {
     </div>
     <div id="payment-element"></div>
     <div id="modal-error" class="modal-error"></div>
-    <label class="modal-no-refund">
-      <input type="checkbox" id="no-refund-check">
-      <span>Entiendo que es un producto digital y <strong>no tiene reembolso</strong></span>
-    </label>
     <button id="modal-submit" class="modal-submit" onclick="submitPayment()">
       <span id="modal-submit-label">Pagar $697 →</span>
       <span id="modal-submit-loading" style="display:none">Procesando…</span>
     </button>
+    <p style="margin:16px 0 4px;font-size:11px;line-height:1.5;color:rgba(245,237,216,0.5);font-family:'Poppins',sans-serif;text-align:center">Al completar tu pago aceptas que es un producto digital y <strong style="color:rgba(245,237,216,0.78)">no tiene reembolso</strong>.</p>
     <div class="modal-secure">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
-      Pago 100% seguro · Procesado por Stripe
+      Pago 100% seguro y encriptado
     </div>
   </div>
 </div>
@@ -904,6 +916,82 @@ body {
   let stripeInstance  = null;
   let elementsInstance = null;
   let paymentElInstance = null;
+  let expressElInstance = null;
+  let paypalLoaded = false;
+  let checkoutClientSecret = null;
+
+  // --- Código secreto (precio especial) ---
+  const APPLIED_CODE = new URLSearchParams(window.location.search).get('code') || '';
+  function fmtPrice(cents){ const d = cents/100; return Number.isInteger(d) ? String(d) : d.toFixed(2); }
+  function applyCodeDisplay(cents){
+    const dStr = fmtPrice(cents);
+    const mp = document.querySelector('.modal-price');
+    if (mp) mp.innerHTML = '<span style="font-size:18px;color:var(--gold);vertical-align:top;padding-top:9px;display:inline-block">$</span>' + dStr + ' <span style="font-size:15px;font-family:\'Poppins\',sans-serif;font-weight:300;color:rgba(245,237,216,0.4)">USD</span>';
+    const lbl = document.getElementById('modal-submit-label');
+    if (lbl) lbl.textContent = 'Pagar $' + dStr + ' →';
+  }
+  function applyCode(){ const c=(document.getElementById('code-input').value||'').trim(); if(c){ const u=new URL(window.location.href); u.searchParams.set('code', c); window.location.href=u.toString(); } }
+  if (APPLIED_CODE) {
+    fetch('/api/validate-code?code=' + encodeURIComponent(APPLIED_CODE))
+      .then(function(r){return r.json();}).then(function(d){ if (d && d.valid) applyCodeDisplay(d.amount); }).catch(function(){});
+  }
+
+  function renderPayPal(clientId) {
+    if (!clientId) return;
+    const buyer = () => ({
+      name:  document.getElementById('buyer-name').value.trim(),
+      email: document.getElementById('buyer-email').value.trim(),
+      phone: document.getElementById('buyer-phone').value.trim(),
+    });
+    const mount = () => {
+      if (!window.paypal) return;
+      const cont = document.getElementById('paypal-buttons');
+      cont.innerHTML = '';
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 46 },
+        onClick: (data, actions) => {
+          // PayPal recopila los datos del comprador; no exigimos el formulario.
+          document.getElementById('modal-error').textContent = '';
+          return actions.resolve();
+        },
+        createOrder: () => fetch('/api/paypal-create-order', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code: APPLIED_CODE }),
+        }).then(r => r.json()).then(d => { if (!d.id) throw new Error('order'); return d.id; }),
+        onApprove: (data, actions) => fetch('/api/paypal-capture-order', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderID: data.orderID, ...buyer() }),
+        }).then(r => r.json()).then(d => {
+          if (d.status === 'COMPLETED') {
+            window.location.href = 'https://annygomez.com/next-fly-academy/success.html';
+            return;
+          }
+          const issues = (d && d.details && Array.isArray(d.details.details)) ? d.details.details : [];
+          if (issues.some(x => x.issue === 'INSTRUMENT_DECLINED')) {
+            return actions.restart(); // método rechazado: que elija otro
+          }
+          document.getElementById('modal-error').textContent = 'No se pudo completar el pago con PayPal. Intenta con otro método.';
+        }),
+        onCancel: () => { document.getElementById('modal-error').textContent = ''; },
+        onError: () => {
+          document.getElementById('modal-error').textContent = 'Hubo un error con PayPal. Intenta de nuevo.';
+        },
+      }).render('#paypal-buttons');
+      try {
+        paypal.Messages({ amount: 697.00, placement: 'payment', style: { layout: 'text', text: { color: 'white' }, logo: { type: 'inline' } } })
+          .render('#paypal-paylater-msg');
+      } catch (e) {}
+    };
+    if (window.paypal) { mount(); return; }
+    if (paypalLoaded) return;
+    paypalLoaded = true;
+    const s = document.createElement('script');
+    s.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(clientId) +
+      '&currency=USD&intent=capture&components=buttons,messages&enable-funding=paylater&disable-funding=card,venmo';
+    s.onload = mount;
+    s.onerror = () => { paypalLoaded = false; };
+    document.head.appendChild(s);
+  }
 
   async function openPaymentModal(btn) {
     const label   = btn.querySelector('.btn-label');
@@ -913,13 +1001,22 @@ body {
     loading.style.display = 'inline';
 
     try {
-      const [configData, checkoutData] = await Promise.all([
-        fetch('/api/config').then(r => r.json()),
-        fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(r => r.json()),
-      ]);
+      const configData = await fetch('/api/config').then(r => r.json());
 
-      if (!configData.publishableKey) throw new Error('Config error');
-      if (!checkoutData.clientSecret)  throw new Error(checkoutData.error || 'Error desconocido');
+      // Abrir el modal y mostrar PayPal SIEMPRE (no depende de Stripe)
+      document.getElementById('payment-overlay').classList.add('active');
+      const scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      renderPayPal(configData.paypalClientId);
+
+      // Pago con tarjeta (Stripe) — opcional, no bloquea PayPal
+      try {
+      const checkoutData = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: APPLIED_CODE }) }).then(r => r.json());
+      if (!configData.publishableKey || !checkoutData.clientSecret) throw new Error('stripe_unavailable');
+      checkoutClientSecret = checkoutData.clientSecret;
 
       stripeInstance   = Stripe(configData.publishableKey);
       elementsInstance = stripeInstance.elements({
@@ -934,7 +1031,7 @@ body {
             colorTextPlaceholder: 'rgba(245,237,216,0.32)',
             fontFamily:           'Poppins, system-ui, sans-serif',
             fontSizeBase:         '14px',
-            borderRadius:         '10px',
+            borderRadius:         '14px',
             spacingUnit:          '3px',
           },
           rules: {
@@ -971,16 +1068,54 @@ body {
       });
 
       paymentElInstance = elementsInstance.create('payment', {
-        wallets: { link: 'never' },
+        wallets: { link: 'never', applePay: 'never', googlePay: 'never' },
       });
       paymentElInstance.mount('#payment-element');
 
-      document.getElementById('payment-overlay').classList.add('active');
-      const scrollY = window.scrollY;
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
+      // Express Checkout (Apple Pay / Google Pay) arriba — pago en 1 toque
+      try {
+        expressElInstance = elementsInstance.create('expressCheckout', {
+          paymentMethods: { link: 'never', amazonPay: 'never' },
+        });
+        expressElInstance.on('ready', (e) => {
+          if (e && e.availablePaymentMethods) {
+            document.getElementById('express-wrap').style.display = 'block';
+          }
+        });
+        expressElInstance.on('click', (e) => {
+          document.getElementById('modal-error').textContent = '';
+          e.resolve({ emailRequired: true, phoneNumberRequired: true, billingAddressRequired: true }); // pedir correo, teléfono y nombre a la wallet
+        });
+        expressElInstance.on('confirm', async (event) => {
+          const ebd = (event && event.billingDetails) || {};
+          const em = ebd.email || document.getElementById('buyer-email').value.trim();
+          try {
+            const piId = (checkoutClientSecret || '').split('_secret')[0];
+            if (piId && em) {
+              await fetch('/api/checkout', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'attach-customer', paymentIntentId: piId, name: ebd.name, email: em, phone: ebd.phone }),
+              });
+            }
+          } catch (e) {}
+          const { error } = await stripeInstance.confirmPayment({
+            elements: elementsInstance,
+            confirmParams: {
+              return_url: 'https://annygomez.com/next-fly-academy/success.html',
+              receipt_email: em || undefined,
+            },
+          });
+          if (error) { document.getElementById('modal-error').textContent = error.message; }
+        });
+        expressElInstance.mount('#express-checkout-element');
+      } catch (exErr) {}
+      } catch (stripeErr) {
+        // Tarjeta no disponible (ej. preview sin llaves Stripe): ocultar sección de tarjeta, dejar PayPal
+        const pe = document.getElementById('payment-element');
+        if (pe) pe.style.display = 'none';
+        const sb = document.getElementById('modal-submit');
+        if (sb) sb.style.display = 'none';
+      }
 
     } catch (err) {
       alert('Hubo un error al iniciar el pago. Por favor intenta de nuevo.');
@@ -1000,9 +1135,16 @@ body {
     document.body.style.width = '';
     window.scrollTo(0, scrollY);
     if (paymentElInstance) { paymentElInstance.destroy(); paymentElInstance = null; }
+    if (expressElInstance) { expressElInstance.destroy(); expressElInstance = null; }
     if (elementsInstance) { elementsInstance = null; }
     document.getElementById('payment-element').innerHTML = '';
+    document.getElementById('payment-element').style.display = '';
+    document.getElementById('express-checkout-element').innerHTML = '';
+    document.getElementById('express-wrap').style.display = 'none';
+    document.getElementById('paypal-buttons').innerHTML = '';
+    document.getElementById('paypal-paylater-msg').innerHTML = '';
     const btn = document.getElementById('modal-submit');
+    btn.style.display = '';
     btn.disabled = false;
     document.getElementById('modal-submit-label').style.display  = 'inline';
     document.getElementById('modal-submit-loading').style.display = 'none';
@@ -1010,7 +1152,6 @@ body {
     document.getElementById('buyer-name').value  = '';
     document.getElementById('buyer-email').value = '';
     document.getElementById('buyer-phone').value = '';
-    document.getElementById('no-refund-check').checked = false;
   }
 
   function handleOverlayClick(e) {
@@ -1021,14 +1162,8 @@ body {
     const name    = document.getElementById('buyer-name').value.trim();
     const email   = document.getElementById('buyer-email').value.trim();
     const phone   = document.getElementById('buyer-phone').value.trim();
-    const noRefund = document.getElementById('no-refund-check').checked;
-
     if (!name || !email || !phone) {
       document.getElementById('modal-error').textContent = 'Por favor completa todos los campos.';
-      return;
-    }
-    if (!noRefund) {
-      document.getElementById('modal-error').textContent = 'Debes aceptar la política de no reembolso para continuar.';
       return;
     }
 
@@ -1037,6 +1172,18 @@ body {
     document.getElementById('modal-submit-label').style.display  = 'none';
     document.getElementById('modal-submit-loading').style.display = 'inline';
     document.getElementById('modal-error').textContent = '';
+
+    // Registrar al comprador como Customer en Stripe (nombre completo + correo +
+    // teléfono) ANTES de cobrar, para que el recibo y el panel lo identifiquen.
+    try {
+      const piId = (checkoutClientSecret || '').split('_secret')[0];
+      if (piId) {
+        await fetch('/api/checkout', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'attach-customer', paymentIntentId: piId, name, email, phone }),
+        });
+      }
+    } catch (e) { /* no bloquear el pago */ }
 
     const { error } = await stripeInstance.confirmPayment({
       elements: elementsInstance,

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset de 5 minutos para la mujer agotada — Anny Gómez</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --crema:      #FBF6F2;
+    --nude:       #E8D9CD;
+    --rosa:       #D4BEB0;
+    --cobre:      #C4855A;
+    --cobre-lt:   #D9A07A;
+    --espresso:   #2E1A10;
+    --topo:       #8C6A58;
+    --salvia:     #A6B0A0;
+  }
+
+  html { background: #e8e0d8; }
+  body { font-family: 'Poppins', sans-serif; color: var(--espresso); background: #e8e0d8; padding: 0 0 40px; }
+
+  /* ── SAVE BANNER ── */
+  .save-banner {
+    background: var(--espresso); color: var(--crema);
+    padding: 14px 24px; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .save-banner p { font-size: 13px; font-weight: 300; line-height: 1.5; flex: 1; }
+  .save-banner strong { color: var(--cobre-lt); font-weight: 500; }
+  .save-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--cobre); color: var(--crema); border: none; border-radius: 10px;
+    padding: 10px 20px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 400;
+    letter-spacing: 0.06em; cursor: pointer; white-space: nowrap; text-decoration: none; transition: background 0.2s;
+  }
+  .save-btn:hover { background: #a96b43; }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    max-width: 760px; width: calc(100% - 32px); background: var(--crema);
+    margin: 0 auto 28px; position: relative; overflow: hidden;
+    box-shadow: 0 8px 48px rgba(46,26,16,0.18); border-radius: 4px;
+  }
+
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; }
+
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px 12px; border-bottom: 1px solid var(--rosa);
+  }
+  .page-header .logo { font-family: 'Alex Brush', cursive; font-size: 24px; color: var(--topo); letter-spacing: 0.02em; }
+  .page-header .tagline { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rosa); font-weight: 400; }
+
+  .page-footer {
+    padding: 11px 28px; border-top: 1px solid var(--rosa);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-footer span { font-size: 11px; color: var(--rosa); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .page-body { padding: 32px 44px 32px; }
+
+  .section-label { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cobre); font-weight: 500; margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 600; color: var(--espresso); line-height: 1.2; margin-bottom: 10px; }
+  .section-divider { width: 36px; height: 2px; background: var(--cobre); border-radius: 2px; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--cobre); padding: 14px 20px; margin: 20px 0; background: var(--nude); border-radius: 0 10px 10px 0; }
+  .pull-quote p { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--espresso); line-height: 1.7; }
+
+  .verse-box { background: linear-gradient(135deg, var(--nude) 0%, var(--crema) 100%); border: 1px solid var(--rosa); border-radius: 12px; padding: 16px 20px; margin-top: 22px; text-align: center; }
+  .verse-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: var(--espresso); line-height: 1.75; margin-bottom: 8px; }
+  .verse-ref { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cobre); font-weight: 500; }
+
+  .body-text { font-size: 15px; font-weight: 300; color: var(--topo); line-height: 1.85; margin-bottom: 18px; }
+  .body-text strong { color: var(--espresso); font-weight: 500; }
+
+  .insight-box { background: var(--espresso); border-radius: 12px; padding: 18px 22px; margin: 22px 0; }
+  .insight-box p { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--crema); line-height: 1.7; text-align: center; }
+
+  /* PORTADA */
+  .cover { background: linear-gradient(160deg, #FBF6F2 0%, #EFE3D6 45%, #E8D9CD 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 540px; text-align: center; padding: 60px 48px; }
+  .cover-orb-1 { width: 320px; height: 320px; border: 1px solid rgba(196,133,90,0.1); top: -80px; right: -80px; }
+  .cover-orb-2 { width: 200px; height: 200px; border: 1px solid rgba(166,176,160,0.15); bottom: 60px; left: -60px; }
+  .cover-orb-3 { width: 120px; height: 120px; border: 1px solid rgba(196,133,90,0.08); bottom: 100px; right: 40px; }
+  .cover-eyebrow { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--salvia); font-weight: 400; margin-bottom: 32px; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--espresso); line-height: 1.18; margin-bottom: 16px; max-width: 380px; }
+  .cover-subtitle { font-size: 16px; font-weight: 300; color: var(--topo); letter-spacing: 0.04em; margin-bottom: 40px; line-height: 1.65; }
+  .cover-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; width: 260px; }
+  .cover-divider-line { flex: 1; height: 1px; background: var(--cobre); opacity: 0.5; }
+  .cover-divider-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobre); }
+  .cover-author { font-family: 'Alex Brush', cursive; font-size: 52px; color: var(--cobre); margin-bottom: 10px; line-height: 1; }
+  .cover-tagline { font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--topo); font-weight: 400; margin-bottom: 52px; }
+  .cover-verse { max-width: 340px; border-top: 1px solid var(--rosa); padding-top: 22px; }
+  .cover-verse p { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: var(--topo); line-height: 1.75; margin-bottom: 8px; }
+  .cover-verse span { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cobre); font-weight: 500; }
+
+  .letter-drop-cap::first-letter { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--cobre); float: left; line-height: 0.78; margin-right: 8px; margin-top: 6px; }
+  .signature { font-family: 'Alex Brush', cursive; font-size: 36px; color: var(--cobre); margin-top: 20px; margin-bottom: 4px; }
+  .signature-title { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--topo); }
+
+  /* PASOS */
+  .step-card { border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; position: relative; overflow: hidden; background: rgba(196,133,90,0.08); }
+  .step-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; background: var(--cobre); }
+  .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .step-number { width: 40px; height: 40px; border-radius: 50%; background: var(--cobre); color: var(--crema); font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 600; color: var(--espresso); }
+  .step-min { display:block; font-family:'Poppins',sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobre); font-weight: 500; margin-top: 2px; }
+  .step-desc { font-size: 14.5px; font-weight: 300; color: var(--topo); line-height: 1.75; margin-bottom: 12px; }
+  .step-desc strong { color: var(--espresso); font-weight: 500; }
+  .step-key { font-size: 14px; font-style: italic; font-family: 'Playfair Display', serif; color: var(--espresso); padding: 10px 14px; background: rgba(255,255,255,0.55); border-radius: 8px; }
+
+  /* CHECKLIST */
+  .check-list { list-style: none; margin: 8px 0 4px; }
+  .check-list li { font-size: 15px; font-weight: 300; color: var(--topo); padding: 9px 0 9px 34px; position: relative; line-height: 1.5; border-bottom: 1px solid rgba(212,190,176,0.4); }
+  .check-list li:last-child { border-bottom: none; }
+  .check-box { position: absolute; left: 0; top: 8px; width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--rosa); background: var(--crema); cursor: pointer; transition: all .2s; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .check-box.checked { background: var(--cobre); border-color: var(--cobre); }
+  .check-box.checked::after { content: '✓'; color: #fff; font-size: 13px; position: absolute; top: 1px; left: 5px; }
+  .check-list li strong { color: var(--espresso); font-weight: 500; }
+
+  .reto-box { background: linear-gradient(135deg, var(--nude) 0%, var(--crema) 100%); border: 1px solid var(--rosa); border-radius: 12px; padding: 20px 22px; margin: 18px 0; }
+  .reto-box .reto-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobre); font-weight: 600; margin-bottom: 8px; }
+  .reto-box .reto-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--espresso); margin-bottom: 10px; }
+
+  .write-line { margin-bottom: 16px; }
+  .write-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--topo); font-weight: 500; margin-bottom: 6px; }
+  .write-input { border: none; border-bottom: 1.5px solid var(--rosa); background: transparent; width: 100%; padding: 6px 0; font-family: 'Poppins', sans-serif; font-size: 15px; color: var(--espresso); outline: none; }
+
+  .closing { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--rosa); text-align: center; }
+  .closing-quote { font-family: 'Playfair Display', serif; font-size: 19px; font-style: italic; color: var(--espresso); line-height: 1.7; margin-bottom: 6px; }
+  .closing-author { font-family: 'Alex Brush', cursive; font-size: 26px; color: var(--cobre); }
+
+  @media (max-width: 600px) {
+    .page { width: calc(100% - 16px); border-radius: 2px; }
+    .page-header { padding: 12px 20px 10px; }
+    .page-header .tagline { display: none; }
+    .page-body { padding: 24px 20px 24px; }
+    .page-footer { padding: 10px 20px; }
+    .page-footer span:nth-child(2) { display: none; }
+    .cover { padding: 44px 24px; min-height: auto; }
+    .cover-title { font-size: 30px; }
+    .cover-subtitle { font-size: 14px; }
+    .cover-author { font-size: 42px; }
+    .section-title { font-size: 24px; }
+    .step-title { font-size: 18px; }
+    .insight-box p, .pull-quote p { font-size: 16px; }
+  }
+
+  @media print {
+    html { background: white; }
+    body { background: white; padding: 0; }
+    .save-banner { display: none; }
+    .page { box-shadow: none; border-radius: 0; margin: 0; page-break-after: always; break-after: page; width: 210mm; max-width: none; min-height: 297mm; }
+    .page:last-child { page-break-after: avoid; break-after: avoid; }
+    .cover { min-height: 297mm; }
+    .page-footer { position: absolute; bottom: 0; left: 0; right: 0; }
+    .page-body { padding-bottom: 60px; }
+    .step-card, .verse-box, .insight-box, .pull-quote, .reto-box, .write-line { break-inside: avoid; page-break-inside: avoid; }
+    .section-title, .step-title { break-after: avoid; page-break-after: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { size: A4; margin: 0; }
+</style>
+</head>
+<body>
+
+<div id="guia-content">
+
+<!-- ═══ PAGE 1 — PORTADA ═══ -->
+<div class="page">
+  <div class="cover">
+    <span class="orb cover-orb-1"></span>
+    <span class="orb cover-orb-2"></span>
+    <span class="orb cover-orb-3"></span>
+
+    <p class="cover-eyebrow">Recurso gratuito &nbsp;·&nbsp; Anny Gómez</p>
+
+    <h1 class="cover-title">Reset de 5 minutos para la mujer agotada</h1>
+    <p class="cover-subtitle">5 pasos · 5 minutos · para volver<br>a ti cuando ya no puedes más</p>
+
+    <div class="cover-divider">
+      <div class="cover-divider-line"></div>
+      <div class="cover-divider-dot"></div>
+      <div class="cover-divider-line"></div>
+    </div>
+
+    <div class="cover-author">Anny Gómez</div>
+    <p class="cover-tagline">Pausa &nbsp;·&nbsp; Calma &nbsp;·&nbsp; Propósito</p>
+
+    <div class="cover-verse">
+      <p>"Vengan a mí todos los que están cansados y cargados, y yo los haré descansar."</p>
+      <span>Mateo 11:28</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .optin { max-width: 760px; width: calc(100% - 32px); margin: 0 auto 28px; }
+  .optin-card { background: linear-gradient(140deg, #2E1A10 0%, #3c2417 100%); border-radius: 20px; padding: 38px 32px; text-align: center; box-shadow: 0 8px 48px rgba(46,26,16,0.22); position: relative; overflow: hidden; }
+  .optin-eyebrow { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #D9A07A; font-weight: 500; margin-bottom: 8px; }
+  .optin-title { font-family: 'Playfair Display', serif; font-size: 27px; font-weight: 600; color: #FBF6F2; line-height: 1.25; margin-bottom: 10px; }
+  .optin-sub { font-size: 14px; font-weight: 300; color: rgba(245,237,216,0.75); line-height: 1.6; max-width: 380px; margin: 0 auto 22px; }
+  .optin-form { display: flex; flex-direction: column; gap: 11px; max-width: 380px; margin: 0 auto; }
+  .optin-form input { padding: 14px 16px; border-radius: 11px; border: 1px solid rgba(212,190,176,0.28); background: rgba(255,255,255,0.06); color: #FBF6F2; font-family: 'Poppins', sans-serif; font-size: 15px; outline: none; transition: border-color .2s; }
+  .optin-form input::placeholder { color: rgba(245,237,216,0.45); }
+  .optin-form input:focus { border-color: #C4855A; }
+  .optin-form button { margin-top: 4px; padding: 15px; border-radius: 11px; border: none; background: linear-gradient(135deg, #C4855A 0%, #D9A07A 100%); color: #2E1A10; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: transform .15s, box-shadow .2s; }
+  .optin-form button:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(196,133,90,0.35); }
+  .optin-form button:disabled { opacity: 0.6; cursor: default; transform: none; }
+  .optin-msg { margin-top: 14px; font-size: 14px; min-height: 18px; color: #DDB860; }
+  @media print { .optin { display: none !important; } }
+  @media (max-width:600px){ .optin-title{font-size:23px} }
+</style>
+
+<div class="optin">
+  <div class="optin-card">
+    <p class="optin-eyebrow">¿Quieres guardarlo?</p>
+    <h3 class="optin-title">Te lo envío a tu correo 🤍</h3>
+    <p class="optin-sub">Recibe el Reset de 5 minutos en PDF para tenerlo siempre contigo — y cada semana, una reflexión de Anny para vivir con más calma y propósito.</p>
+    <form id="resetForm" class="optin-form" novalidate>
+      <input type="text" id="rsName" placeholder="Tu nombre" autocomplete="name">
+      <input type="email" id="rsEmail" placeholder="Tu mejor correo" autocomplete="email" required>
+      <button type="submit" id="rsBtn">Envíamelo a mi correo</button>
+    </form>
+    <p id="rsMsg" class="optin-msg"></p>
+  </div>
+</div>
+
+<!-- ═══ PAGE 2 — CARTA DE ANNY ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Reset de 5 minutos</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Antes de empezar</p>
+    <h2 class="section-title">No estás cansada. Estás agotada.</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text letter-drop-cap">Hay un cansancio que no se quita durmiendo. Es el de hacer todo por todos —la casa, los hijos, el trabajo, los demás— y llegar al final del día sin que quede nada para ti. Sonríes por fuera, pero por dentro estás vacía.</p>
+
+    <p class="body-text">Y lo peor es la culpa: <strong>sientes que no tienes derecho a parar.</strong> Que descansar es ser floja. Que si te detienes, todo se cae.</p>
+
+    <p class="body-text">Déjame decirte algo: <strong>descansar no es rendirte. Es recargar.</strong> No necesitas una semana libre ni unas vacaciones que no llegan. Necesitas aprender a hacer una pausa real — aunque sea de 5 minutos — antes de seguir.</p>
+
+    <p class="body-text">Esto es exactamente lo que hago yo cuando siento que ya no puedo más. Cinco pasos, un minuto cada uno. Te devuelven la calma y te recuerdan quién eres.</p>
+
+    <div class="pull-quote">
+      <p>"No puedes dar desde un vaso vacío. Llenarte a ti también es amar a los tuyos."</p>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <p style="font-size:11px;font-weight:300;color:var(--topo)">Con cariño,</p>
+      <div class="signature">Anny Gómez</div>
+      <p class="signature-title">@annygomezleal &nbsp;·&nbsp; annygomez.com</p>
+    </div>
+
+    <div class="verse-box">
+      <p class="verse-text">"Él da fuerzas al cansado, y multiplica las fuerzas al que no tiene ningunas."</p>
+      <p class="verse-ref">Isaías 40:29</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Pausa · Calma · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 3 — EL RESET (5 PASOS) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Reset de 5 minutos</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">El reset</p>
+    <h2 class="section-title">5 minutos para volver a ti</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text" style="margin-bottom:20px">Pon un cronómetro en 5 minutos. Un paso por minuto. No necesitas un lugar especial ni que nadie te vea. Solo a ti, respirando.</p>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <div><h3 class="step-title">Respira</h3><span class="step-min">Minuto 1</span></div>
+      </div>
+      <p class="step-desc">Inhala por la nariz contando <strong>4</strong>. Sostén el aire contando <strong>7</strong>. Exhala lento por la boca contando <strong>8</strong>. Repítelo 4 veces. Esto literalmente calma tu sistema nervioso y le avisa a tu cuerpo que estás a salvo.</p>
+      <div class="step-key">"Antes de resolver nada, respira. La calma piensa mejor que la prisa."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <div><h3 class="step-title">Ancla tu mente</h3><span class="step-min">Minuto 2</span></div>
+      </div>
+      <p class="step-desc">Repite una verdad que te sostenga. La mía: <strong>"Vengan a mí todos los que están cansados… y yo los haré descansar."</strong> No estás sola cargando todo. Suelta el peso en quien sí puede sostenerlo.</p>
+      <div class="step-key">"Tu mente cree lo que le repites. Repítele paz."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <div><h3 class="step-title">La regla de UNA sola cosa</h3><span class="step-min">Minuto 3</span></div>
+      </div>
+      <p class="step-desc">De todos tus pendientes, elige <strong>UNA</strong> sola cosa: la más importante, no la más urgente. El resto puede esperar. El agobio nace de querer hacerlo todo a la vez. La paz nace de elegir.</p>
+      <div class="step-key">"No tienes que con todo. Tienes que con lo siguiente."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <div><h3 class="step-title">Suelta la culpa</h3><span class="step-min">Minuto 4</span></div>
+      </div>
+      <p class="step-desc">Dilo en voz alta: <strong>"Descansar no me hace menos. Me hace sostenible."</strong> No naciste para vivir vacía. Cuidarte no le quita a nadie; te devuelve a ti para los que amas.</p>
+      <div class="step-key">"La culpa pesa más que la tarea. Suéltala primero."</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-number">5</div>
+        <div><h3 class="step-title">Un gesto de calma</h3><span class="step-min">Minuto 5</span></div>
+      </div>
+      <p class="step-desc">Cierra con algo pequeño y físico: un vaso de agua, relaja los hombros, una mano en el pecho, agradece UNA cosa. Tu cuerpo necesita una señal de que el reset terminó y vuelves renovada.</p>
+      <div class="step-key">"La calma también se entrena, un gesto a la vez."</div>
+    </div>
+
+    <div class="insight-box">
+      <p>"No necesitas más tiempo. Necesitas pausas reales antes de seguir corriendo."</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Pausa · Calma · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 4 — TU CHECKLIST + HÁBITO ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Reset de 5 minutos</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Para tenerlo a mano</p>
+    <h2 class="section-title">Tu checklist del reset</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text" style="margin-bottom:10px">Guarda esto en tu teléfono o imprímelo. La próxima vez que sientas que ya no puedes más, haz los 5 pasos:</p>
+
+    <ul class="check-list">
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Respira</strong> — 4 segundos dentro, 7 sostén, 8 fuera (×4)</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Ancla tu mente</strong> — repite tu verdad / versículo</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Una sola cosa</strong> — elige la importante, suelta el resto</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Suelta la culpa</strong> — "descansar me hace sostenible"</li>
+      <li><span class="check-box" onclick="this.classList.toggle('checked')"></span><strong>Gesto de calma</strong> — agua, relaja los hombros, gratitud</li>
+    </ul>
+
+    <div class="reto-box">
+      <p class="reto-label">Conviértelo en hábito</p>
+      <p class="reto-title">Tu reset diario</p>
+      <p class="body-text" style="margin:0">Elige UN momento fijo al día para hacer tu reset de 5 minutos —antes de levantarte, después de dejar a los niños, o antes de dormir—. Cinco minutos al día cambian cómo vives los otros 1.435.</p>
+    </div>
+
+    <div class="write-line">
+      <p class="write-label">Mi reset será cada día a las…</p>
+      <input class="write-input" type="text">
+    </div>
+    <div class="write-line">
+      <p class="write-label">La verdad / versículo que voy a repetir</p>
+      <input class="write-input" type="text">
+    </div>
+
+    <div class="verse-box">
+      <p class="verse-text">"En paz me acostaré y asimismo dormiré; porque solo tú, Señor, me haces vivir confiada."</p>
+      <p class="verse-ref">Salmos 4:8</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Pausa · Calma · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE 5 — CIERRE ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="logo">Anny Gómez</span>
+    <span class="tagline">Reset de 5 minutos</span>
+  </div>
+  <div class="page-body">
+    <p class="section-label">Para llevar contigo</p>
+    <h2 class="section-title">Vuelve a ti</h2>
+    <div class="section-divider"></div>
+
+    <p class="body-text">Recuerda esto cada vez que el agotamiento quiera ganarte:</p>
+
+    <ul class="check-list" style="margin-bottom:20px">
+      <li style="padding-left:0;border:none"><strong>1.</strong> &nbsp;No estás cansada — estás agotada. Y tiene solución.</li>
+      <li style="padding-left:0;border:none"><strong>2.</strong> &nbsp;Descansar no es rendirte. Es recargar.</li>
+      <li style="padding-left:0;border:none"><strong>3.</strong> &nbsp;No tienes que con todo. Tienes que con lo siguiente.</li>
+      <li style="padding-left:0;border:none"><strong>4.</strong> &nbsp;5 minutos al día cambian los otros 1.435.</li>
+      <li style="padding-left:0;border:none"><strong>5.</strong> &nbsp;Llenarte a ti también es amar a los tuyos.</li>
+    </ul>
+
+    <div class="write-line">
+      <p class="write-label">Cómo quiero sentirme al final del día</p>
+      <input class="write-input" type="text">
+    </div>
+    <div class="write-line">
+      <p class="write-label">Una cosa que voy a soltar esta semana</p>
+      <input class="write-input" type="text">
+    </div>
+
+    <div class="insight-box" style="margin-top:18px">
+      <p>"No naciste para vivir agotada. Naciste para vivir con propósito."</p>
+    </div>
+
+    <div class="closing">
+      <p class="closing-quote">Si este reset te ayudó, cuéntamelo.<br>Te leo en Instagram.</p>
+      <div class="closing-author">Anny Gómez</div>
+      <p class="signature-title" style="margin-top:6px">@annygomezleal &nbsp;·&nbsp; annygomez.com</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>annygomez.com</span>
+    <span>Pausa · Calma · Propósito</span>
+    <span>@annygomezleal</span>
+  </div>
+</div>
+
+</div><!-- /guia-content -->
+
+<script>
+  (function(){
+    var f = document.getElementById('resetForm');
+    if (!f) return;
+    var btn = document.getElementById('rsBtn');
+    var msg = document.getElementById('rsMsg');
+    f.addEventListener('submit', async function(e){
+      e.preventDefault();
+      var name = document.getElementById('rsName').value.trim();
+      var email = document.getElementById('rsEmail').value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.style.color='#E0A0A0'; msg.textContent='Escribe un correo válido.'; return; }
+      btn.disabled = true; var orig = btn.textContent; btn.textContent = 'Enviando…'; msg.textContent='';
+      try {
+        var r = await fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name: name, email: email, source: 'reset' }) });
+        var d = await r.json();
+        if (r.ok && d.success) {
+          msg.style.color = '#DDB860';
+          msg.textContent = '¡Listo! Revisa tu correo 🤍 (mira también en spam/promociones)';
+          f.reset();
+        } else {
+          msg.style.color = '#E0A0A0';
+          msg.textContent = d.error || 'Algo salió mal. Intenta de nuevo.';
+        }
+      } catch (err) {
+        msg.style.color = '#E0A0A0';
+        msg.textContent = 'Error de conexión. Intenta de nuevo.';
+      } finally {
+        btn.disabled = false; btn.textContent = orig;
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

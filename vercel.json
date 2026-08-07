@@ -2,13 +2,21 @@
   "functions": {
     "api/generate-image.js": { "maxDuration": 60 }
   },
+  "redirects": [
+    { "source": "/next-flight-academy", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/next-flight-academy/", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/next-flight-academy/:path+", "destination": "/next-fly-academy/:path+", "permanent": false },
+    { "source": "/next-flight", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/nextflight", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/nextflightacademy", "destination": "/next-fly-academy/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://js.stripe.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://api.stripe.com https://errors.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com; worker-src blob:;"
+          "value": "default-src 'self'; script-src 'self' https://js.stripe.com https://www.paypal.com https://www.paypalobjects.com https://pay.google.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://api.stripe.com https://errors.stripe.com https://www.paypal.com https://www.sandbox.paypal.com https://api-m.paypal.com https://api-m.sandbox.paypal.com; frame-src https://js.stripe.com https://hooks.stripe.com https://www.paypal.com https://www.sandbox.paypal.com https://pay.google.com; worker-src blob:;"
         }
       ]
     }

@@ -1,1 +1,13 @@
+node_modules
 .vercel
+
+# secretos
+.env
+.env.*
+*.env
+.stripe.env
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log

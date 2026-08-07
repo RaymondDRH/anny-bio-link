@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Paso a Paso para Comenzar con Acorns</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
+
+  :root {
+    --green-dark: #0A3D2E;
+    --green-mid: #1B6B46;
+    --green-light: #00A86B;
+    --green-pale: #EAF5EF;
+    --gold: #E8961A;
+    --gold-pale: #FEF3DC;
+    --red: #C0392B;
+    --red-pale: #FDEDEC;
+    --blue-pale: #EBF5FF;
+    --blue: #1A6BAD;
+    --text: #0D1B14;
+    --text-mid: #2D4A3A;
+    --text-light: #5A7268;
+    --border: #D1E8DA;
+    --bg: #F7FBF8;
+    --white: #FFFFFF;
+    --shadow: 0 4px 24px rgba(10, 61, 46, 0.10);
+  }
+
+  @page { size: 794px auto; margin: 0; }
+  @page-disabled {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  /* ── PAGE BREAKS ── */
+  .page {
+    width: 100%;
+    background: var(--white);
+    position: relative;
+    padding: 0;
+  }
+
+  .page-break {
+    
+    
+  }
+
+  /* evitar cortes dentro de bloques */
+  .check-item, .card, .error-item, .faq-item, .step-item,
+  .tip-box, .warning-box, .info-box, .gold-box,
+  .resource-item, .next-step-card, .toc-item,
+  .chapter-header, .cta-block, .checklist, .error-list,
+  .card-grid, .next-steps-grid, .steps-list {
+    
+    
+  }
+
+  @media screen {
+    body { background: #D0D0D0; }
+    .page { width: 794px; margin: 32px auto; box-shadow: var(--shadow); padding: 48px 56px; min-height: 1122px; }
+  }
+
+  @media print {
+    body { background: white; }
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(155deg, #061F16 0%, #0A3D2E 45%, #1B6B46 100%);
+    min-height: 267mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 64px;
+    position: relative;
+    
+    
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300A86B' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .cover-badge {
+    background: rgba(0,168,107,0.20);
+    border: 1px solid rgba(0,168,107,0.40);
+    color: #6EE8B0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .cover-acorn {
+    font-size: 72px;
+    margin-bottom: 24px;
+    position: relative;
+    filter: drop-shadow(0 8px 24px rgba(0,168,107,0.4));
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    position: relative;
+    max-width: 580px;
+  }
+
+  .cover h1 span {
+    color: #6EE8B0;
+  }
+
+  .cover-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    text-align: center;
+    max-width: 500px;
+    line-height: 1.65;
+    position: relative;
+    margin-bottom: 52px;
+  }
+
+  .cover-divider {
+    width: 64px;
+    height: 3px;
+    background: linear-gradient(90deg, #00A86B, #E8961A);
+    border-radius: 8px;
+    margin: 0 auto 52px;
+    position: relative;
+  }
+
+  .cover-stats {
+    display: flex;
+    gap: 40px;
+    position: relative;
+    margin-bottom: 56px;
+  }
+
+  .cover-stat {
+    text-align: center;
+  }
+
+  .cover-stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    color: #6EE8B0;
+  }
+
+  .cover-stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  .cover-stat-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .cover-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 64px;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cover-footer-text {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 500;
+  }
+
+  .cover-footer-tag {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── INNER PAGES ── */
+  .inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--green-pale);
+    margin-bottom: 40px;
+  }
+
+  .page-header-brand {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .page-header-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-pale);
+    color: var(--green-mid);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green-dark);
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 32px;
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  /* ── CHAPTER HEADER ── */
+  .chapter-header {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .chapter-num {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.25);
+    color: #fff;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .chapter-info h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .chapter-info p {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
+  /* ── BODY TEXT ── */
+  p { margin-bottom: 14px; color: var(--text-mid); }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin: 24px 0 10px;
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-mid);
+    margin: 20px 0 8px;
+  }
+
+  /* ── FEATURE CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .card-icon { font-size: 24px; margin-bottom: 8px; }
+
+  .card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin: 0 0 6px;
+  }
+
+  .card p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    margin: 16px 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    background: var(--white);
+    transition: background 0.2s;
+  }
+
+  .check-item:first-child { border-radius: 12px 12px 0 0; }
+  .check-item:last-child { border-radius: 0 0 12px 12px; border-bottom: 1px solid var(--border); }
+
+  .check-item:nth-child(even) { background: var(--bg); }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    background: white;
+  }
+
+  .check-num {
+    width: 22px;
+    height: 22px;
+    background: var(--green-dark);
+    color: white;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .check-content h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 3px;
+  }
+
+  .check-content p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── CALLOUT BOXES ── */
+  .tip-box {
+    background: var(--green-pale);
+    border: 1px solid #B2DEC7;
+    border-left: 4px solid var(--green-light);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tip-box-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .tip-box-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin: 0 0 4px;
+  }
+
+  .tip-box-content p {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .warning-box {
+    background: var(--red-pale);
+    border: 1px solid #F5C6C1;
+    border-left: 4px solid var(--red);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .warning-box-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .warning-box-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--red);
+    margin: 0 0 4px;
+  }
+
+  .warning-box-content p {
+    font-size: 12.5px;
+    color: #7B1A1A;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .info-box {
+    background: var(--blue-pale);
+    border: 1px solid #BDD9F5;
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .info-box-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .info-box-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 0 0 4px;
+  }
+
+  .info-box-content p {
+    font-size: 12.5px;
+    color: #1A3A5C;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .gold-box {
+    background: var(--gold-pale);
+    border: 1px solid #F5D9A0;
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .gold-box-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .gold-box-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #7A4800;
+    margin: 0 0 4px;
+  }
+
+  .gold-box-content p {
+    font-size: 12.5px;
+    color: #5A3600;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ── ERROR LIST ── */
+  .error-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  .error-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--white);
+    border: 1px solid #F5C6C1;
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+
+  .error-badge {
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .error-item-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 3px;
+  }
+
+  .error-item-content p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── FAQ ── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-bottom: none;
+    padding: 14px 18px;
+    background: var(--white);
+  }
+
+  .faq-item:nth-child(even) { background: var(--bg); }
+  .faq-item:first-child { border-radius: 10px 10px 0 0; }
+  .faq-item:last-child { border-radius: 0 0 10px 10px; border-bottom: 1px solid var(--border); }
+
+  .faq-q {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 5px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .faq-q-icon {
+    color: var(--green-light);
+    flex-shrink: 0;
+  }
+
+  .faq-a {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    padding-left: 22px;
+    line-height: 1.55;
+  }
+
+  /* ── STEPS LIST ── */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 16px 0 24px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--green-dark);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-content h4 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 4px 0 4px;
+  }
+
+  .step-content p {
+    font-size: 12.5px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ── BONUS TABLE ── */
+  .bonus-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bonus-table th {
+    background: var(--green-dark);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 16px;
+    text-align: left;
+    letter-spacing: 0.3px;
+  }
+
+  .bonus-table td {
+    padding: 11px 16px;
+    font-size: 12.5px;
+    color: var(--text-mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bonus-table tr:last-child td { border-bottom: none; }
+  .bonus-table tr:nth-child(even) td { background: var(--bg); }
+
+  .badge-standard { background: #E8F5EE; color: #1B6B46; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .badge-promo { background: var(--gold-pale); color: #7A4800; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+  .badge-special { background: #F0E6FF; color: #5B1FA8; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+
+  /* ── SCREENSHOT PLACEHOLDER ── */
+  .screenshot-placeholder {
+    background: var(--bg);
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin: 16px 0;
+    color: var(--text-light);
+    font-size: 12px;
+  }
+
+  .screenshot-placeholder .icon { font-size: 28px; margin-bottom: 8px; }
+  .screenshot-placeholder strong { display: block; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+
+  /* ── NEXT STEPS ── */
+  .next-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0 24px;
+  }
+
+  .next-step-card {
+    background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+    border-radius: 14px;
+    padding: 22px 20px;
+    color: white;
+  }
+
+  .next-step-card .step-icon { font-size: 28px; margin-bottom: 10px; }
+  .next-step-card h4 { font-size: 14px; font-weight: 700; color: white; margin: 0 0 6px; }
+  .next-step-card p { font-size: 12px; color: rgba(255,255,255,0.70); margin: 0; line-height: 1.55; }
+
+  /* ── RESOURCES PAGE ── */
+  .resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .resource-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+
+  .resource-icon {
+    font-size: 22px;
+    width: 44px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .resource-content h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 2px;
+  }
+
+  .resource-content p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  /* ── CTA BLOCK ── */
+  .cta-block {
+    background: linear-gradient(135deg, #061F16 0%, #0A3D2E 60%, #1B6B46 100%);
+    border-radius: 16px;
+    padding: 32px 36px;
+    text-align: center;
+    margin: 24px 0;
+  }
+
+  .cta-block h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    color: white;
+    margin: 0 0 10px;
+  }
+
+  .cta-block p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    margin: 0 0 20px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #00A86B, #00C47E);
+    color: white;
+    font-size: 17px;
+    font-weight: 800;
+    padding: 18px 44px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 28px rgba(0,168,107,0.45);
+  }
+
+  .btn-referido {
+    display: block;
+    background: linear-gradient(135deg, #00A86B 0%, #00C47E 100%);
+    color: white;
+    font-size: 17px;
+    font-weight: 800;
+    padding: 20px 36px;
+    border-radius: 14px;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 28px rgba(0,168,107,0.35);
+    margin: 24px 0;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  .btn-referido span {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .cta-link-box {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    font-family: monospace;
+  }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .page-footer-brand {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green-light);
+  }
+
+  .page-footer-note {
+    font-size: 11px;
+    color: var(--text-light);
+  }
+
+  /* ── TOC ── */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0 28px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  .toc-num {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--green-light);
+    width: 28px;
+    height: 28px;
+    background: var(--green-pale);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .toc-text {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  .spacer { height: 20px; }
+
+  ul { padding-left: 18px; margin-bottom: 14px; }
+  ul li { font-size: 13px; color: var(--text-mid); margin-bottom: 5px; line-height: 1.55; }
+
+  strong { color: var(--text); }
+
+  .highlight { color: var(--green-light); font-weight: 700; }
+  .text-red { color: var(--red); font-weight: 600; }
+
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     PORTADA
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-badge">Guía Oficial de Referido · 2026</div>
+    <div class="cover-acorn">🌱</div>
+    <h1>Guía Paso a Paso para Comenzar con <span>Acorns</span> y Obtener Todos los Beneficios</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-sub">Aprende a invertir desde pocos dólares y evita los errores que pueden hacerte perder bonos y recompensas.</p>
+
+    <div class="cover-stats">
+      <div class="cover-stat">
+        <div class="cover-stat-num">+10M</div>
+        <div class="cover-stat-label">Usuarios activos</div>
+      </div>
+      <div class="cover-stat-divider"></div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">$1</div>
+        <div class="cover-stat-label">Para empezar</div>
+      </div>
+      <div class="cover-stat-divider"></div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">100%</div>
+        <div class="cover-stat-label">Automatizado</div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <span class="cover-footer-text">🔒 Guía exclusiva para nuevos usuarios · Uso personal</span>
+      <span class="cover-footer-tag">Guía de referido Acorns</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TABLA DE CONTENIDO + INTRO
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Tabla de Contenido</span>
+    </div>
+
+    <div class="section-tag">📋 Contenido</div>
+    <h2 class="section-title">Lo que vas a aprender</h2>
+    <p class="section-subtitle">Esta guía te lleva de la mano desde cero hasta tener tu cuenta activa e invertir con inteligencia.</p>
+
+    <div class="toc-grid">
+      <div class="toc-item"><div class="toc-num">01</div><span class="toc-text">¿Qué es Acorns?</span></div>
+      <div class="toc-item"><div class="toc-num">02</div><span class="toc-text">Cómo registrarte correctamente</span></div>
+      <div class="toc-item"><div class="toc-num">03</div><span class="toc-text">Errores que te hacen perder el bono</span></div>
+      <div class="toc-item"><div class="toc-num">04</div><span class="toc-text">Cómo verificar que todo quedó bien</span></div>
+      <div class="toc-item"><div class="toc-num">05</div><span class="toc-text">El programa de referidos</span></div>
+      <div class="toc-item"><div class="toc-num">06</div><span class="toc-text">Cómo invertir inteligentemente</span></div>
+      <div class="toc-item"><div class="toc-num">07</div><span class="toc-text">Preguntas frecuentes</span></div>
+      <div class="toc-item"><div class="toc-num">08</div><span class="toc-text">Próximos pasos</span></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-tag">👋 Introducción</div>
+    <h2 class="section-title">Bienvenido a tu nueva forma de invertir</h2>
+
+    <p>Si alguna vez pensaste que invertir era solo para personas con mucho dinero o conocimiento financiero, <strong>Acorns está aquí para demostrar lo contrario.</strong> Millones de personas en Estados Unidos ya están haciendo crecer su dinero de forma automática, sin complicaciones y desde su teléfono.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h4>Inversión automática</h4>
+        <p>Acorns invierte tu dinero sin que tengas que hacer nada. Solo configura una vez y el sistema trabaja por ti.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🪙</div>
+        <h4>Round-Ups inteligentes</h4>
+        <p>Cada compra que haces se redondea al dólar más cercano y la diferencia se invierte automáticamente.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h4>Portafolios diversificados</h4>
+        <p>Tu dinero se distribuye en diferentes activos para maximizar el crecimiento y reducir el riesgo.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h4>Plataforma segura</h4>
+        <p>Acorns está registrada en la SEC y protegida por SIPC hasta $500,000. Tu dinero está protegido.</p>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">💡</div>
+      <div class="tip-box-content">
+        <h4>¿Por qué necesitas esta guía?</h4>
+        <p>Muchas personas pierden sus bonos de bienvenida por cometer errores evitables durante el registro. Esta guía fue creada específicamente para que completes cada paso correctamente y aproveches al máximo todos los beneficios disponibles.</p>
+      </div>
+    </div>
+
+    <a class="btn-referido" href="https://acorns.com/share/?shareable_code=NQYLHN4&first_name=Anny&friend_reward=5">
+      🌱 Comenzar con Acorns y obtener mi bono
+      <span>Toca aquí para registrarte con el enlace de referido</span>
+    </a>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Introducción · Pág. 2</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 1
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 1</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>01</div>
+      <div class="chapter-info">
+        <h2>¿Qué es Acorns?</h2>
+        <p>Todo lo que necesitas saber sobre la plataforma antes de comenzar</p>
+      </div>
+    </div>
+
+    <p>Acorns es una <strong>aplicación de inversión automatizada</strong> diseñada para personas que quieren comenzar a invertir sin necesidad de experiencia previa. Fue fundada en 2012 y hoy cuenta con más de 10 millones de usuarios en Estados Unidos.</p>
+
+    <p>El concepto es simple: <strong>Acorns hace el trabajo duro por ti.</strong> Conectas tu cuenta bancaria, eliges un portafolio, y la aplicación comienza a invertir pequeñas cantidades de manera automática y constante.</p>
+
+    <h3>🔄 ¿Cómo funciona Acorns?</h3>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Round-Ups (Redondeo de compras)</h4>
+          <p>Cada vez que usas tu tarjeta de débito o crédito vinculada, Acorns redondea el precio al dólar más cercano e invierte esa diferencia. Ejemplo: si pagas $3.75 por un café, invierte $0.25 automáticamente.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Inversiones Recurrentes</h4>
+          <p>Programa depósitos automáticos diarios, semanales o mensuales. Puedes empezar con tan solo $5. La constancia es el secreto del crecimiento a largo plazo.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Portafolios Diversificados</h4>
+          <p>Acorns te ofrece 5 portafolios según tu perfil de riesgo: Conservador, Moderadamente Conservador, Moderado, Moderadamente Agresivo y Agresivo. Cada uno invierte en una mezcla de acciones y bonos.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Acorns Earn (Bonos por compras)</h4>
+          <p>Compra en tiendas asociadas como Nike, Walmart, Airbnb y más de 350 marcas, y recibe un porcentaje de tu compra directamente en tu cuenta de inversión.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>🛡️ Seguridad de la plataforma</h3>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <h4>Registrada en la SEC</h4>
+        <p>Acorns está regulada por la Comisión de Bolsa y Valores de EE.UU. (SEC). Opera dentro del marco legal financiero.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h4>Protección SIPC</h4>
+        <p>Tus inversiones están protegidas por SIPC hasta $500,000 en caso de que la firma cierre.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏦</div>
+        <h4>FDIC en Checking</h4>
+        <p>Si usas la cuenta de débito Acorns, tu saldo está protegido por el FDIC hasta $250,000.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h4>Encriptación 256-bit</h4>
+        <p>Toda tu información está protegida con el mismo nivel de encriptación que usan los bancos principales.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 1 · Pág. 3</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 2
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 2</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>02</div>
+      <div class="chapter-info">
+        <h2>Cómo registrarte correctamente</h2>
+        <p>Sigue este checklist paso a paso para no perderte ningún beneficio</p>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-box-icon">⚠️</div>
+      <div class="warning-box-content">
+        <h4>Antes de comenzar — Lee esto</h4>
+        <p>El <strong>orden</strong> en que completas cada paso es muy importante. Saltarte pasos o completarlos fuera de orden puede impedir que el sistema registre tu referido y pierdas los bonos de bienvenida.</p>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-num">1</div>
+        <div class="check-content">
+          <h4>Usar el enlace de referido correcto</h4>
+          <p>Abre el enlace que te compartieron directamente desde tu teléfono o computadora. <strong>No busques Acorns en Google ni en la App Store directamente</strong> — eso no registra el referido.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">2</div>
+        <div class="check-content">
+          <h4>Crear una cuenta nueva</h4>
+          <p>Registra tu nombre, correo electrónico y contraseña. Si ya tienes una cuenta de Acorns, este proceso no aplica — el referido solo funciona con cuentas nuevas.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">3</div>
+        <div class="check-content">
+          <h4>Verificar tu identidad</h4>
+          <p>Acorns solicita tu número de Seguro Social (SSN) y otra información personal por requerimiento federal (Ley USA PATRIOT Act). Es un proceso estándar y seguro en todas las plataformas de inversión.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">4</div>
+        <div class="check-content">
+          <h4>Vincular tu cuenta bancaria</h4>
+          <p>Conecta tu cuenta de banco de manera segura usando Plaid. Necesitas una cuenta bancaria activa en Estados Unidos. Sin este paso, no puedes hacer depósitos ni recibir bonos.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">5</div>
+        <div class="check-content">
+          <h4>Completar tu perfil financiero</h4>
+          <p>Responde las preguntas sobre tus metas financieras, nivel de ingresos y tolerancia al riesgo. Con esta información, Acorns te asigna el portafolio más adecuado para ti.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">6</div>
+        <div class="check-content">
+          <h4>Realizar el depósito inicial</h4>
+          <p>Realiza tu primer depósito. Puedes empezar desde $5. Este paso es <strong>indispensable</strong> para activar la cuenta y cumplir con los requisitos de los bonos promocionales.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">7</div>
+        <div class="check-content">
+          <h4>Confirmar que la transferencia fue aprobada</h4>
+          <p>Espera la confirmación del banco (usualmente 1–3 días hábiles). Verifica en la app que el depósito aparece como "completado" o "procesado". No canceles la cuenta durante este periodo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">📱</div>
+      <div class="tip-box-content">
+        <h4>¿Dónde descargo la app?</h4>
+        <p>Una vez que abras el enlace de referido desde tu teléfono, serás redirigido automáticamente a la App Store (iPhone) o Google Play (Android) para descargar Acorns. <strong>No cierres el enlace antes de descargar</strong> — el código de referido se guarda automáticamente.</p>
+      </div>
+    </div>
+
+    <a class="btn-referido" href="https://acorns.com/share/?shareable_code=NQYLHN4&first_name=Anny&friend_reward=5">
+      🔗 Usar el enlace de referido ahora
+      <span>Recuerda: debes entrar desde este enlace para recibir tu bono</span>
+    </a>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 2 · Pág. 4</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 3
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 3</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>03</div>
+      <div class="chapter-info">
+        <h2>Errores que pueden hacerte perder el bono</h2>
+        <p>Evita estas fallas comunes que invalidan el referido</p>
+      </div>
+    </div>
+
+    <p>El sistema de referidos de Acorns es automático, pero también es estricto. Cualquier error en el proceso puede significar que el referido <strong>no sea contabilizado</strong> y que tanto tú como quien te invitó pierdan sus bonos.</p>
+
+    <div class="error-list">
+      <div class="error-item">
+        <span class="error-badge">ERROR 1</span>
+        <div class="error-item-content">
+          <h4>No usar el enlace de referido</h4>
+          <p>Si descargaste la app desde la App Store o Google Play sin abrir primero el enlace de tu contacto, el sistema no puede rastrear que vienes de un referido. Este es el error más común y uno de los más difíciles de revertir.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 2</span>
+        <div class="error-item-content">
+          <h4>Tener una cuenta anterior en Acorns</h4>
+          <p>Si en algún momento creaste una cuenta en Acorns (aunque la hayas cerrado), los bonos de nuevo usuario probablemente no apliquen para ti. El sistema verifica historial por correo, SSN y dispositivo.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 3</span>
+        <div class="error-item-content">
+          <h4>No completar la verificación de identidad</h4>
+          <p>Una cuenta que no ha sido verificada con SSN y datos personales completos se considera incompleta. Los bonos se acreditan únicamente a cuentas verificadas al 100%.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 4</span>
+        <div class="error-item-content">
+          <h4>No conectar una cuenta bancaria válida</h4>
+          <p>Sin una cuenta bancaria activa y verificada, Acorns no puede procesar depósitos. Usar cuentas de prepago, Chime Beta, o cuentas bloqueadas puede causar el rechazo de la vinculación.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 5</span>
+        <div class="error-item-content">
+          <h4>Cancelar la cuenta demasiado pronto</h4>
+          <p>Algunos bonos requieren que mantengas la cuenta activa durante un periodo mínimo (generalmente 30 a 90 días). Cancelar antes invalida el bono retroactivamente.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 6</span>
+        <div class="error-item-content">
+          <h4>No realizar el depósito mínimo requerido</h4>
+          <p>Los bonos promocionales generalmente requieren un depósito inicial o un mínimo de fondos invertidos para ser acreditados. Si la cuenta tiene $0, el bono no se activa.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">ERROR 7</span>
+        <div class="error-item-content">
+          <h4>El banco rechaza la transferencia</h4>
+          <p>Si el banco devuelve la transferencia (NSF, fondos insuficientes, o cuenta no compatible), el depósito no se contabiliza. Asegúrate de tener fondos disponibles y que tu banco permita transferencias ACH.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-box-icon">🚨</div>
+      <div class="warning-box-content">
+        <h4>IMPORTANTE: Si alguno de estos pasos falla, el sistema puede no contabilizar el referido.</h4>
+        <p>En caso de dudas, contacta al soporte de Acorns <strong>antes</strong> de cerrar la aplicación o intentar registrarte de nuevo. El equipo de soporte puede revisar el estado de tu referido si actúas a tiempo.</p>
+      </div>
+    </div>
+
+    <a class="btn-referido" href="https://acorns.com/share/?shareable_code=NQYLHN4&first_name=Anny&friend_reward=5">
+      ✅ Registrarme correctamente desde aquí
+      <span>Evita todos los errores — entra siempre por este enlace</span>
+    </a>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 3 · Pág. 5</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 4
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 4</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>04</div>
+      <div class="chapter-info">
+        <h2>Cómo verificar que todo quedó bien</h2>
+        <p>Confirma que tu cuenta está activa y tu referido fue registrado</p>
+      </div>
+    </div>
+
+    <p>Una vez completado el registro, es importante que <strong>confirmes que todo está funcionando correctamente</strong>. Esto te evitará sorpresas y te dará la tranquilidad de saber que tu bono está en camino.</p>
+
+    <h3>✅ Lista de verificación post-registro</h3>
+
+    <div class="checklist">
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-content">
+          <h4>Estado de la cuenta: "Activa"</h4>
+          <p>En la app, ve a Perfil → Configuración de cuenta. Debe mostrar que tu cuenta está activa y en buen estado.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-content">
+          <h4>Identidad verificada</h4>
+          <p>Confirma que no aparece ninguna notificación pendiente de verificación. Si la hay, resuélvela de inmediato.</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-content">
+          <h4>Cuenta bancaria vinculada correctamente</h4>
+          <p>En la sección de "Transferencias" o "Vinculación bancaria" debe aparecer tu banco con el estado "Vinculado" o "Activo".</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-content">
+          <h4>Depósito inicial en proceso o completado</h4>
+          <p>Ve a la sección de "Actividad" o "Historial". Debes ver tu primer depósito listado como "En proceso" o "Completado".</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-box"></div>
+        <div class="check-content">
+          <h4>Portafolio asignado</h4>
+          <p>Verifica que se te haya asignado un portafolio de inversión (Conservador, Moderado, etc.) en la pantalla principal de tu cuenta Invest.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid" style="margin-top:16px;">
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <h4>Estado: Activa</h4>
+        <p>Tu cuenta debe mostrar este estado antes de que cualquier bono pueda ser acreditado. Sin este estado, el proceso está incompleto.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h4>Depósito: En proceso</h4>
+        <p>Las transferencias bancarias toman 1–3 días hábiles. Ver el estado "En proceso" significa que todo va bien — solo espera.</p>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">💡</div>
+      <div class="tip-box-content">
+        <h4>¿Cuándo llega el bono?</h4>
+        <p>Los bonos de referido generalmente se acreditan entre <strong>3 y 15 días hábiles</strong> después de que todos los requisitos han sido completados. Recibirás una notificación en la app cuando el bono sea acreditado en tu cuenta.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-icon">📞</div>
+      <div class="info-box-content">
+        <h4>¿Tienes problemas o dudas?</h4>
+        <p>Contacta al soporte oficial de Acorns en <strong>support.acorns.com</strong> o desde la app en Perfil → Ayuda. El soporte en inglés está disponible de lunes a viernes. Explica tu situación con todos los detalles posibles.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 4 · Pág. 6</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 5
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 5</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>05</div>
+      <div class="chapter-info">
+        <h2>Cómo funciona el programa de referidos</h2>
+        <p>Comparte tu enlace y genera ingresos adicionales</p>
+      </div>
+    </div>
+
+    <p>El programa de referidos de Acorns es una de las formas más sencillas de ganar dinero extra mientras ayudas a otras personas a comenzar su camino en las inversiones. Es un sistema de <strong>ganar-ganar</strong>: tú recibes un bono y la persona que invitas también recibe uno.</p>
+
+    <h3>🔗 ¿Qué es un enlace de referido?</h3>
+    <p>Es un link único y personalizado que Acorns te genera dentro de la aplicación. Cuando alguien se registra usando tu enlace y completa todos los pasos requeridos, ambos reciben una recompensa directamente en sus cuentas de inversión.</p>
+
+    <h3>📤 Cómo encontrar y compartir tu enlace</h3>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Abre la app de Acorns</h4>
+          <p>Una vez que tu cuenta esté activa y verificada, podrás acceder al programa de referidos.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Ve a Perfil → Invitar amigos</h4>
+          <p>Busca la sección "Refer a friend" o "Invitar amigos" dentro de tu perfil o menú principal.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Copia o comparte tu enlace</h4>
+          <p>Puedes compartirlo directamente por mensaje de texto, WhatsApp, correo, redes sociales o donde prefieras.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>🎁 Tipos de bonos: ¿cuál aplica para ti?</h3>
+
+    <table class="bonus-table">
+      <thead>
+        <tr>
+          <th>Tipo de Bono</th>
+          <th>¿Quién lo recibe?</th>
+          <th>Requisito</th>
+          <th>Vigencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge-standard">Estándar</span></td>
+          <td>Referidor + nuevo usuario</td>
+          <td>Completar registro + depósito inicial</td>
+          <td>Siempre disponible</td>
+        </tr>
+        <tr>
+          <td><span class="badge-promo">Promocional</span></td>
+          <td>Nuevo usuario principalmente</td>
+          <td>Depósito mínimo + mantener cuenta activa</td>
+          <td>Tiempo limitado</td>
+        </tr>
+        <tr>
+          <td><span class="badge-special">Especial</span></td>
+          <td>Ambos (puede ser mayor)</td>
+          <td>Requisitos específicos de campaña</td>
+          <td>Campañas puntuales</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="gold-box">
+      <div class="gold-box-icon">⭐</div>
+      <div class="gold-box-content">
+        <h4>Sobre los montos de los bonos</h4>
+        <p>Acorns actualiza regularmente las promociones y bonos disponibles. Los montos específicos varían según las campañas vigentes al momento de tu registro. <strong>Siempre verifica los términos actuales directamente en la app o en el enlace de referido compartido contigo.</strong></p>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">💡</div>
+      <div class="tip-box-content">
+        <h4>Maximiza tus ganancias con referidos</h4>
+        <p>No hay límite en la cantidad de personas que puedes referir. Cada persona que completa el proceso correctamente genera un bono para ti. A mayor cantidad de referidos exitosos, mayores son tus ganancias pasivas.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 5 · Pág. 7</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 6
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 6</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>06</div>
+      <div class="chapter-info">
+        <h2>Cómo empezar a invertir inteligentemente</h2>
+        <p>Principios clave para hacer crecer tu dinero desde el primer día</p>
+      </div>
+    </div>
+
+    <p>Registrarte es solo el primer paso. Lo que haces <strong>después</strong> del registro es lo que determinará cuánto puede crecer tu dinero a lo largo del tiempo. Estos son los principios fundamentales que todo nuevo inversor debe conocer.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h4>Inversión automática</h4>
+        <p>Configura inversiones recurrentes semanales aunque sean pequeñas. La automatización elimina la tentación de "esperar el momento perfecto" — que nunca llega.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⏳</div>
+        <h4>Piensa en el largo plazo</h4>
+        <p>El interés compuesto funciona con el tiempo. $25 por semana durante 10 años puede crecer considerablemente más de lo que invertiste originalmente.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h4>Diversificación</h4>
+        <p>Acorns invierte tu dinero en ETFs que incluyen cientos de acciones y bonos. No dependes del éxito de una sola empresa.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📅</div>
+        <h4>Constancia sobre cantidad</h4>
+        <p>Es mejor invertir $10 cada semana de manera consistente que $200 una vez al año. La frecuencia construye el hábito y el hábito construye el patrimonio.</p>
+      </div>
+    </div>
+
+    <h3>❌ Errores comunes de principiantes</h3>
+
+    <div class="error-list">
+      <div class="error-item">
+        <span class="error-badge">EVITAR</span>
+        <div class="error-item-content">
+          <h4>Retirar el dinero cuando el mercado baja</h4>
+          <p>Las caídas del mercado son temporales y normales. Retirar durante una baja es la forma más común de perder dinero en inversiones.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">EVITAR</span>
+        <div class="error-item-content">
+          <h4>No activar los Round-Ups</h4>
+          <p>Los Round-Ups son dinero que ya gastaste de todas formas. No activarlos es dejar pasar una oportunidad de inversión sin esfuerzo adicional.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">EVITAR</span>
+        <div class="error-item-content">
+          <h4>No revisar el portafolio asignado</h4>
+          <p>Si tienes 25 años y un horizonte largo, un portafolio conservador puede limitar tu crecimiento. Verifica que tu portafolio coincide con tus metas reales.</p>
+        </div>
+      </div>
+      <div class="error-item">
+        <span class="error-badge">EVITAR</span>
+        <div class="error-item-content">
+          <h4>Ignorar Acorns Earn</h4>
+          <p>Comprar en tiendas asociadas y recibir un porcentaje de vuelta en inversiones es dinero gratis. Activa esta función desde el principio.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">🌱</div>
+      <div class="tip-box-content">
+        <h4>El principio del árbol de roble</h4>
+        <p>El nombre "Acorns" (bellotas en inglés) viene de la frase: <em>"Los robles más fuertes nacen de las bellotas más pequeñas."</em> Tu inversión hoy, por pequeña que sea, puede convertirse en algo grande mañana. <strong>Lo único que necesitas es empezar.</strong></p>
+      </div>
+    </div>
+
+    <a class="btn-referido" href="https://acorns.com/share/?shareable_code=NQYLHN4&first_name=Anny&friend_reward=5">
+      💵 Empezar a invertir con Acorns
+      <span>Haz clic aquí · Tu primer depósito puede ser desde $5</span>
+    </a>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 6 · Pág. 8</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 7 — FAQ
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 7</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>07</div>
+      <div class="chapter-info">
+        <h2>Preguntas frecuentes</h2>
+        <p>Las respuestas a las dudas más comunes entre nuevos usuarios</p>
+      </div>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Necesito mucho dinero para empezar?</div>
+        <div class="faq-a">No. Puedes comenzar con tan solo $5. La idea de Acorns es precisamente que cualquier persona pueda invertir, sin importar cuánto dinero tenga.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Acorns está disponible para inmigrantes?</div>
+        <div class="faq-a">Acorns requiere número de Seguro Social (SSN) o ITIN y una dirección en Estados Unidos. Si cumples estos requisitos, puedes registrarte independientemente de tu estatus migratorio.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Cuánto cobra Acorns por usar el servicio?</div>
+        <div class="faq-a">Acorns cobra entre $3 y $12 al mes dependiendo del plan (Bronze, Silver, Gold). Para balances pequeños, es importante considerar este costo en relación a tus inversiones.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Puedo perder todo mi dinero?</div>
+        <div class="faq-a">Como toda inversión, existe riesgo de pérdida. Sin embargo, los portafolios de Acorns están diversificados en cientos de activos, lo que reduce significativamente ese riesgo. A largo plazo, los mercados tienden a crecer.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Cuándo puedo retirar mi dinero?</div>
+        <div class="faq-a">Puedes retirar tu dinero en cualquier momento. Las transferencias tardan entre 3 y 6 días hábiles en llegar a tu cuenta bancaria. Sin embargo, retirar demasiado pronto puede invalidar bonos de bienvenida.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Qué son los Round-Ups y cómo funcionan?</div>
+        <div class="faq-a">Cuando haces una compra (ej: $3.40), Acorns redondea a $4.00 y la diferencia ($0.60) se acumula. Cuando el total acumulado llega a $5, se invierte automáticamente en tu portafolio.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Es seguro vincular mi cuenta bancaria?</div>
+        <div class="faq-a">Sí. Acorns usa Plaid, un servicio de terceros de alta seguridad que usan miles de apps financieras. No almacena tus credenciales bancarias directamente.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Cuánto tiempo tarda en llegar el bono de referido?</div>
+        <div class="faq-a">Generalmente entre 3 y 15 días hábiles después de completar todos los pasos requeridos. Recibirás una notificación en la app cuando el bono sea acreditado.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Puedo tener más de una cuenta en Acorns?</div>
+        <div class="faq-a">No. Acorns solo permite una cuenta por persona. Tener cuentas duplicadas viola sus términos de servicio y puede resultar en la suspensión de ambas cuentas.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Qué pasa si el mercado cae justo cuando empiezo?</div>
+        <div class="faq-a">En realidad, las caídas del mercado son oportunidades de comprar más acciones a menor precio. Esto se llama "dollar cost averaging" y es una estrategia que beneficia a los inversores a largo plazo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Tengo que pagar impuestos por mis ganancias en Acorns?</div>
+        <div class="faq-a">Sí. Si tus inversiones generan ganancias, podrías deber impuestos en tu declaración anual. Acorns envía un formulario 1099 a fin de año con el resumen de tu actividad. Consulta a un contador si tienes dudas.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Puedo cancelar mi suscripción en cualquier momento?</div>
+        <div class="faq-a">Sí, puedes cancelar cuando quieras. Sin embargo, asegúrate de revisar los términos de los bonos activos antes de hacerlo, ya que cancelar prematuramente puede invalidar recompensas pendientes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Qué portafolio me conviene si soy principiante?</div>
+        <div class="faq-a">Depende de tu tolerancia al riesgo y tu horizonte de tiempo. Si tienes más de 5 años para invertir y puedes tolerar fluctuaciones, un portafolio Moderado o Moderadamente Agresivo suele dar mejores resultados a largo plazo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Puedo vincular una cuenta de Chime o Cash App?</div>
+        <div class="faq-a">Algunas cuentas como Chime o Cash App pueden tener limitaciones de compatibilidad con Plaid. Para mejores resultados, vincula una cuenta de banco tradicional (Wells Fargo, Chase, Bank of America, etc.).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-q-icon">❓</span> ¿Cuántas personas puedo referir?</div>
+        <div class="faq-a">No hay límite. Puedes referir a tantas personas como quieras. Cada referido exitoso genera un bono para ti. Es una excelente forma de generar ingresos adicionales compartiendo algo que ya usas.</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 7 · Pág. 9</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     CAPÍTULO 8 — PRÓXIMOS PASOS
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Capítulo 8</span>
+    </div>
+
+    <div class="chapter-header">
+      <div class="chapter-num">CAP<br>08</div>
+      <div class="chapter-info">
+        <h2>Próximos pasos</h2>
+        <p>Tu camino hacia la libertad financiera comienza ahora</p>
+      </div>
+    </div>
+
+    <p>Llegaste al final de la guía. Ahora tienes todo el conocimiento necesario para comenzar con Acorns de la forma correcta y aprovechar al máximo cada beneficio disponible. El siguiente paso es tuyo.</p>
+
+    <div class="next-steps-grid">
+      <div class="next-step-card">
+        <div class="step-icon">🔗</div>
+        <h4>Paso 1: Abre el enlace de referido</h4>
+        <p>Usa el enlace personalizado que te compartieron. No busques la app directamente — ese paso es fundamental para recibir los bonos.</p>
+      </div>
+      <div class="next-step-card">
+        <div class="step-icon">✅</div>
+        <h4>Paso 2: Completa el registro</h4>
+        <p>Sigue el checklist del Capítulo 2 paso a paso. Tómate tu tiempo, no omitas pasos y verifica cada sección.</p>
+      </div>
+      <div class="next-step-card">
+        <div class="step-icon">💵</div>
+        <h4>Paso 3: Haz tu primer depósito</h4>
+        <p>Aunque sea pequeño, haz ese primer depósito. Es lo que activa tu cuenta y dispara el proceso de bonificación.</p>
+      </div>
+      <div class="next-step-card">
+        <div class="step-icon">📚</div>
+        <h4>Paso 4: Aprende mientras inviertes</h4>
+        <p>Acorns tiene recursos educativos dentro de la app. Explóralos. El conocimiento es el mejor activo que puedes tener.</p>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <h3>¿Listo para comenzar?</h3>
+      <p>Toca el botón y accede con el enlace de referido para obtener todos tus beneficios de bienvenida.</p>
+      <a class="cta-button" href="https://acorns.com/share/?shareable_code=NQYLHN4&first_name=Anny&friend_reward=5">🌱 Comenzar con Acorns Ahora</a>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-icon">🤝</div>
+      <div class="tip-box-content">
+        <h4>Después de registrarte: comparte tu propio enlace</h4>
+        <p>Una vez activa tu cuenta, obtendrás tu propio enlace de referido. Compártelo con familia, amigos o en tus redes sociales y genera ingresos adicionales cada vez que alguien complete el proceso usando tu enlace.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Capítulo 8 · Pág. 10</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     RECURSOS
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="inner">
+    <div class="page-header">
+      <span class="page-header-brand">🌱 Guía Acorns</span>
+      <span class="page-header-label">Recursos</span>
+    </div>
+
+    <div class="section-tag">📚 Recursos</div>
+    <h2 class="section-title">Recursos recomendados</h2>
+    <p class="section-subtitle">Herramientas y páginas que te ayudarán a seguir aprendiendo sobre inversión y finanzas personales.</p>
+
+    <div class="resource-list">
+      <div class="resource-item">
+        <div class="resource-icon">🏦</div>
+        <div class="resource-content">
+          <h4>Acorns Help Center</h4>
+          <p>Centro oficial de ayuda de Acorns. Tutoriales, artículos y soporte directo en inglés.</p>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">📖</div>
+        <div class="resource-content">
+          <h4>Acorns Grow</h4>
+          <p>Blog educativo de Acorns con artículos sobre finanzas personales, ahorro e inversión.</p>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">📊</div>
+        <div class="resource-content">
+          <h4>Investor.gov (SEC)</h4>
+          <p>Recursos educativos gratuitos de la Comisión de Bolsa y Valores. Ideal para aprender los fundamentos de la inversión.</p>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">💰</div>
+        <div class="resource-content">
+          <h4>MyMoney.gov</h4>
+          <p>Portal del gobierno de EE.UU. con educación financiera en español. Incluye calculadoras y guías de ahorro.</p>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">📱</div>
+        <div class="resource-content">
+          <h4>App de Acorns</h4>
+          <p>Disponible en iOS y Android. Incluye sección educativa "Learn" con artículos y videos sobre finanzas personales.</p>
+        </div>
+      </div>
+      <div class="resource-item">
+        <div class="resource-icon">🧮</div>
+        <div class="resource-content">
+          <h4>Calculadora de interés compuesto</h4>
+          <p>Usa calculadoras en línea gratuitas (como en Investor.gov) para visualizar el crecimiento potencial de tus inversiones a lo largo del tiempo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-box">
+      <div class="gold-box-icon">📌</div>
+      <div class="gold-box-content">
+        <h4>Nota sobre la información de esta guía</h4>
+        <p>Esta guía fue creada con propósitos educativos y es solo una referencia general. Los términos, condiciones, montos de bonos y características de Acorns pueden cambiar en cualquier momento. Siempre verifica la información más actualizada directamente en <strong>acorns.com</strong> antes de tomar decisiones financieras.</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-brand">🌱 Guía Acorns</span>
+      <span class="page-footer-note">Recursos · Pág. 11</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     PÁGINA DE CONTACTO / CIERRE
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="cover" style="justify-content: flex-start; padding-top: 80px;">
+    <div style="position:relative; text-align:center; width:100%; max-width:560px; margin:0 auto;">
+      <div style="font-size:56px; margin-bottom:24px;">🌱</div>
+      <div class="cover-badge">¡Gracias por leer esta guía!</div>
+      <h1 style="font-size:30px; margin-top:24px;">¿Tienes preguntas? Estamos aquí para ayudarte.</h1>
+      <div class="cover-divider" style="margin: 24px auto;"></div>
+      <p class="cover-sub" style="margin-bottom:40px;">Si tienes dudas sobre el proceso de registro, los bonos o cualquier parte de esta guía, no dudes en contactarnos. Queremos que tu experiencia con Acorns sea exitosa desde el primer día.</p>
+
+      <a href="https://www.instagram.com/annygomezleal/" style="text-decoration:none; display:block; margin-bottom:32px;">
+        <div style="background: linear-gradient(135deg, rgba(131,58,180,0.35) 0%, rgba(253,29,29,0.25) 50%, rgba(252,176,69,0.25) 100%); border: 1px solid rgba(255,255,255,0.18); border-radius:16px; padding: 24px 32px; display:flex; align-items:center; gap:20px; transition: opacity 0.2s;">
+          <div style="width:56px; height:56px; border-radius:16px; background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); display:flex; align-items:center; justify-content:center; font-size:26px; flex-shrink:0;">📸</div>
+          <div style="text-align:left;">
+            <div style="color:rgba(255,255,255,0.5); font-size:10.5px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px;">Sígueme en Instagram</div>
+            <div style="color:white; font-size:20px; font-weight:800; letter-spacing:0.3px;">@annygomezleal</div>
+            <div style="color:rgba(255,255,255,0.45); font-size:11.5px; margin-top:3px;">instagram.com/annygomezleal</div>
+          </div>
+          <div style="margin-left:auto; color:rgba(255,255,255,0.3); font-size:22px;">→</div>
+        </div>
+      </a>
+
+      <p style="color:rgba(255,255,255,0.35); font-size:11.5px; line-height:1.7; max-width:460px; margin:0 auto;">
+        Esta guía fue creada con fines educativos. No somos representantes oficiales de Acorns. Los bonos, términos y condiciones son responsabilidad directa de Acorns y pueden cambiar sin previo aviso.
+      </p>
+    </div>
+
+    <div class="cover-footer">
+      <span class="cover-footer-text">Guía de Referido Acorns · Uso personal</span>
+      <span class="cover-footer-tag">© 2026 · Todos los derechos reservados</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
