@@ -233,6 +233,38 @@
   .footer-note{text-align:center;color:var(--topo);font-size:11.5px;margin-top:30px;opacity:.8;}
   .restart{background:none;border:none;color:var(--topo);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;margin:18px auto 0;display:block;}
 
+  /* ===== Captura de correo (gate suave) ===== */
+  .gate-head{text-align:center;}
+  .gate-sub{font-size:14.5px;line-height:1.6;color:var(--topo);margin:12px 0 0;}
+  .gate-form{display:flex;flex-direction:column;gap:12px;margin-top:26px;}
+  .gate-input{
+    appearance:none;width:100%;font-family:inherit;
+    /* 16px evita el zoom automatico de iOS al enfocar un campo */
+    font-size:16px;color:var(--espresso);
+    background:var(--glass);border:1px solid var(--glass-line);
+    padding:17px 20px;border-radius:var(--r);min-height:56px;
+    backdrop-filter:blur(10px);
+    transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  /* #6E5044 sobre el fondo crema da 4.6:1 — cumple WCAG AA.
+     El anterior (--topo al 75%) daba 2.97:1 y se leia mal en exteriores. */
+  .gate-input::placeholder{color:#6E5044;opacity:1;}
+  /* Visible solo para lectores de pantalla */
+  .solo-lectores{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
+  .gate-input:focus{outline:none;border-color:var(--cobre);box-shadow:0 0 0 3px rgba(196,133,90,.18);}
+  .gate-input[aria-invalid="true"]{border-color:#B3452B;}
+  .gate-error{color:#B3452B;font-size:13px;line-height:1.4;min-height:18px;text-align:center;}
+  .gate-note{font-size:11.5px;line-height:1.55;color:var(--topo);opacity:.85;text-align:center;margin-top:16px;}
+  .gate-spin{
+    width:18px;height:18px;border-radius:50%;
+    border:2px solid rgba(255,255,255,.45);border-top-color:#fff;
+    animation:gate-rot .7s linear infinite;
+  }
+  @keyframes gate-rot{to{transform:rotate(360deg);}}
+
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
     .progress-fill{transition:width .01s!important;}
@@ -257,7 +289,7 @@
     <h1>¿Qué tipo de mujer eres <em>en realidad</em>?</h1>
     <p class="hero-sub">Responde con sinceridad. En 2 minutos descubrirás tu arquetipo, con un mensaje y un versículo escritos solo para ti — y tu medalla para compartir.</p>
     <button class="btn btn-primary" id="start-btn">Descubrir mi tipo ✦</button>
-    <span class="chip"><b>7 preguntas</b><span class="dot"></span>2 minutos<span class="dot"></span>sin registro</span>
+    <span class="chip"><b>7 preguntas</b><span class="dot"></span>2 minutos<span class="dot"></span>gratis</span>
     <div class="hero-sign">
       <span class="sign">Anny Gómez</span>
       <small>@annygomezleal</small>
@@ -283,6 +315,37 @@
       <h2 class="serif">Analizando tus respuestas…</h2>
       <p id="loading-text">Escuchando lo que tu corazón eligió</p>
     </div>
+  </section>
+
+  <!-- ===== GATE: captura de correo (suave, con salida) ===== -->
+  <section id="gate" class="screen" aria-label="Recibe tu resultado">
+    <div class="gate-head">
+      <p class="eyebrow">Tu resultado está listo</p>
+      <h2 class="serif" style="font-size:30px;margin-top:10px">¿A dónde te lo envío?</h2>
+      <p class="gate-sub">Te mando tu arquetipo completo, tu medalla y el versículo que escribí para ti — para que lo tengas siempre.</p>
+    </div>
+
+    <form class="gate-form" id="gate-form" novalidate>
+      <label class="solo-lectores" for="gate-name">Tu nombre</label>
+      <input class="gate-input" id="gate-name" type="text" name="name"
+             placeholder="Tu nombre" autocomplete="given-name"
+             aria-describedby="gate-error" required>
+      <label class="solo-lectores" for="gate-email">Tu correo</label>
+      <input class="gate-input" id="gate-email" type="email" name="email"
+             placeholder="Tu correo" autocomplete="email" inputmode="email"
+             aria-describedby="gate-error" required>
+      <p class="gate-error" id="gate-error" role="alert"></p>
+      <button class="btn btn-primary" id="gate-submit" type="submit" style="width:100%">
+        <span id="gate-label">Ver mi resultado ✦</span>
+      </button>
+      <p class="solo-lectores" id="gate-status" role="status"></p>
+    </form>
+
+    <button class="restart" id="gate-skip" type="button">Ver sin dejar mi correo</button>
+
+    <p class="gate-note">
+      Al continuar te sumas a la comunidad de Anny. Puedes darte de baja<br>cuando quieras. Nunca compartimos tu correo.
+    </p>
   </section>
 
   <!-- ===== RESULT ===== -->
@@ -442,14 +505,29 @@
 
   /* ---------- Loading ---------- */
   var loadMsgs=["Escuchando lo que tu corazón eligió","Buscando los patrones de tu energía","Revelando tu arquetipo…"];
+  // Resultado ya calculado, esperando a que ella pase por el gate.
+  var pendingResult = null;
+
   function startLoading(){
     show("loading");
     var i=0, el=document.getElementById("loading-text");
     var iv=setInterval(function(){ i++; if(i<loadMsgs.length) el.textContent=loadMsgs[i]; },800);
     var res = computeTop2();
     fetchResultText(res.primary,res.secondary).then(function(remoteHtml){
-      setTimeout(function(){ clearInterval(iv); showResult(res.primary,res.secondary,remoteHtml); }, 2400);
+      setTimeout(function(){
+        clearInterval(iv);
+        pendingResult = {primary:res.primary, secondary:res.secondary, html:remoteHtml};
+        show("gate");
+      }, 2400);
     });
+  }
+
+  // Revela el resultado guardado. Se llama tanto si dejó el correo como si no:
+  // NADIE se queda sin ver su resultado.
+  // showResult() ya hace el show("result") al final, cuando el canvas está listo.
+  function revealResult(){
+    if(!pendingResult) return;
+    showResult(pendingResult.primary, pendingResult.secondary, pendingResult.html);
   }
 
   function fetchResultText(primary,secondary){
@@ -766,8 +844,89 @@
     show("quiz"); current=0; answers=[]; answerTexts=[]; renderQuestion();
   });
 
+  /* ---------- Gate de correo ----------
+     REGLA: nadie se queda sin ver su resultado. Si el guardado falla,
+     tarda o ella decide saltarlo, el resultado se muestra igual. */
+  var gateDone  = false;
+  var gateRun   = 0;      // identifica la ronda actual del test
+  var gateGuard = null;   // temporizador de la ronda en curso
+
+  // `run` ata la llamada a la ronda en que se programo. Si la usuaria reinicia
+  // el test, el temporizador y el fetch de la ronda anterior siguen vivos: sin
+  // esta guarda consumirian la bandera y dejarian el gate MUERTO para siempre
+  // (boton deshabilitado y sin forma de ver el resultado). Doble defensa con
+  // !pendingResult por si alguna callback llega sin identificador de ronda.
+  function gateGo(run){
+    if(run !== undefined && run !== gateRun) return;
+    if(gateDone || !pendingResult) return;
+    gateDone = true;
+    revealResult();
+  }
+
+  document.getElementById("gate-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var nameEl=document.getElementById("gate-name");
+    var mailEl=document.getElementById("gate-email");
+    var errEl =document.getElementById("gate-error");
+    var name=nameEl.value.trim(), email=mailEl.value.trim();
+
+    nameEl.setAttribute("aria-invalid","false");
+    mailEl.setAttribute("aria-invalid","false");
+    if(!name){
+      errEl.textContent="¿Cómo te llamas?";
+      nameEl.setAttribute("aria-invalid","true"); nameEl.focus(); return;
+    }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+      errEl.textContent="Revisa tu correo, parece que le falta algo.";
+      mailEl.setAttribute("aria-invalid","true"); mailEl.focus(); return;
+    }
+    errEl.textContent="";
+
+    var btn=document.getElementById("gate-submit");
+    btn.disabled=true;
+    btn.setAttribute("aria-busy","true");
+    // El nombre accesible no puede quedar vacio mientras carga.
+    btn.setAttribute("aria-label","Enviando tu resultado");
+    document.getElementById("gate-label").innerHTML='<span class="gate-spin" aria-hidden="true"></span>';
+    document.getElementById("gate-status").textContent="Enviando tu resultado…";
+
+    // Si el servidor tarda, no la dejamos esperando: a los 6s se revela igual.
+    var myRun=gateRun;
+    gateGuard=setTimeout(function(){ gateGo(myRun); },6000);
+
+    fetch("/api/leads",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        source:"quiz",
+        name:name,
+        email:email,
+        archetype: pendingResult ? ARCH[pendingResult.primary].key : null,
+        // Si Claude fallo, pendingResult.html es null: mandamos el texto local
+        // del arquetipo para que igual reciba el correo que le prometimos.
+        result_html: pendingResult
+          ? (pendingResult.html || ARCH[pendingResult.primary].text)
+          : null
+      })
+    }).catch(function(){ /* fail-open: el fallo nunca bloquea el resultado */ })
+      .then(function(){ clearTimeout(gateGuard); gateGo(myRun); });
+  });
+
+  document.getElementById("gate-skip").addEventListener("click",function(){ gateGo(gateRun); });
+
   document.getElementById("restart-btn").addEventListener("click",function(){
     current=0; answers=[]; answerTexts=[];
+    // Reiniciar el gate. gateRun++ invalida el temporizador y el fetch de la
+    // ronda anterior, que si no consumirian la bandera y dejarian el gate muerto.
+    gateRun++;
+    clearTimeout(gateGuard); gateGuard=null;
+    gateDone=false; pendingResult=null;
+    var b=document.getElementById("gate-submit");
+    b.disabled=false; b.removeAttribute("aria-busy"); b.removeAttribute("aria-label");
+    document.getElementById("gate-form").reset();
+    document.getElementById("gate-error").textContent="";
+    document.getElementById("gate-status").textContent="";
+    document.getElementById("gate-label").textContent="Ver mi resultado ✦";
     show("hero");
   });
 
