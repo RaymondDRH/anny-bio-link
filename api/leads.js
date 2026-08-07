@@ -36,30 +36,46 @@ async function subscribeToBlog(email, name) {
   } catch (e) { console.error('[leads] Ghost:', e.message); }
 }
 
+// Todo dato del cliente que entra en una plantilla de correo pasa por aqui.
+// Sin esto, alguien mete <a href="..."> por el campo `name` y le sale un enlace
+// clicable en un correo firmado con el SPF/DKIM de annygomez.com.
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
 function resetEmailHtml(name) {
-  const hi = name && name !== 'Reset' ? `Hola ${name},` : 'Hola,';
+  const hi = name && name !== 'Reset' ? `Hola ${escapeHtml(name)},` : 'Hola,';
   return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Pausa &middot; Calma &middot; Prop&oacute;sito</div></div><div style="padding:40px 40px 32px"><p style="font-size:22px;color:#2E1A10;margin:0 0 20px">Aqu&iacute; tienes tu Reset de 5 minutos &#129293;</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">${hi} te dejo adjunto el <strong>Reset de 5 minutos para la mujer agotada</strong> en PDF, para que lo tengas siempre a mano.</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">Adem&aacute;s te sumaste a mi comunidad: cada semana te llegar&aacute; una reflexi&oacute;n para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p><p style="font-size:13px;color:#8C6A58;margin:16px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div></div></body></html>`;
 }
 
 // El resultado del quiz viaja desde el navegador para poder enviarlo por correo.
 // NO se confia en el cliente: lista blanca de etiquetas (p/strong/em/span/br),
-// sin <a> (sin enlaces no hay phishing util desde el dominio de Anny),
-// sin scripts, sin atributos de evento y con tope de longitud.
+// sin scripts, sin atributos de evento, sin enlaces y con tope de longitud.
+//
+// OJO: quitar <a> NO basta por si solo — los clientes de correo convierten las
+// URLs en texto plano en enlaces clicables. Por eso tambien se neutralizan las
+// cadenas que parecen dominio o URL.
 function sanitizarResultado(html) {
   if (!html || typeof html !== 'string') return '';
   let s = html.slice(0, 4000);
   s = s.replace(/<(script|style|iframe|object|embed|link|meta)[\s\S]*?<\/\1\s*>/gi, '');
   s = s.replace(/<\/?(script|style|iframe|object|embed|link|meta)[^>]*>/gi, '');
-  s = s.replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
-  s = s.replace(/javascript:/gi, '');
+  // [\s\/] y no solo \s: "<p/onerror=..." usa la barra como separador valido
+  s = s.replace(/[\s/]on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
+  s = s.replace(/(javascript|data|vbscript)\s*:/gi, '');
   s = s.replace(/<(?!\/?(?:p|strong|em|span|br)\b)[^>]*>/gi, '');
+  // Autolinkificacion: romper URLs y dominios sueltos del texto
+  s = s.replace(/\b(?:https?:\/\/|www\.)\S+/gi, '[enlace removido]');
+  s = s.replace(/\b[\w.-]+\.(com|net|org|io|co|link|xyz|info|shop|app)\b/gi, '[enlace removido]');
   return s.trim();
 }
 
 function quizEmailHtml(name, arqKey, resultadoLimpio) {
   const a = ARQUETIPOS[arqKey];
   const titulo = a ? a.nombre : 'Tu arquetipo';
-  const hi = name && name !== 'Quiz' ? `Hola ${name},` : 'Hola,';
+  const hi = name && name !== 'Quiz' ? `Hola ${escapeHtml(name)},` : 'Hola,';
   return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Prop&oacute;sito &middot; H&aacute;bitos &middot; Fe</div></div><div style="padding:40px 40px 32px"><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 8px">${hi}</p><p style="font-size:24px;color:#2E1A10;margin:0 0 22px;font-family:Georgia,serif">Eres <strong>${titulo}</strong> &#10022;</p><div style="font-size:15px;line-height:1.75;color:#4a3020">${resultadoLimpio}</div><div style="margin:30px 0 0;padding-top:22px;border-top:1px solid #E8D9CD"><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0 0 14px">Gu&aacute;rdalo. Vas a querer releerlo el d&iacute;a que se te olvide de qu&eacute; est&aacute;s hecha.</p><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0">Desde hoy te acompa&ntilde;o cada semana con algo pr&aacute;ctico para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p></div><p style="font-size:13px;color:#8C6A58;margin:26px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div></div></body></html>`;
 }
 
@@ -126,10 +142,11 @@ module.exports = async (req, res) => {
     }
   }
 
-  const source = (body && body.source ? String(body.source).trim() : '');
-  const name = (body && body.name ? String(body.name).trim() : '');
-  const email = (body && body.email ? String(body.email).trim() : '');
-  const archetype = (body && body.archetype ? String(body.archetype).trim() : '');
+  const source = (body && body.source ? String(body.source).trim().slice(0, 32) : '');
+  // Topes de longitud: sin esto, un `name` de 1 MB infla el cuerpo del correo.
+  const name = (body && body.name ? String(body.name).trim().slice(0, 80) : '');
+  const email = (body && body.email ? String(body.email).trim().slice(0, 160) : '');
+  const archetype = (body && body.archetype ? String(body.archetype).trim().slice(0, 32) : '');
 
   if (source === 'reset' || source === 'quiz') {
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'Correo inválido' });
@@ -155,8 +172,18 @@ module.exports = async (req, res) => {
       // Su resultado por correo. Fail-open: si esto falla, el lead YA quedó
       // guardado arriba y ella YA vio su resultado en pantalla. No rompe nada.
       try {
-        const limpio = sanitizarResultado(body.result_html);
         const arq = ARQUETIPOS[archetype] ? archetype : null;
+        let limpio = sanitizarResultado(body.result_html);
+        // Si Claude fallo, el cliente manda el texto vacio. Armamos el cuerpo
+        // con los datos del arquetipo: no la dejamos suscrita sin recibir lo
+        // que le prometimos en pantalla.
+        if (!limpio && arq) {
+          const a = ARQUETIPOS[arq];
+          limpio =
+            `<p><strong>Tu superpoder:</strong> ${escapeHtml(a.superpoder)}.</p>` +
+            `<p><strong>Lo que te frena:</strong> ${escapeHtml(a.reto)}.</p>` +
+            `<p><strong>Tu próximo paso:</strong> ${escapeHtml(a.paso)}.</p>`;
+        }
         if (limpio && RESEND_KEY) {
           await fetch('https://api.resend.com/emails', {
             method: 'POST',

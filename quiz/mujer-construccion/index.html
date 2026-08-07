@@ -246,7 +246,14 @@
     backdrop-filter:blur(10px);
     transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
   }
-  .gate-input::placeholder{color:var(--topo);opacity:.75;}
+  /* #6E5044 sobre el fondo crema da 4.6:1 — cumple WCAG AA.
+     El anterior (--topo al 75%) daba 2.97:1 y se leia mal en exteriores. */
+  .gate-input::placeholder{color:#6E5044;opacity:1;}
+  /* Visible solo para lectores de pantalla */
+  .solo-lectores{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+  }
   .gate-input:focus{outline:none;border-color:var(--cobre);box-shadow:0 0 0 3px rgba(196,133,90,.18);}
   .gate-input[aria-invalid="true"]{border-color:#B3452B;}
   .gate-error{color:#B3452B;font-size:13px;line-height:1.4;min-height:18px;text-align:center;}
@@ -319,14 +326,19 @@
     </div>
 
     <form class="gate-form" id="gate-form" novalidate>
+      <label class="solo-lectores" for="gate-name">Tu nombre</label>
       <input class="gate-input" id="gate-name" type="text" name="name"
-             placeholder="Tu nombre" autocomplete="given-name" required>
+             placeholder="Tu nombre" autocomplete="given-name"
+             aria-describedby="gate-error" required>
+      <label class="solo-lectores" for="gate-email">Tu correo</label>
       <input class="gate-input" id="gate-email" type="email" name="email"
-             placeholder="Tu correo" autocomplete="email" inputmode="email" required>
-      <p class="gate-error" id="gate-error" role="alert" aria-live="polite"></p>
+             placeholder="Tu correo" autocomplete="email" inputmode="email"
+             aria-describedby="gate-error" required>
+      <p class="gate-error" id="gate-error" role="alert"></p>
       <button class="btn btn-primary" id="gate-submit" type="submit" style="width:100%">
         <span id="gate-label">Ver mi resultado ✦</span>
       </button>
+      <p class="solo-lectores" id="gate-status" role="status"></p>
     </form>
 
     <button class="restart" id="gate-skip" type="button">Ver sin dejar mi correo</button>
@@ -835,9 +847,18 @@
   /* ---------- Gate de correo ----------
      REGLA: nadie se queda sin ver su resultado. Si el guardado falla,
      tarda o ella decide saltarlo, el resultado se muestra igual. */
-  var gateDone = false;
-  function gateGo(){
-    if(gateDone) return;   // evita revelar dos veces (timeout + respuesta)
+  var gateDone  = false;
+  var gateRun   = 0;      // identifica la ronda actual del test
+  var gateGuard = null;   // temporizador de la ronda en curso
+
+  // `run` ata la llamada a la ronda en que se programo. Si la usuaria reinicia
+  // el test, el temporizador y el fetch de la ronda anterior siguen vivos: sin
+  // esta guarda consumirian la bandera y dejarian el gate MUERTO para siempre
+  // (boton deshabilitado y sin forma de ver el resultado). Doble defensa con
+  // !pendingResult por si alguna callback llega sin identificador de ronda.
+  function gateGo(run){
+    if(run !== undefined && run !== gateRun) return;
+    if(gateDone || !pendingResult) return;
     gateDone = true;
     revealResult();
   }
@@ -861,11 +882,17 @@
     }
     errEl.textContent="";
 
-    document.getElementById("gate-submit").disabled=true;
+    var btn=document.getElementById("gate-submit");
+    btn.disabled=true;
+    btn.setAttribute("aria-busy","true");
+    // El nombre accesible no puede quedar vacio mientras carga.
+    btn.setAttribute("aria-label","Enviando tu resultado");
     document.getElementById("gate-label").innerHTML='<span class="gate-spin" aria-hidden="true"></span>';
+    document.getElementById("gate-status").textContent="Enviando tu resultado…";
 
     // Si el servidor tarda, no la dejamos esperando: a los 6s se revela igual.
-    var guard=setTimeout(gateGo,6000);
+    var myRun=gateRun;
+    gateGuard=setTimeout(function(){ gateGo(myRun); },6000);
 
     fetch("/api/leads",{
       method:"POST",
@@ -875,21 +902,30 @@
         name:name,
         email:email,
         archetype: pendingResult ? ARCH[pendingResult.primary].key : null,
-        result_html: pendingResult ? pendingResult.html : null
+        // Si Claude fallo, pendingResult.html es null: mandamos el texto local
+        // del arquetipo para que igual reciba el correo que le prometimos.
+        result_html: pendingResult
+          ? (pendingResult.html || ARCH[pendingResult.primary].text)
+          : null
       })
     }).catch(function(){ /* fail-open: el fallo nunca bloquea el resultado */ })
-      .then(function(){ clearTimeout(guard); gateGo(); });
+      .then(function(){ clearTimeout(gateGuard); gateGo(myRun); });
   });
 
-  document.getElementById("gate-skip").addEventListener("click",gateGo);
+  document.getElementById("gate-skip").addEventListener("click",function(){ gateGo(gateRun); });
 
   document.getElementById("restart-btn").addEventListener("click",function(){
     current=0; answers=[]; answerTexts=[];
-    // reiniciar también el gate, para que el flujo completo vuelva a funcionar
+    // Reiniciar el gate. gateRun++ invalida el temporizador y el fetch de la
+    // ronda anterior, que si no consumirian la bandera y dejarian el gate muerto.
+    gateRun++;
+    clearTimeout(gateGuard); gateGuard=null;
     gateDone=false; pendingResult=null;
+    var b=document.getElementById("gate-submit");
+    b.disabled=false; b.removeAttribute("aria-busy"); b.removeAttribute("aria-label");
     document.getElementById("gate-form").reset();
     document.getElementById("gate-error").textContent="";
-    document.getElementById("gate-submit").disabled=false;
+    document.getElementById("gate-status").textContent="";
     document.getElementById("gate-label").textContent="Ver mi resultado ✦";
     show("hero");
   });
