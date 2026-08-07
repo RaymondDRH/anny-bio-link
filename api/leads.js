@@ -41,6 +41,28 @@ function resetEmailHtml(name) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Pausa &middot; Calma &middot; Prop&oacute;sito</div></div><div style="padding:40px 40px 32px"><p style="font-size:22px;color:#2E1A10;margin:0 0 20px">Aqu&iacute; tienes tu Reset de 5 minutos &#129293;</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">${hi} te dejo adjunto el <strong>Reset de 5 minutos para la mujer agotada</strong> en PDF, para que lo tengas siempre a mano.</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">Adem&aacute;s te sumaste a mi comunidad: cada semana te llegar&aacute; una reflexi&oacute;n para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p><p style="font-size:13px;color:#8C6A58;margin:16px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div></div></body></html>`;
 }
 
+// El resultado del quiz viaja desde el navegador para poder enviarlo por correo.
+// NO se confia en el cliente: lista blanca de etiquetas (p/strong/em/span/br),
+// sin <a> (sin enlaces no hay phishing util desde el dominio de Anny),
+// sin scripts, sin atributos de evento y con tope de longitud.
+function sanitizarResultado(html) {
+  if (!html || typeof html !== 'string') return '';
+  let s = html.slice(0, 4000);
+  s = s.replace(/<(script|style|iframe|object|embed|link|meta)[\s\S]*?<\/\1\s*>/gi, '');
+  s = s.replace(/<\/?(script|style|iframe|object|embed|link|meta)[^>]*>/gi, '');
+  s = s.replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
+  s = s.replace(/javascript:/gi, '');
+  s = s.replace(/<(?!\/?(?:p|strong|em|span|br)\b)[^>]*>/gi, '');
+  return s.trim();
+}
+
+function quizEmailHtml(name, arqKey, resultadoLimpio) {
+  const a = ARQUETIPOS[arqKey];
+  const titulo = a ? a.nombre : 'Tu arquetipo';
+  const hi = name && name !== 'Quiz' ? `Hola ${name},` : 'Hola,';
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Prop&oacute;sito &middot; H&aacute;bitos &middot; Fe</div></div><div style="padding:40px 40px 32px"><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 8px">${hi}</p><p style="font-size:24px;color:#2E1A10;margin:0 0 22px;font-family:Georgia,serif">Eres <strong>${titulo}</strong> &#10022;</p><div style="font-size:15px;line-height:1.75;color:#4a3020">${resultadoLimpio}</div><div style="margin:30px 0 0;padding-top:22px;border-top:1px solid #E8D9CD"><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0 0 14px">Gu&aacute;rdalo. Vas a querer releerlo el d&iacute;a que se te olvide de qu&eacute; est&aacute;s hecha.</p><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0">Desde hoy te acompa&ntilde;o cada semana con algo pr&aacute;ctico para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p></div><p style="font-size:13px;color:#8C6A58;margin:26px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div></div></body></html>`;
+}
+
 async function claudeQuizResult(arqKey, answers, name, secKey) {
   const a = ARQUETIPOS[arqKey];
   if (!a) throw new Error('arquetipo inválido');
@@ -130,6 +152,24 @@ module.exports = async (req, res) => {
       await subscribeToBlog(email, name);
     } else if (source === 'quiz') {
       await subscribeToBlog(email, name);
+      // Su resultado por correo. Fail-open: si esto falla, el lead YA quedó
+      // guardado arriba y ella YA vio su resultado en pantalla. No rompe nada.
+      try {
+        const limpio = sanitizarResultado(body.result_html);
+        const arq = ARQUETIPOS[archetype] ? archetype : null;
+        if (limpio && RESEND_KEY) {
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${RESEND_KEY}` },
+            body: JSON.stringify({
+              from: 'Anny Gómez <hola@annygomez.com>',
+              to: [email],
+              subject: arq ? `Eres ${ARQUETIPOS[arq].nombre} 🤍 tu resultado` : 'Tu resultado del test 🤍',
+              html: quizEmailHtml(name, arq, limpio),
+            }),
+          });
+        }
+      } catch (e) { console.error('[leads] quiz email:', e.message); }
     } else {
       await fetch('https://aicrafterlab-n8n.j1omvg.easypanel.host/webhook/anny-guia-habitos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, email }) });
     }
