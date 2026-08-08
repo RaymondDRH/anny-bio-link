@@ -8,7 +8,10 @@
     { "source": "/next-flight-academy/:path+", "destination": "/next-fly-academy/:path+", "permanent": false },
     { "source": "/next-flight", "destination": "/next-fly-academy/", "permanent": false },
     { "source": "/nextflight", "destination": "/next-fly-academy/", "permanent": false },
-    { "source": "/nextflightacademy", "destination": "/next-fly-academy/", "permanent": false }
+    { "source": "/nextflightacademy", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/test", "destination": "/quiz/mujer-construccion/", "permanent": false },
+    { "source": "/quiz", "destination": "/quiz/mujer-construccion/", "permanent": false },
+    { "source": "/soy", "destination": "/quiz/mujer-construccion/", "permanent": false }
   ],
   "headers": [
     {
