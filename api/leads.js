@@ -4,6 +4,7 @@
 // - source 'reset' → guarda lead + envía PDF (Resend) + suscribe al blog
 // - default        → guía de hábitos vía n8n
 const crypto = require('crypto');
+const { enviarCorreo } = require('../lib/mailer');
 const RESEND_KEY = process.env.RESEND_API_KEY;
 const GHOST_KEY = process.env.GHOST_ADMIN_KEY;
 const GHOST_URL = 'https://blog.annygomez.com/ghost/api/admin';
@@ -164,8 +165,18 @@ module.exports = async (req, res) => {
     if (!sb.ok) { const e = await sb.json().catch(()=>({})); if (e.code && e.code !== '23505') console.error('[leads] Supabase:', e); }
 
     if (source === 'reset') {
-      const mail = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${RESEND_KEY}` }, body: JSON.stringify({ from: 'Anny Gómez <hola@annygomez.com>', to: [email], subject: 'Tu Reset de 5 minutos 🤍', html: resetEmailHtml(name), attachments: [{ filename: 'Reset-de-5-minutos-Anny-Gomez.pdf', path: RESET_PDF_URL }] }) });
-      if (!mail.ok) { const e = await mail.json().catch(()=>({})); return res.status(500).json({ error: e.message || 'No se pudo enviar el correo' }); }
+      // Critico: ella pidio la guia y se la prometimos. Reintenta y avisa si falla.
+      const mail = await enviarCorreo(
+        {
+          from: 'Anny Gómez <hola@annygomez.com>',
+          to: [email],
+          subject: 'Tu Reset de 5 minutos 🤍',
+          html: resetEmailHtml(name),
+          attachments: [{ filename: 'Reset-de-5-minutos-Anny-Gomez.pdf', path: RESET_PDF_URL }],
+        },
+        { critico: true, etiqueta: 'guia Reset de 5 minutos' },
+      );
+      if (!mail.ok) return res.status(500).json({ error: 'No se pudo enviar el correo' });
       await subscribeToBlog(email, name);
     } else if (source === 'quiz') {
       await subscribeToBlog(email, name);
@@ -184,17 +195,18 @@ module.exports = async (req, res) => {
             `<p><strong>Lo que te frena:</strong> ${escapeHtml(a.reto)}.</p>` +
             `<p><strong>Tu próximo paso:</strong> ${escapeHtml(a.paso)}.</p>`;
         }
-        if (limpio && RESEND_KEY) {
-          await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${RESEND_KEY}` },
-            body: JSON.stringify({
+        if (limpio) {
+          // critico: false a proposito. Si la cuota de Resend esta apretada,
+          // el que cede es este, no el correo de alguien que pago $697.
+          await enviarCorreo(
+            {
               from: 'Anny Gómez <hola@annygomez.com>',
               to: [email],
               subject: arq ? `Eres ${ARQUETIPOS[arq].nombre} 🤍 tu resultado` : 'Tu resultado del test 🤍',
               html: quizEmailHtml(name, arq, limpio),
-            }),
-          });
+            },
+            { critico: false, etiqueta: 'resultado del quiz' },
+          );
         }
       } catch (e) { console.error('[leads] quiz email:', e.message); }
     } else {

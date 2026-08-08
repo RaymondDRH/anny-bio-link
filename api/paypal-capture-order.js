@@ -1,5 +1,6 @@
 // Captura (cobra) una orden de PayPal aprobada y notifica a Anny la venta.
 const { sendReceiptToAnny } = require('../lib/receipt');
+const { enviarCorreo, escaparHtml } = require('../lib/mailer');
 const BASE = process.env.PAYPAL_ENV === 'live'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
@@ -49,51 +50,45 @@ async function notifyAnny({ name, email, phone, amount, method }) {
       } catch (e) { console.error('tg notify', e.message); }
     }
   }
-  const resendKey = process.env.RESEND_API_KEY;
-  if (resendKey) {
-    try {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          from: 'Next Flight Academy <ventas@annygomez.com>',
-          to: ['annygomezleal@gmail.com'],
-          subject: `🎉 Nueva venta — Next Flight Academy ($${amount})`,
-          html:
-            `<h2>¡Nueva venta! 🎉</h2>` +
-            `<p><b>Producto:</b> Next Flight Academy</p>` +
-            `<p><b>Monto:</b> $${amount} USD</p>` +
-            `<p><b>Método:</b> ${method}</p>` +
-            `<p><b>Cliente:</b> ${name || '—'}</p>` +
-            `<p><b>Correo:</b> ${email || '—'}</p>` +
-            `<p><b>Teléfono:</b> ${phone || '—'}</p>`,
-        }),
-      });
-    } catch (e) { console.error('resend notify', e.message); }
-  }
+  // Critico: sin este correo, Anny sabe que hubo venta (Telegram) pero no tiene
+  // los datos del comprador para darle el acceso.
+  await enviarCorreo(
+    {
+      from: 'Next Flight Academy <ventas@annygomez.com>',
+      to: ['annygomezleal@gmail.com'],
+      subject: `🎉 Nueva venta — Next Flight Academy ($${amount})`,
+      html:
+        `<h2>¡Nueva venta! 🎉</h2>` +
+        `<p><b>Producto:</b> Next Flight Academy</p>` +
+        `<p><b>Monto:</b> $${escaparHtml(amount)} USD</p>` +
+        `<p><b>Método:</b> ${escaparHtml(method)}</p>` +
+        `<p><b>Cliente:</b> ${escaparHtml(name) || '—'}</p>` +
+        `<p><b>Correo:</b> ${escaparHtml(email) || '—'}</p>` +
+        `<p><b>Teléfono:</b> ${escaparHtml(phone) || '—'}</p>`,
+    },
+    { critico: true, etiqueta: `aviso de venta a Anny — PayPal ($${amount})` },
+  );
 }
 
 // --- Correo de bienvenida al comprador (branding Next Fly) ---
 function welcomeHtml(name, amount) {
-  const hi = name ? (', ' + String(name)) : '';
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;font-family:'Poppins','Helvetica Neue',Arial,sans-serif"><table width="100%" cellpadding="0" cellspacing="0" style="padding:28px 12px"><tr><td align="center"><table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#2a0a12;border-radius:18px;overflow:hidden;border:1px solid rgba(196,154,60,0.28)"><tr><td><img src="https://annygomez.com/next-fly-banner-email.jpg" alt="Next Flight Academy" width="560" style="width:100%;display:block"></td></tr><tr><td style="padding:38px 40px 30px;text-align:center"><h1 style="margin:0 0 10px;font-family:'Playfair Display',Georgia,serif;font-size:27px;color:#e3b95a;font-weight:500">¡Te damos la bienvenida a bordo${hi}! &#9992;&#65039;</h1><p style="margin:0 0 22px;font-size:15px;line-height:1.7;color:#f5edd8">Tu compra de <strong>Next Flight Academy</strong> está <strong style="color:#e3b95a">confirmada</strong>. ¡Qué emoción tenerte en este viaje!</p><div style="background:rgba(255,255,255,0.04);border:1px solid rgba(196,154,60,0.28);border-radius:14px;padding:18px 22px;margin:4px 0 20px;text-align:left"><p style="margin:0 0 10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e3b95a">Recibo de compra</p><p style="margin:0 0 5px;font-size:14px;color:#f5edd8"><strong>Comprador:</strong> ${name || '—'}</p><p style="margin:0 0 5px;font-size:14px;color:#f5edd8"><strong>Producto:</strong> Next Flight Academy</p><p style="margin:0;font-size:14px;color:#f5edd8"><strong>Monto pagado:</strong> $${amount || '—'} USD</p></div><div style="background:rgba(196,154,60,0.10);border:1px solid rgba(196,154,60,0.25);border-radius:14px;padding:22px 26px;margin:6px 0 24px"><p style="margin:0;font-size:14px;line-height:1.7;color:#f5edd8">&#127915; Tus <strong>accesos a la plataforma</strong> se están preparando y los recibirás <strong style="color:#e3b95a">en las próximas horas</strong>. Mantente pendiente de tu correo.</p></div><p style="margin:0 0 10px;font-size:14px;color:#f5edd8">¿Tienes alguna duda? Escríbenos:</p><p style="margin:0 0 4px;font-size:14px;color:#e3b95a">&#128247; Instagram: <a href="https://instagram.com/annygomezleal" style="color:#e3b95a;text-decoration:none">@annygomezleal</a></p><p style="margin:0 0 26px;font-size:14px;color:#e3b95a">&#128172; WhatsApp: <a href="https://wa.me/12516509950" style="color:#e3b95a;text-decoration:none">+1 251 650 9950</a></p><p style="margin:0;font-size:13px;color:rgba(245,237,216,0.6)">Prepárate para despegar &#128640;</p></td></tr><tr><td style="background:#140309;padding:18px 40px;text-align:center;border-top:1px solid rgba(196,154,60,0.18)"><p style="margin:0;font-size:11px;color:rgba(245,237,216,0.45)">Next Flight Academy &middot; &copy; 2026</p></td></tr></table></td></tr></table></body></html>`;
+  const hi = name ? (', ' + escaparHtml(name)) : '';
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;font-family:'Poppins','Helvetica Neue',Arial,sans-serif"><table width="100%" cellpadding="0" cellspacing="0" style="padding:28px 12px"><tr><td align="center"><table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#2a0a12;border-radius:18px;overflow:hidden;border:1px solid rgba(196,154,60,0.28)"><tr><td><img src="https://annygomez.com/next-fly-banner-email.jpg" alt="Next Flight Academy" width="560" style="width:100%;display:block"></td></tr><tr><td style="padding:38px 40px 30px;text-align:center"><h1 style="margin:0 0 10px;font-family:'Playfair Display',Georgia,serif;font-size:27px;color:#e3b95a;font-weight:500">¡Te damos la bienvenida a bordo${hi}! &#9992;&#65039;</h1><p style="margin:0 0 22px;font-size:15px;line-height:1.7;color:#f5edd8">Tu compra de <strong>Next Flight Academy</strong> está <strong style="color:#e3b95a">confirmada</strong>. ¡Qué emoción tenerte en este viaje!</p><div style="background:rgba(255,255,255,0.04);border:1px solid rgba(196,154,60,0.28);border-radius:14px;padding:18px 22px;margin:4px 0 20px;text-align:left"><p style="margin:0 0 10px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#e3b95a">Recibo de compra</p><p style="margin:0 0 5px;font-size:14px;color:#f5edd8"><strong>Comprador:</strong> ${escaparHtml(name) || '—'}</p><p style="margin:0 0 5px;font-size:14px;color:#f5edd8"><strong>Producto:</strong> Next Flight Academy</p><p style="margin:0;font-size:14px;color:#f5edd8"><strong>Monto pagado:</strong> $${escaparHtml(amount) || '—'} USD</p></div><div style="background:rgba(196,154,60,0.10);border:1px solid rgba(196,154,60,0.25);border-radius:14px;padding:22px 26px;margin:6px 0 24px"><p style="margin:0;font-size:14px;line-height:1.7;color:#f5edd8">&#127915; Tus <strong>accesos a la plataforma</strong> se están preparando y los recibirás <strong style="color:#e3b95a">en las próximas horas</strong>. Mantente pendiente de tu correo.</p></div><p style="margin:0 0 10px;font-size:14px;color:#f5edd8">¿Tienes alguna duda? Escríbenos:</p><p style="margin:0 0 4px;font-size:14px;color:#e3b95a">&#128247; Instagram: <a href="https://instagram.com/annygomezleal" style="color:#e3b95a;text-decoration:none">@annygomezleal</a></p><p style="margin:0 0 26px;font-size:14px;color:#e3b95a">&#128172; WhatsApp: <a href="https://wa.me/12516509950" style="color:#e3b95a;text-decoration:none">+1 251 650 9950</a></p><p style="margin:0;font-size:13px;color:rgba(245,237,216,0.6)">Prepárate para despegar &#128640;</p></td></tr><tr><td style="background:#140309;padding:18px 40px;text-align:center;border-top:1px solid rgba(196,154,60,0.18)"><p style="margin:0;font-size:11px;color:rgba(245,237,216,0.45)">Next Flight Academy &middot; &copy; 2026</p></td></tr></table></td></tr></table></body></html>`;
 }
 
 async function sendWelcome(toEmail, name, amount) {
-  const resendKey = process.env.RESEND_API_KEY;
-  if (!resendKey || !toEmail) return;
-  try {
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: 'Next Flight Academy <ventas@annygomez.com>',
-        to: [toEmail],
-        subject: '✈️ ¡Te damos la bienvenida! Tu compra de Next Flight Academy está confirmada',
-        html: welcomeHtml(name, amount),
-      }),
-    });
-  } catch (e) { console.error('welcome email', e.message); }
+  if (!toEmail) return { ok: false, intentos: 0, motivo: 'sin_destinatario' };
+  // EL MAS CRITICO DE TODOS: es la unica confirmacion que recibe alguien que
+  // acaba de pagar $697. Si no llega, pago y no tiene ni prueba de la compra.
+  return enviarCorreo(
+    {
+      from: 'Next Flight Academy <ventas@annygomez.com>',
+      to: [toEmail],
+      subject: '✈️ ¡Te damos la bienvenida! Tu compra de Next Flight Academy está confirmada',
+      html: welcomeHtml(name, amount),
+    },
+    { critico: true, etiqueta: `bienvenida al comprador — PayPal (${toEmail})` },
+  );
 }
 
 module.exports = async (req, res) => {
