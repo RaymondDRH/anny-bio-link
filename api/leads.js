@@ -76,8 +76,33 @@ function sanitizarResultado(html) {
 function quizEmailHtml(name, arqKey, resultadoLimpio) {
   const a = ARQUETIPOS[arqKey];
   const titulo = a ? a.nombre : 'Tu arquetipo';
-  const hi = name && name !== 'Quiz' ? `Hola ${escapeHtml(name)},` : 'Hola,';
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Prop&oacute;sito &middot; H&aacute;bitos &middot; Fe</div></div><div style="padding:40px 40px 32px"><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 8px">${hi}</p><p style="font-size:24px;color:#2E1A10;margin:0 0 22px;font-family:Georgia,serif">Eres <strong>${titulo}</strong> &#10022;</p><div style="font-size:15px;line-height:1.75;color:#4a3020">${resultadoLimpio}</div><div style="margin:30px 0 0;padding-top:22px;border-top:1px solid #E8D9CD"><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0 0 14px">Gu&aacute;rdalo. Vas a querer releerlo el d&iacute;a que se te olvide de qu&eacute; est&aacute;s hecha.</p><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0">Desde hoy te acompa&ntilde;o cada semana con algo pr&aacute;ctico para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p></div><p style="font-size:13px;color:#8C6A58;margin:26px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div></div></body></html>`;
+  // Medalla ligera (24-42 KB) con fondo crema igual al del correo, para que
+  // se vea como si fuera transparente. Las del quiz pesan 2 MB y muchos
+  // clientes de correo no las cargarian.
+  const medalla = arqKey
+    ? `https://annygomez.com/quiz/mujer-construccion/img/email/medalla-${arqKey}.jpg`
+    : '';
+  // NO se saluda aqui: el texto de Claude YA trae su propio saludo. Poner
+  // "Hola [nombre]" aqui producia dos saludos seguidos. El nombre se
+  // personaliza en el ASUNTO, que es donde de verdad se nota.
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+    .verse{font-style:italic;color:#6b4a35;border-left:2px solid #D4BEB0;padding-left:16px;margin-top:22px}
+    .verse-ref{display:block;margin-top:8px;font-style:normal;font-size:13px;color:#8C6A58;letter-spacing:.02em}
+  </style></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff">
+
+  <div style="background:#FBF6F2;padding:34px 40px 22px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Prop&oacute;sito &middot; H&aacute;bitos &middot; Fe</div></div>
+
+  ${medalla ? `<div style="background:#FBF6F2;text-align:center;padding:8px 0 26px"><img src="${medalla}" alt="${escapeHtml(titulo)}" width="220" style="width:220px;max-width:62%;height:auto;display:block;margin:0 auto"></div>` : ''}
+
+  <div style="padding:34px 40px 32px"><p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8C6A58;margin:0 0 10px;text-align:center">Tu resultado</p><p style="font-size:27px;color:#2E1A10;margin:0 0 26px;font-family:Georgia,serif;text-align:center">Eres <strong>${titulo}</strong></p><div style="font-size:15px;line-height:1.75;color:#4a3020">${resultadoLimpio}</div>
+
+  <div style="margin:32px 0 0;padding:24px;background:#FBF6F2;border-radius:10px;text-align:center"><p style="font-size:15px;line-height:1.6;color:#2E1A10;margin:0 0 8px;font-family:Georgia,serif">&iquest;Te reconociste?</p><p style="font-size:14px;line-height:1.65;color:#4a3020;margin:0 0 18px">Comparte tu medalla en tus historias y etiqu&eacute;tame &mdash; me encanta ver a qui&eacute;n le llega esto.</p><a href="https://instagram.com/annygomezleal" style="display:inline-block;background:#C4855A;color:#fff;text-decoration:none;padding:13px 30px;border-radius:6px;font-family:Georgia,serif;font-size:14px">Etiquetarme en Instagram</a></div>
+
+  <div style="margin:30px 0 0;padding-top:22px;border-top:1px solid #E8D9CD"><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0 0 14px">Gu&aacute;rdalo. Vas a querer releerlo el d&iacute;a que se te olvide de qu&eacute; est&aacute;s hecha.</p><p style="font-size:14px;line-height:1.7;color:#4a3020;margin:0">Desde hoy te acompa&ntilde;o cada semana con algo pr&aacute;ctico para vivir con m&aacute;s calma y prop&oacute;sito. &#129293;</p></div><p style="font-size:13px;color:#8C6A58;margin:26px 0 0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div>
+
+  <div style="background:#FBF6F2;padding:22px 40px;text-align:center;border-top:1px solid #E8D9CD"><p style="font-size:11.5px;color:#8C6A58;margin:0;line-height:1.7">Recibiste este correo porque hiciste el test en <a href="https://annygomez.com" style="color:#8C6A58">annygomez.com</a><br><a href="mailto:hola@annygomez.com?subject=Quiero%20darme%20de%20baja" style="color:#8C6A58">Darme de baja</a> &middot; &copy; 2026 Anny G&oacute;mez</p></div>
+
+  </div></body></html>`;
 }
 
 async function claudeQuizResult(arqKey, answers, name, secKey) {
@@ -201,12 +226,26 @@ module.exports = async (req, res) => {
         if (limpio) {
           // critico: false a proposito. Si la cuota de Resend esta apretada,
           // el que cede es este, no el correo de alguien que pago $697.
+          // El nombre va en el ASUNTO, no en el cuerpo: ahi si se nota y sube
+          // la apertura. Solo el primer nombre — "Rasymond David, eres..."
+          // suena a formulario; "Rasymond, eres..." suena a persona.
+          const primerNombre = name && name !== 'Quiz' ? name.split(/\s+/)[0] : '';
+          const asunto = arq
+            ? (primerNombre
+                ? `${primerNombre}, eres ${ARQUETIPOS[arq].nombre} 🤍`
+                : `Eres ${ARQUETIPOS[arq].nombre} 🤍`)
+            : 'Tu resultado del test 🤍';
           await enviarCorreo(
             {
               from: 'Anny Gómez <hola@annygomez.com>',
               to: [email],
-              subject: arq ? `Eres ${ARQUETIPOS[arq].nombre} 🤍 tu resultado` : 'Tu resultado del test 🤍',
+              subject: asunto,
               html: quizEmailHtml(name, arq, limpio),
+              // Boton nativo de "cancelar suscripcion" en Gmail y similares.
+              headers: {
+                'List-Unsubscribe': '<mailto:hola@annygomez.com?subject=Quiero%20darme%20de%20baja>',
+                'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+              },
             },
             { critico: false, etiqueta: 'resultado del quiz' },
           );
