@@ -163,6 +163,44 @@ html { scroll-behavior: smooth; }
 .nfa-title { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--crema); margin-bottom: 8px; line-height: 1.25; }
 .nfa-desc  { font-size: 13px; font-weight: 300; color: rgba(251,246,242,0.55); line-height: 1.68; margin-bottom: 18px; }
 
+/* Quiz card — puerta de entrada. Clara y accesible (gratis), a proposito
+   distinta de la nfa-card, que es oscura y premium ($697). */
+.quiz-card {
+  position: relative; overflow: hidden;
+  background: linear-gradient(150deg, #FFFDFB 0%, var(--nude) 100%);
+  border: 1px solid rgba(196,133,90,0.28);
+  border-radius: 20px;
+  box-shadow: 0 4px 28px rgba(46,26,16,0.10);
+}
+.quiz-card::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 190px; height: 190px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,133,90,0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+.quiz-body { padding: 26px 22px 24px; position: relative; z-index: 1; }
+.quiz-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 10.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--cobre-deep); background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(196,133,90,0.22);
+  padding: 6px 12px; border-radius: 999px; margin-bottom: 14px;
+}
+.quiz-title {
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.22;
+  color: var(--espresso); margin-bottom: 10px;
+}
+.quiz-title em { font-style: italic; color: var(--cobre-deep); }
+.quiz-desc {
+  font-size: 13px; font-weight: 300; color: var(--topo);
+  line-height: 1.68; margin-bottom: 20px;
+}
+.quiz-meta {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 11px; color: var(--topo); margin-bottom: 18px;
+}
+.quiz-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rosa-arena); }
+
 /* Buttons */
 .btn {
   display: block; width: 100%; padding: 14px 20px;
@@ -175,9 +213,11 @@ html { scroll-behavior: smooth; }
 .btn:active { transform: scale(0.96); box-shadow: none; filter: brightness(0.92); }
 .btn-solid  { background: var(--cobre); color: var(--crema); }
 .btn-nfa    { background: linear-gradient(135deg, #C49A3C 0%, #DDB860 100%); color: #330C15; }
+.btn-quiz   { background: linear-gradient(135deg, var(--cobre) 0%, var(--cobre-deep) 100%); color: #fff; }
 @media (hover: hover) and (pointer: fine) {
   .btn-solid:hover { background: #a96b43; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(196,133,90,0.28); }
   .btn-nfa:hover   { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
+  .btn-quiz:hover  { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,133,90,0.38); }
 }
 
 /* Reto card */
@@ -363,6 +403,17 @@ html { scroll-behavior: smooth; }
 .d-btn-primary { background: var(--cobre); color: var(--crema); box-shadow: 0 10px 22px -10px rgba(196,133,90,0.55); }
 .d-btn-primary:hover { background: var(--cobre-deep); transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(196,133,90,0.65); }
 
+/* Quiz card desktop — puerta de entrada al embudo */
+.d-card-quiz { background: linear-gradient(150deg, #FFFDFB 0%, var(--nude) 100%); border-color: rgba(196,133,90,0.28); position: relative; overflow: hidden; }
+.d-card-quiz::before { content: ''; position: absolute; top: -70px; right: -70px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(196,133,90,0.16) 0%, transparent 70%); pointer-events: none; }
+.d-card-quiz > * { position: relative; z-index: 1; }
+/* El badge base es salvia = "Proximamente". El quiz esta disponible AHORA,
+   asi que va en cobre para que se lea como invitacion, no como espera. */
+.d-card-quiz .d-badge { background: rgba(196,133,90,0.12); border-color: rgba(196,133,90,0.35); color: var(--cobre-deep); }
+.d-card-quiz h2 em { font-style: italic; color: var(--cobre-deep); }
+.d-quiz-meta { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-size: 11.5px; color: var(--topo); margin: 0 0 22px; }
+.d-quiz-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rosa-arena); }
+
 /* NFA card desktop */
 .d-card-nfa { background: var(--espresso); color: var(--crema); border: none; padding: 0; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; min-height: 240px; text-decoration: none; }
 .d-card-nfa:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 26px 50px -24px rgba(46,26,16,0.45); }
@@ -472,6 +523,20 @@ html { scroll-behavior: smooth; }
   </section>
 
   <div class="cards-area">
+
+    <div class="quiz-card fade-in">
+      <div class="quiz-body">
+        <div class="quiz-eyebrow">Test gratuito</div>
+        <div class="quiz-title">¿Qué tipo de mujer eres <em>en realidad</em>?</div>
+        <div class="quiz-desc">Responde con sinceridad y descubre tu arquetipo — con un mensaje y un versículo escritos solo para ti, y tu medalla para compartir.</div>
+        <div class="quiz-meta">
+          <span>7 preguntas</span><span class="sep"></span>
+          <span>2 minutos</span><span class="sep"></span>
+          <span>gratis</span>
+        </div>
+        <a href="/quiz/mujer-construccion/" class="btn btn-quiz">Descubrir mi tipo ✦</a>
+      </div>
+    </div>
 
     <div class="reto-card fade-in">
       <div class="coming-badge"><span class="pulse-dot"></span>Próximamente</div>
@@ -600,6 +665,19 @@ html { scroll-behavior: smooth; }
       <h1>Me alegra que estés <em>aquí.</em></h1>
       <p>Encuentra mis recursos, retos y reflexiones — pensados para ayudarte a vivir con propósito.</p>
     </div>
+
+    <!-- Quiz -->
+    <article class="d-card d-card-quiz reveal">
+      <div class="d-badge">Test gratuito</div>
+      <h2>¿Qué tipo de mujer eres <em>en realidad</em>?</h2>
+      <p class="d-desc">Responde con sinceridad y descubre tu arquetipo — con un mensaje y un versículo escritos solo para ti, y tu medalla para compartir.</p>
+      <div class="d-quiz-meta">
+        <span>7 preguntas</span><span class="sep"></span>
+        <span>2 minutos</span><span class="sep"></span>
+        <span>gratis</span>
+      </div>
+      <a href="/quiz/mujer-construccion/" class="d-btn d-btn-primary">Descubrir mi tipo <span class="arrow">→</span></a>
+    </article>
 
     <!-- Reto -->
     <article class="d-card d-card-reto reveal">
