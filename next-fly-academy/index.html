@@ -1039,6 +1039,35 @@ body {
     } catch (e) {}
   })();
 
+  // Guarda el lead del checkout. La usan TODOS los caminos de pago.
+  //
+  // POR QUE ES COMPARTIDA: antes vivia dentro de submitPayment(), asi que solo
+  // la ejecutaba el boton de tarjeta. Quien pagaba con Apple Pay o Google Pay
+  // no dejaba lead: la wallet le pide el telefono, se lo entrega a Stripe y ahi
+  // se quedaba. Nunca llegaba a Supabase. Se descubrio en la compra de prueba.
+  //
+  // FAIL-OPEN ESTRICTO: sin await, sin bloquear, sin esperar respuesta. Si esto
+  // falla, tarda o el endpoint esta caido, el cobro sigue su curso exactamente
+  // igual. Un fallo al guardar un lead JAMAS puede costar una venta.
+  function guardarLead(d) {
+    try {
+      if (!d || !d.email) return;   // sin correo no hay lead que guardar
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'checkout',
+          name: d.name || '',
+          email: d.email,
+          telefono: d.telefono || '',
+          pais: d.pais || '',        // DECLARADO: el servidor no lo adivina
+          producto: 'next-fly-academy',
+          origen: (new URLSearchParams(location.search).get('de') || 'checkout')
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   // El telefono con su codigo de pais delante, para Stripe, PayPal, el recibo y
   // el aviso a Anny. Sin esto, el recibo mostraba "300 123 4567" a secas: un
   // numero sin pais con el que no se puede llamar ni escribir por WhatsApp.
@@ -1229,6 +1258,18 @@ body {
         expressElInstance.on('confirm', async (event) => {
           const ebd = (event && event.billingDetails) || {};
           const em = ebd.email || document.getElementById('buyer-email').value.trim();
+          // Guardar el lead tambien aqui. La wallet ya pidio nombre, correo y
+          // telefono (ver el 'click' de arriba), asi que hay tanto dato como en
+          // el formulario. El pais sale de la direccion de facturacion que
+          // devuelve la wallet — declarado, igual que el selector — y si no
+          // viene, del selector de la pagina.
+          const selP = document.getElementById('buyer-country');
+          guardarLead({
+            name: ebd.name || document.getElementById('buyer-name').value.trim(),
+            email: em,
+            telefono: ebd.phone || '',
+            pais: (ebd.address && ebd.address.country) || (selP ? selP.value : ''),
+          });
           try {
             const piId = (checkoutClientSecret || '').split('_secret')[0];
             if (piId && em) {
@@ -1323,24 +1364,7 @@ body {
     // FAIL-OPEN ESTRICTO: sin await, sin bloquear, sin esperar respuesta. Si
     // esto falla, tarda o el endpoint esta caido, el cobro sigue su curso
     // exactamente igual. Un fallo al guardar un lead JAMAS puede costar una venta.
-    var guardarLead = function () {
-      try {
-        fetch('/api/leads', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            source: 'checkout',
-            name: name,
-            email: email,
-            telefono: phone,
-            pais: pais,            // el que ELLA eligio: el servidor no lo adivina
-            producto: 'next-fly-academy',
-            origen: (new URLSearchParams(location.search).get('de') || 'checkout')
-          })
-        }).catch(function () {});
-      } catch (e) {}
-    };
-    guardarLead();
+    guardarLead({ name: name, email: email, telefono: phone, pais: pais });
 
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
       err.textContent = 'Revisa tu correo, parece que le falta algo.';

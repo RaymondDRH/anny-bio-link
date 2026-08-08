@@ -1,7 +1,8 @@
 // Captura (cobra) una orden de PayPal aprobada y notifica a Anny la venta.
 const { sendReceiptToAnny } = require('../lib/receipt');
 const { enviarCorreo, escaparHtml } = require('../lib/mailer');
-const { marcarComprado } = require('../lib/leads-estado');
+const { marcarComprado, guardarLeadCheckout } = require('../lib/leads-estado');
+const { normalizarTelefono } = require('../lib/telefono');
 const BASE = process.env.PAYPAL_ENV === 'live'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
@@ -137,6 +138,24 @@ module.exports = async (req, res) => {
       });
       // Correo de bienvenida al comprador
       await sendWelcome(payer.email_address || body.email, payerName || body.name, amountVal);
+      // PayPal recoge sus propios datos y NO pasa por el formulario, asi que
+      // aqui nunca existia un lead que marcar: marcarComprado afectaba 0 filas
+      // y la compradora no aparecia en Supabase. Se crea (o se completa) el
+      // lead con los datos verificados de PayPal y luego se marca comprado.
+      // El pais sale de la direccion de PayPal: declarado, no adivinado.
+      const telPaypal = normalizarTelefono(
+        payerPhone,
+        (payer.address && payer.address.country_code) || '',
+      );
+      await guardarLeadCheckout({
+        p_name: payerName || body.name || '',
+        p_email: payer.email_address || body.email || '',
+        p_origen: 'paypal',
+        p_telefono: telPaypal.e164 || null,
+        p_telefono_crudo: telPaypal.original || null,
+        p_telefono_ok: telPaypal.original ? telPaypal.valido : null,
+        p_producto: 'next-fly-academy',
+      });
       // Cierra el ciclo del lead: 'intentando' -> 'compro'. Fail-open.
       await marcarComprado(payer.email_address || body.email);
       // Recibo PDF a Anny (correo + Telegram)
