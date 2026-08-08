@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "libphonenumber-js": "^1.13.10",
     "pdf-lib": "^1.17.1",
     "stripe": "^14.21.0"
   }

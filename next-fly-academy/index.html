@@ -593,6 +593,35 @@ body {
   box-shadow: 0 0 0 3px rgba(196,154,60,0.1);
 }
 
+/* Telefono = selector de pais + numero. El pais se DECLARA, nunca se adivina:
+   sin el, "321 1234567" podia guardarse como mexicano siendo colombiano. */
+.modal-field-tel { display: flex; gap: 8px; }
+.modal-field-tel .modal-field-input { min-width: 0; } /* sin esto el input no encoge dentro del flex */
+
+.modal-field-country {
+  flex: 0 0 42%;
+  padding-right: 26px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23C49A3C' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  text-overflow: ellipsis;
+}
+/* La lista desplegable usa colores del sistema en Windows y Android: se fuerzan
+   para que no salga texto claro sobre fondo claro. */
+.modal-field-country option { background: #1B1408; color: #F5EDD8; }
+
+.modal-field-hint {
+  margin: 5px 0 0;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: rgba(245,237,216,0.42);
+  font-family: 'Poppins', sans-serif;
+}
+
 #payment-element { margin-bottom: 18px; min-height: 40px; }
 
 .modal-submit {
@@ -882,7 +911,44 @@ body {
       </div>
       <div class="modal-field">
         <label class="modal-field-label" for="buyer-phone">Número de teléfono</label>
-        <input type="tel" id="buyer-phone" class="modal-field-input" placeholder="+1 (555) 000-0000" autocomplete="tel">
+        <!-- El pais se ELIGE, no se deduce del numero. Sin esto, "321 1234567"
+             se guardaba como mexicano siendo colombiano, y sin ningun aviso.
+             Si su pais no esta en la lista, escribir el numero con + funciona
+             igual: el + siempre manda sobre el selector. -->
+        <div class="modal-field-tel">
+          <select id="buyer-country" class="modal-field-input modal-field-country" aria-label="País de tu teléfono">
+            <option value="US" data-dial="1">🇺🇸 +1 Estados Unidos</option>
+            <option value="MX" data-dial="52">🇲🇽 +52 México</option>
+            <option value="CO" data-dial="57">🇨🇴 +57 Colombia</option>
+            <option value="VE" data-dial="58">🇻🇪 +58 Venezuela</option>
+            <option value="AR" data-dial="54">🇦🇷 +54 Argentina</option>
+            <option value="ES" data-dial="34">🇪🇸 +34 España</option>
+            <option value="PE" data-dial="51">🇵🇪 +51 Perú</option>
+            <option value="CL" data-dial="56">🇨🇱 +56 Chile</option>
+            <option value="EC" data-dial="593">🇪🇨 +593 Ecuador</option>
+            <option value="DO" data-dial="1">🇩🇴 +1 República Dominicana</option>
+            <option value="PR" data-dial="1">🇵🇷 +1 Puerto Rico</option>
+            <option value="GT" data-dial="502">🇬🇹 +502 Guatemala</option>
+            <option value="CR" data-dial="506">🇨🇷 +506 Costa Rica</option>
+            <option value="PA" data-dial="507">🇵🇦 +507 Panamá</option>
+            <option value="BO" data-dial="591">🇧🇴 +591 Bolivia</option>
+            <option value="UY" data-dial="598">🇺🇾 +598 Uruguay</option>
+            <option value="PY" data-dial="595">🇵🇾 +595 Paraguay</option>
+            <option value="HN" data-dial="504">🇭🇳 +504 Honduras</option>
+            <option value="SV" data-dial="503">🇸🇻 +503 El Salvador</option>
+            <option value="NI" data-dial="505">🇳🇮 +505 Nicaragua</option>
+            <option value="CU" data-dial="53">🇨🇺 +53 Cuba</option>
+            <option value="CA" data-dial="1">🇨🇦 +1 Canadá</option>
+            <option value="BR" data-dial="55">🇧🇷 +55 Brasil</option>
+            <option value="IT" data-dial="39">🇮🇹 +39 Italia</option>
+            <option value="FR" data-dial="33">🇫🇷 +33 Francia</option>
+            <option value="DE" data-dial="49">🇩🇪 +49 Alemania</option>
+            <option value="GB" data-dial="44">🇬🇧 +44 Reino Unido</option>
+          </select>
+          <input type="tel" id="buyer-phone" class="modal-field-input" placeholder="300 123 4567"
+                 autocomplete="tel-national" inputmode="tel">
+        </div>
+        <p class="modal-field-hint">¿Tu país no aparece? Escribe tu número con el signo + y el código, por ejemplo +351 912 345 678.</p>
       </div>
     </div>
     <div id="payment-element"></div>
@@ -892,7 +958,6 @@ body {
       <span id="modal-submit-loading" style="display:none">Procesando…</span>
     </button>
     <p style="margin:16px 0 4px;font-size:11px;line-height:1.5;color:rgba(245,237,216,0.5);font-family:'Poppins',sans-serif;text-align:center">Al completar tu pago aceptas que es un producto digital y <strong style="color:rgba(245,237,216,0.78)">no tiene reembolso</strong>.</p>
-    <p style="margin:8px 0 4px;font-size:11px;line-height:1.5;color:rgba(245,237,216,0.42);font-family:'Poppins',sans-serif;text-align:center">Guardamos tus datos para poder ayudarte con tu compra si algo sale mal. No los compartimos con nadie.</p>
     <div class="modal-secure">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
       Pago 100% seguro y encriptado
@@ -913,6 +978,80 @@ body {
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // El campo de telefono solo acepta lo que puede formar parte de un numero.
+  // type="tel" NO valida nada: solo cambia el teclado del movil. Sin esto se
+  // podia escribir texto libre, que acababa en Stripe y en la base de datos.
+  //
+  // El '+' se conserva si es lo primero del numero, AUNQUE venga detras de un
+  // espacio o un parentesis. Antes se anclaba a la posicion 0 exacta, asi que
+  // pegar "(+57) 300..." o " +57 300..." desde WhatsApp borraba el prefijo sin
+  // avisar — y sin prefijo el servidor no sabe de que pais es el numero.
+  //
+  // NO hay maxlength en el input a proposito: el navegador aplica maxlength AL
+  // PEGAR, antes de que esto limpie. Pegar "WhatsApp: +54 9 11 1234-5678" se
+  // comia los ultimos digitos y guardaba un numero corto que parecia valido.
+  // Se recorta aqui, DESPUES de limpiar.
+  (function () {
+    var tel = document.getElementById('buyer-phone');
+    if (!tel) return;
+    var LARGO_MAX = 30;
+    var limpiar = function () {
+      var v = tel.value;
+      var limpio = v.replace(/[^\d+\s()\-.]/g, '');       // fuera letras y simbolos
+      limpio = limpio.replace(/^[\s(]+(?=\+)/, '');        // saca el '+' a la superficie
+      var internacional = limpio.charAt(0) === '+';
+      limpio = limpio.replace(/\+/g, '');                  // fuera todos los '+'
+      if (internacional) limpio = '+' + limpio.replace(/^(\d+)\)/, '$1'); // sin ')' huerfano
+      if (limpio.length > LARGO_MAX) limpio = limpio.slice(0, LARGO_MAX);
+      if (limpio === v) return;
+      // El cursor se mide desde el FINAL: es lo unico estable cuando la limpieza
+      // cambia el largo por delante. Antes se restaba la diferencia de longitud
+      // y podia salir negativo, que el navegador interpreta como "al final".
+      var desdeFinal = v.length - (tel.selectionStart == null ? v.length : tel.selectionStart);
+      tel.value = limpio;
+      var pos = Math.max(0, Math.min(limpio.length, limpio.length - desdeFinal));
+      try { tel.setSelectionRange(pos, pos); } catch (e) {}
+    };
+    tel.addEventListener('input', limpiar);
+    tel.addEventListener('change', limpiar);
+    tel.addEventListener('blur', limpiar);
+    // Pegar y arrastrar disparan el filtro despues de que el navegador inserte.
+    tel.addEventListener('paste', function () { setTimeout(limpiar, 0); });
+    tel.addEventListener('drop', function () { setTimeout(limpiar, 0); });
+  })();
+
+  // Preselecciona el pais con la geolocalizacion que Vercel ya incluye en cada
+  // peticion. Es solo una comodidad: si falla, queda Estados Unidos y ella lo
+  // cambia. Nunca bloquea ni retrasa nada del pago.
+  (function () {
+    var sel = document.getElementById('buyer-country');
+    if (!sel) return;
+    var tocado = false;
+    sel.addEventListener('change', function () { tocado = true; });
+    try {
+      fetch('/api/leads').then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.pais || tocado) return;
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === d.pais) { sel.selectedIndex = i; return; }
+        }
+      }).catch(function () {});
+    } catch (e) {}
+  })();
+
+  // El telefono con su codigo de pais delante, para Stripe, PayPal, el recibo y
+  // el aviso a Anny. Sin esto, el recibo mostraba "300 123 4567" a secas: un
+  // numero sin pais con el que no se puede llamar ni escribir por WhatsApp.
+  // Si ella escribio su propio '+', ese manda y no se toca.
+  function telefonoConPais() {
+    var tel = document.getElementById('buyer-phone');
+    var v = tel ? tel.value.trim() : '';
+    if (!v || v.charAt(0) === '+') return v;
+    var sel = document.getElementById('buyer-country');
+    var opt = sel && sel.options[sel.selectedIndex];
+    var dial = opt && opt.getAttribute('data-dial');
+    return dial ? '+' + dial + ' ' + v.replace(/^0+/, '') : v;
+  }
 
   let stripeInstance  = null;
   let elementsInstance = null;
@@ -942,7 +1081,7 @@ body {
     const buyer = () => ({
       name:  document.getElementById('buyer-name').value.trim(),
       email: document.getElementById('buyer-email').value.trim(),
-      phone: document.getElementById('buyer-phone').value.trim(),
+      phone: telefonoConPais(),
     });
     const mount = () => {
       if (!window.paypal) return;
@@ -1163,32 +1302,62 @@ body {
     const name    = document.getElementById('buyer-name').value.trim();
     const email   = document.getElementById('buyer-email').value.trim();
     const phone   = document.getElementById('buyer-phone').value.trim();
+    const selPais = document.getElementById('buyer-country');
+    const pais    = selPais ? selPais.value : '';
+    const err = document.getElementById('modal-error');
     if (!name || !email || !phone) {
-      document.getElementById('modal-error').textContent = 'Por favor completa todos los campos.';
+      err.textContent = 'Por favor completa todos los campos.';
       return;
     }
 
-    // Guardar el lead ANTES de intentar cobrar. Si esta persona abandona el
+    // Guardar el lead ANTES de validar el formato. Si esta persona abandona el
     // pago, esto es lo unico que queda de ella — y es el lead mas caliente que
     // existe: dejo hasta su telefono.
+    //
+    // POR QUE ANTES Y NO DESPUES: las validaciones de abajo hacen `return`. Si
+    // se guardaba despues, quien tropezaba con una validacion, se frustraba y
+    // cerraba el modal no dejaba NI RASTRO: ni nombre, ni correo, ni telefono.
+    // Si luego corrige y reenvia, el servidor rellena y mejora la misma fila
+    // (anny.guardar_lead_checkout), no la duplica ni pierde la correccion.
     //
     // FAIL-OPEN ESTRICTO: sin await, sin bloquear, sin esperar respuesta. Si
     // esto falla, tarda o el endpoint esta caido, el cobro sigue su curso
     // exactamente igual. Un fallo al guardar un lead JAMAS puede costar una venta.
-    try {
-      fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'checkout',
-          name: name,
-          email: email,
-          telefono: phone,
-          producto: 'next-fly-academy',
-          origen: (new URLSearchParams(location.search).get('de') || 'checkout')
-        })
-      }).catch(function () {});
-    } catch (e) {}
+    var guardarLead = function () {
+      try {
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            source: 'checkout',
+            name: name,
+            email: email,
+            telefono: phone,
+            pais: pais,            // el que ELLA eligio: el servidor no lo adivina
+            producto: 'next-fly-academy',
+            origen: (new URLSearchParams(location.search).get('de') || 'checkout')
+          })
+        }).catch(function () {});
+      } catch (e) {}
+    };
+    guardarLead();
+
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
+      err.textContent = 'Revisa tu correo, parece que le falta algo.';
+      document.getElementById('buyer-email').focus();
+      return;
+    }
+    // E.164 admite entre 7 y 15 digitos. Fuera de ese rango no es un telefono.
+    // El servidor vuelve a validar y normaliza a E.164 con el pais elegido —
+    // esto es solo para avisar aqui en vez de guardar un dato inservible.
+    var digitosTel = phone.replace(/\D/g, '');
+    if (digitosTel.length < 7 || digitosTel.length > 15) {
+      err.textContent = 'Revisa tu número de teléfono: parece que le faltan o le sobran dígitos.';
+      document.getElementById('buyer-phone').focus();
+      return;
+    }
+
+    const phoneStripe = telefonoConPais();
 
     const btn = document.getElementById('modal-submit');
     btn.disabled = true;
@@ -1203,7 +1372,7 @@ body {
       if (piId) {
         await fetch('/api/checkout', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'attach-customer', paymentIntentId: piId, name, email, phone }),
+          body: JSON.stringify({ action: 'attach-customer', paymentIntentId: piId, name, email, phone: phoneStripe }),
         });
       }
     } catch (e) { /* no bloquear el pago */ }
@@ -1214,7 +1383,7 @@ body {
         return_url: 'https://annygomez.com/next-fly-academy/success.html',
         receipt_email: email,
         payment_method_data: {
-          billing_details: { name, email, phone },
+          billing_details: { name, email, phone: phoneStripe },
         },
       },
     });
