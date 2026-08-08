@@ -389,6 +389,22 @@
 (function(){
   "use strict";
 
+  /* ---------- Origen del visitante ----------
+     Se captura UNA VEZ al cargar, para saber de donde llego cada lead.
+     ManyChat manda ?de=reel-arquetipos; el bio-link no manda nada y se
+     deduce por el referrer. Sin esto, todos los leads entran iguales y
+     no hay forma de saber que canal funciona. */
+  var ORIGEN = (function(){
+    try {
+      var p = new URLSearchParams(window.location.search).get("de");
+      if (p && p.trim()) return p.trim().slice(0, 60);
+      var ref = document.referrer || "";
+      if (ref.indexOf("annygomez.com") !== -1) return "bio-link";
+      if (ref) return "externo";
+      return "directo";
+    } catch (e) { return "directo"; }
+  })();
+
   /* ---------- Data ---------- */
   /* A=Visionaria · B=Imparable · C=Corazón Gigante · D=Despertando · E=Guerrera · F=Creadora */
   /* 4 opciones por pregunta. Los 6 arquetipos rotan y aparecen 4-5 veces c/u.
@@ -901,6 +917,7 @@
         source:"quiz",
         name:name,
         email:email,
+        origen: ORIGEN,
         archetype: pendingResult ? ARCH[pendingResult.primary].key : null,
         // Si Claude fallo, pendingResult.html es null: mandamos el texto local
         // del arquetipo para que igual reciba el correo que le prometimos.
