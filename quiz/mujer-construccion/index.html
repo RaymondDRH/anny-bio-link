@@ -579,11 +579,16 @@
     // emblem: video de revelación + medalla fija de frente al terminar
     var medalVid = document.getElementById("emb-medal");
     var medalStill = document.getElementById("emb-medal-still");
-    medalStill.src = "img/medalla-"+a.key+".png";
+    // WebP: 88-164 KB contra los 2 MB del PNG, sin diferencia visible.
+    // Fallback al PNG si el navegador no lo soporta (Safari < iOS 14).
+    medalStill.onerror = function(){
+      if(!this._alt){ this._alt = 1; this.src = "img/medalla-"+a.key+".png"; }
+    };
+    medalStill.src = "img/medalla-"+a.key+".webp";
     medalStill.style.display = "none";
     medalVid.style.display = "block";
     medalVid.src = "img/medalla-"+a.key+".mp4";
-    medalVid.poster = "img/medalla-"+a.key+".png";
+    medalVid.poster = "img/medalla-"+a.key+".webp";
     medalVid.load();
     medalVid.onended = function(){ medalStill.style.display="block"; medalVid.style.display="none"; };
 
@@ -748,9 +753,18 @@
         verseText,verseRef);
     }
     function tick(){ if(++n>=2) paint(); }
-    bg.onload=tick; bg.onerror=tick; medal.onload=tick; medal.onerror=tick;
-    bg.src="img/fondo-"+a.key+".jpg";
-    medal.src="img/medalla-"+a.key+".png";
+    bg.onload=tick; medal.onload=tick;
+    // Si el navegador no soporta WebP, se reintenta UNA vez con el formato
+    // original antes de rendirse. Sin esto, la tarjeta para compartir saldria
+    // sin fondo ni medalla en navegadores viejos.
+    bg.onerror=function(){
+      if(!bg._alt){ bg._alt=1; bg.src="img/fondo-"+a.key+".jpg"; } else tick();
+    };
+    medal.onerror=function(){
+      if(!medal._alt){ medal._alt=1; medal.src="img/medalla-"+a.key+".png"; } else tick();
+    };
+    bg.src="img/fondo-"+a.key+".webp";
+    medal.src="img/medalla-"+a.key+".webp";
   }
   function paintCard(ctx,a,secondary,bg,medal,verseText,verseRef){
     var W=1080,H=1920;
