@@ -882,7 +882,8 @@ body {
       </div>
       <div class="modal-field">
         <label class="modal-field-label" for="buyer-phone">Número de teléfono</label>
-        <input type="tel" id="buyer-phone" class="modal-field-input" placeholder="+1 (555) 000-0000" autocomplete="tel">
+        <input type="tel" id="buyer-phone" class="modal-field-input" placeholder="+1 (555) 000-0000"
+               autocomplete="tel" inputmode="tel" maxlength="25">
       </div>
     </div>
     <div id="payment-element"></div>
@@ -913,6 +914,27 @@ body {
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // El campo de telefono solo acepta lo que puede formar parte de un numero.
+  // type="tel" NO valida nada: solo cambia el teclado del movil. Sin esto se
+  // podia escribir texto libre, que acababa en Stripe y en la base de datos.
+  // El '+' se permite unicamente al principio (formato internacional E.164).
+  (function () {
+    var tel = document.getElementById('buyer-phone');
+    if (!tel) return;
+    var limpiar = function () {
+      var v = tel.value;
+      var limpio = v.replace(/[^\d+\s()\-.]/g, '');          // fuera letras y simbolos raros
+      limpio = limpio.replace(/(?!^)\+/g, '');                // el '+' solo al inicio
+      if (limpio !== v) {
+        var pos = tel.selectionStart - (v.length - limpio.length);
+        tel.value = limpio;
+        try { tel.setSelectionRange(pos, pos); } catch (e) {} // conservar el cursor
+      }
+    };
+    tel.addEventListener('input', limpiar);
+    tel.addEventListener('paste', function () { setTimeout(limpiar, 0); });
+  })();
 
   let stripeInstance  = null;
   let elementsInstance = null;
@@ -1163,8 +1185,23 @@ body {
     const name    = document.getElementById('buyer-name').value.trim();
     const email   = document.getElementById('buyer-email').value.trim();
     const phone   = document.getElementById('buyer-phone').value.trim();
+    const err = document.getElementById('modal-error');
     if (!name || !email || !phone) {
-      document.getElementById('modal-error').textContent = 'Por favor completa todos los campos.';
+      err.textContent = 'Por favor completa todos los campos.';
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
+      err.textContent = 'Revisa tu correo, parece que le falta algo.';
+      document.getElementById('buyer-email').focus();
+      return;
+    }
+    // E.164 admite entre 7 y 15 digitos. Fuera de ese rango no es un telefono.
+    // El servidor vuelve a validar y normaliza a E.164 — esto es solo para
+    // avisar aqui en vez de dejar que se guarde un dato inservible.
+    var digitosTel = phone.replace(/\D/g, '');
+    if (digitosTel.length < 7 || digitosTel.length > 15) {
+      err.textContent = 'Revisa tu numero de telefono. Incluye el codigo de pais, por ejemplo +1 251 650 9950.';
+      document.getElementById('buyer-phone').focus();
       return;
     }
 

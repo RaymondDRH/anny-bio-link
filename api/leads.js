@@ -5,6 +5,7 @@
 // - default        → guía de hábitos vía n8n
 const crypto = require('crypto');
 const { enviarCorreo } = require('../lib/mailer');
+const { normalizarTelefono } = require('../lib/telefono');
 const RESEND_KEY = process.env.RESEND_API_KEY;
 const GHOST_KEY = process.env.GHOST_ADMIN_KEY;
 const GHOST_URL = 'https://blog.annygomez.com/ghost/api/admin';
@@ -175,7 +176,11 @@ module.exports = async (req, res) => {
   const archetype = (body && body.archetype ? String(body.archetype).trim().slice(0, 32) : '');
   // De donde vino el lead: ?de= de la URL, o deducido (bio-link / directo).
   const origen = (body && body.origen ? String(body.origen).trim().slice(0, 60) : '');
-  const telefono = (body && body.telefono ? String(body.telefono).trim().slice(0, 40) : '');
+  // Se normaliza a E.164 (+12516509950): es lo que necesita WhatsApp y lo que
+  // evita que el mismo numero entre como tres leads distintos segun como se
+  // haya escrito. Si no se puede normalizar, no se guarda basura.
+  const tel = normalizarTelefono(body && body.telefono);
+  const telefono = tel.e164;
   const producto = (body && body.producto ? String(body.producto).trim().slice(0, 60) : '');
 
   if (source === 'reset' || source === 'quiz') {
