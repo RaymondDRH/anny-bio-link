@@ -148,6 +148,8 @@ module.exports = async (req, res) => {
   const name = (body && body.name ? String(body.name).trim().slice(0, 80) : '');
   const email = (body && body.email ? String(body.email).trim().slice(0, 160) : '');
   const archetype = (body && body.archetype ? String(body.archetype).trim().slice(0, 32) : '');
+  // De donde vino el lead: ?de= de la URL, o deducido (bio-link / directo).
+  const origen = (body && body.origen ? String(body.origen).trim().slice(0, 60) : '');
 
   if (source === 'reset' || source === 'quiz') {
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'Correo inválido' });
@@ -157,6 +159,7 @@ module.exports = async (req, res) => {
 
   try {
     const row = { name: name || (source === 'quiz' ? 'Quiz' : 'Reset'), email };
+    if (origen) row.origen = origen;
     const sb = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny', 'Prefer': 'return=minimal' },

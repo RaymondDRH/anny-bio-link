@@ -11,7 +11,9 @@
     { "source": "/nextflightacademy", "destination": "/next-fly-academy/", "permanent": false },
     { "source": "/test", "destination": "/quiz/mujer-construccion/", "permanent": false },
     { "source": "/quiz", "destination": "/quiz/mujer-construccion/", "permanent": false },
-    { "source": "/soy", "destination": "/quiz/mujer-construccion/", "permanent": false }
+    { "source": "/soy", "destination": "/quiz/mujer-construccion/", "permanent": false },
+    { "source": "/quiz/mujer-construccion", "destination": "/quiz/mujer-construccion/", "permanent": false },
+    { "source": "/next-fly-academy", "destination": "/next-fly-academy/", "permanent": false }
   ],
   "headers": [
     {
