@@ -153,7 +153,50 @@ NUNCA menciones letras de opciones (A, B, C...) ni códigos internos; refiérete
   return txt;
 }
 
+// Inserta la fila del lead. Nunca lanza: devuelve {ok, error} para que quien
+// llama decida. Guardar un lead JAMAS puede tumbar la peticion.
+async function insertarLead(row) {
+  try {
+    const r = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny', 'Prefer': 'return=minimal' },
+      body: JSON.stringify(row),
+    });
+    if (r.ok) return { ok: true, error: null };
+    return { ok: false, error: await r.json().catch(() => ({})) };
+  } catch (e) {
+    return { ok: false, error: { code: 'FETCH', message: e.message } };
+  }
+}
+
+// Guarda el lead del checkout via anny.guardar_lead_checkout (SECURITY DEFINER).
+// Rellena huecos entre intentos en vez de chocar con el UNIQUE del correo.
+// Nunca lanza: un fallo al guardar un lead no puede tumbar nada.
+async function guardarLeadCheckout(args) {
+  try {
+    const r = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/guardar_lead_checkout`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny' },
+      body: JSON.stringify(args),
+    });
+    if (!r.ok) return { ok: false, error: `HTTP ${r.status} ${(await r.text().catch(() => '')).slice(0, 160)}` };
+    return { ok: true, error: null };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
 module.exports = async (req, res) => {
+  // GET = de que pais se esta conectando, para preseleccionar el selector de
+  // telefono del checkout. Vercel pone la cabecera gratis en cada peticion.
+  // Va aqui dentro y no en un archivo nuevo porque el plan Hobby topa en 12
+  // funciones serverless y ya hay 12. lib/ no cuenta, api/ si.
+  // Solo devuelve el codigo de pais: no expone la IP ni nada de la visitante.
+  if (req.method === 'GET') {
+    const p = String(req.headers['x-vercel-ip-country'] || '').toUpperCase();
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).json({ pais: /^[A-Z]{2}$/.test(p) ? p : '' });
+  }
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   let body = req.body;
   if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { body = {}; } }
@@ -178,9 +221,17 @@ module.exports = async (req, res) => {
   const origen = (body && body.origen ? String(body.origen).trim().slice(0, 60) : '');
   // Se normaliza a E.164 (+12516509950): es lo que necesita WhatsApp y lo que
   // evita que el mismo numero entre como tres leads distintos segun como se
-  // haya escrito. Si no se puede normalizar, no se guarda basura.
-  const tel = normalizarTelefono(body && body.telefono);
+  // haya escrito.
+  //
+  // `pais` es el que ELLA eligio en el selector del checkout. Sin el, el modulo
+  // no adivina: devuelve vacio. Por eso siempre se guarda tambien el texto
+  // crudo — si la normalizacion no puede con el numero, el dato real sigue ahi
+  // y se puede recuperar. El telefono del lead que abandono un pago de $697 es
+  // lo mas valioso del embudo: no se descarta nunca.
+  const paisDeclarado = (body && body.pais ? String(body.pais).trim().slice(0, 2) : '');
+  const tel = normalizarTelefono(body && body.telefono, paisDeclarado);
   const telefono = tel.e164;
+  const telefonoCrudo = tel.original;
   const producto = (body && body.producto ? String(body.producto).trim().slice(0, 60) : '');
 
   if (source === 'reset' || source === 'quiz') {
@@ -190,21 +241,30 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const row = { name: name || (source === 'quiz' ? 'Quiz' : 'Reset'), email };
-    if (origen) row.origen = origen;
     if (source === 'checkout') {
-      // El telefono es lo mas valioso de este lead: permite escribirle por
-      // WhatsApp a quien lleno el formulario de pago y no completo la compra.
-      if (telefono) row.telefono = telefono;
-      if (producto) row.producto = producto;
-      row.estado = 'intentando';
+      // El checkout guarda por RPC y no por INSERT directo. POR QUE:
+      // leads.email es UNIQUE y este lead se guarda ANTES de validar el
+      // formato, para no perder a quien se frustra y cierra el modal. Si ella
+      // corrige el telefono y reenvia, un INSERT normal chocaria con el UNIQUE
+      // y se descartaria en silencio: nos quedariamos con el telefono MALO.
+      // La funcion rellena huecos y solo sustituye el telefono si el nuevo
+      // mejora al guardado. Nunca toca `estado`.
+      const rpc = await guardarLeadCheckout({
+        p_name: name,
+        p_email: email,
+        p_origen: origen || null,
+        p_telefono: telefono || null,
+        p_telefono_crudo: telefonoCrudo || null,
+        p_telefono_ok: telefonoCrudo ? tel.valido : null,
+        p_producto: producto || null,
+      });
+      if (!rpc.ok) console.error('[leads] checkout:', rpc.error);
+    } else {
+      const row = { name: name || (source === 'quiz' ? 'Quiz' : 'Reset'), email };
+      if (origen) row.origen = origen;
+      const sb = await insertarLead(row);
+      if (!sb.ok && sb.error && sb.error.code !== '23505') console.error('[leads] Supabase:', sb.error);
     }
-    const sb = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny', 'Prefer': 'return=minimal' },
-      body: JSON.stringify(row),
-    });
-    if (!sb.ok) { const e = await sb.json().catch(()=>({})); if (e.code && e.code !== '23505') console.error('[leads] Supabase:', e); }
 
     if (source === 'reset') {
       // Critico: ella pidio la guia y se la prometimos. Reintenta y avisa si falla.
