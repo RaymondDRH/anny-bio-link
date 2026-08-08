@@ -175,6 +175,8 @@ module.exports = async (req, res) => {
   const archetype = (body && body.archetype ? String(body.archetype).trim().slice(0, 32) : '');
   // De donde vino el lead: ?de= de la URL, o deducido (bio-link / directo).
   const origen = (body && body.origen ? String(body.origen).trim().slice(0, 60) : '');
+  const telefono = (body && body.telefono ? String(body.telefono).trim().slice(0, 40) : '');
+  const producto = (body && body.producto ? String(body.producto).trim().slice(0, 60) : '');
 
   if (source === 'reset' || source === 'quiz') {
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'Correo inválido' });
@@ -185,6 +187,13 @@ module.exports = async (req, res) => {
   try {
     const row = { name: name || (source === 'quiz' ? 'Quiz' : 'Reset'), email };
     if (origen) row.origen = origen;
+    if (source === 'checkout') {
+      // El telefono es lo mas valioso de este lead: permite escribirle por
+      // WhatsApp a quien lleno el formulario de pago y no completo la compra.
+      if (telefono) row.telefono = telefono;
+      if (producto) row.producto = producto;
+      row.estado = 'intentando';
+    }
     const sb = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny', 'Prefer': 'return=minimal' },
@@ -206,6 +215,11 @@ module.exports = async (req, res) => {
       );
       if (!mail.ok) return res.status(500).json({ error: 'No se pudo enviar el correo' });
       await subscribeToBlog(email, name);
+    } else if (source === 'checkout') {
+      // Nada mas que hacer: el lead ya quedo guardado arriba.
+      // NO se envia correo ni se suscribe a la lista: todavia no es cliente
+      // y no dio ese consentimiento. Solo guardamos que lo intento, para que
+      // Anny pueda escribirle si abandona.
     } else if (source === 'quiz') {
       await subscribeToBlog(email, name);
       // Su resultado por correo. Fail-open: si esto falla, el lead YA quedó
