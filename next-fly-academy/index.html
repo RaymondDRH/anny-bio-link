@@ -892,6 +892,7 @@ body {
       <span id="modal-submit-loading" style="display:none">Procesando…</span>
     </button>
     <p style="margin:16px 0 4px;font-size:11px;line-height:1.5;color:rgba(245,237,216,0.5);font-family:'Poppins',sans-serif;text-align:center">Al completar tu pago aceptas que es un producto digital y <strong style="color:rgba(245,237,216,0.78)">no tiene reembolso</strong>.</p>
+    <p style="margin:8px 0 4px;font-size:11px;line-height:1.5;color:rgba(245,237,216,0.42);font-family:'Poppins',sans-serif;text-align:center">Guardamos tus datos para poder ayudarte con tu compra si algo sale mal. No los compartimos con nadie.</p>
     <div class="modal-secure">
       <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
       Pago 100% seguro y encriptado
@@ -1166,6 +1167,28 @@ body {
       document.getElementById('modal-error').textContent = 'Por favor completa todos los campos.';
       return;
     }
+
+    // Guardar el lead ANTES de intentar cobrar. Si esta persona abandona el
+    // pago, esto es lo unico que queda de ella — y es el lead mas caliente que
+    // existe: dejo hasta su telefono.
+    //
+    // FAIL-OPEN ESTRICTO: sin await, sin bloquear, sin esperar respuesta. Si
+    // esto falla, tarda o el endpoint esta caido, el cobro sigue su curso
+    // exactamente igual. Un fallo al guardar un lead JAMAS puede costar una venta.
+    try {
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'checkout',
+          name: name,
+          email: email,
+          telefono: phone,
+          producto: 'next-fly-academy',
+          origen: (new URLSearchParams(location.search).get('de') || 'checkout')
+        })
+      }).catch(function () {});
+    } catch (e) {}
 
     const btn = document.getElementById('modal-submit');
     btn.disabled = true;

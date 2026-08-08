@@ -1,6 +1,7 @@
 // Captura (cobra) una orden de PayPal aprobada y notifica a Anny la venta.
 const { sendReceiptToAnny } = require('../lib/receipt');
 const { enviarCorreo, escaparHtml } = require('../lib/mailer');
+const { marcarComprado } = require('../lib/leads-estado');
 const BASE = process.env.PAYPAL_ENV === 'live'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com';
@@ -136,6 +137,8 @@ module.exports = async (req, res) => {
       });
       // Correo de bienvenida al comprador
       await sendWelcome(payer.email_address || body.email, payerName || body.name, amountVal);
+      // Cierra el ciclo del lead: 'intentando' -> 'compro'. Fail-open.
+      await marcarComprado(payer.email_address || body.email);
       // Recibo PDF a Anny (correo + Telegram)
       const mesesNF = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
       const dNF = new Date();

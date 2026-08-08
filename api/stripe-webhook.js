@@ -3,6 +3,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { sendReceiptToAnny } = require('../lib/receipt');
 const { enviarCorreo, escaparHtml } = require('../lib/mailer');
+const { marcarComprado } = require('../lib/leads-estado');
 
 // Stripe: solo Telegram (Anny ya recibe el correo de su propia cuenta Stripe).
 async function notifyAnny({ name, email, phone, amount, method, product }) {
@@ -93,6 +94,9 @@ module.exports = async (req, res) => {
         // Correo de bienvenida + recibo PDF a Anny SOLO para Next Fly (el webhook escucha toda la cuenta)
         if ((pi.metadata && pi.metadata.product === 'next-fly-academy') || (pi.description || '').includes('Next Fl')) {
           await sendWelcome(pi.receipt_email || bd.email, bd.name, amount);
+          // Cierra el ciclo del lead: pasa de 'intentando' a 'compro' para que
+          // no se le escriba como si hubiera abandonado. Fail-open.
+          await marcarComprado(pi.receipt_email || bd.email);
           const pmType = (charge && charge.payment_method_details && charge.payment_method_details.type) || 'card';
           const pmMap = { card: 'Tarjeta', affirm: 'Affirm', cashapp: 'Cash App', us_bank_account: 'Transferencia', link: 'Link', klarna: 'Klarna', afterpay_clearpay: 'Afterpay' };
           const mesesNF = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
