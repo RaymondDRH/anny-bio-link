@@ -6,6 +6,7 @@
 const crypto = require('crypto');
 const { enviarCorreo } = require('../lib/mailer');
 const { normalizarTelefono } = require('../lib/telefono');
+const { guardarLeadCheckout } = require('../lib/leads-estado');
 const RESEND_KEY = process.env.RESEND_API_KEY;
 const GHOST_KEY = process.env.GHOST_ADMIN_KEY;
 const GHOST_URL = 'https://blog.annygomez.com/ghost/api/admin';
@@ -166,23 +167,6 @@ async function insertarLead(row) {
     return { ok: false, error: await r.json().catch(() => ({})) };
   } catch (e) {
     return { ok: false, error: { code: 'FETCH', message: e.message } };
-  }
-}
-
-// Guarda el lead del checkout via anny.guardar_lead_checkout (SECURITY DEFINER).
-// Rellena huecos entre intentos en vez de chocar con el UNIQUE del correo.
-// Nunca lanza: un fallo al guardar un lead no puede tumbar nada.
-async function guardarLeadCheckout(args) {
-  try {
-    const r = await fetch(`${process.env.SUPABASE_URL}/rest/v1/rpc/guardar_lead_checkout`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': process.env.SUPABASE_ANON_KEY, 'Authorization': `Bearer ${process.env.SUPABASE_ANON_KEY}`, 'Content-Profile': 'anny' },
-      body: JSON.stringify(args),
-    });
-    if (!r.ok) return { ok: false, error: `HTTP ${r.status} ${(await r.text().catch(() => '')).slice(0, 160)}` };
-    return { ok: true, error: null };
-  } catch (e) {
-    return { ok: false, error: e.message };
   }
 }
 
