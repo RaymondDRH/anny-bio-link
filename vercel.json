@@ -3,6 +3,8 @@
     "api/generate-image.js": { "maxDuration": 60 }
   },
   "redirects": [
+    { "source": "/lib/(.*)", "destination": "/", "permanent": false },
+    { "source": "/lib", "destination": "/", "permanent": false },
     { "source": "/next-flight-academy", "destination": "/next-fly-academy/", "permanent": false },
     { "source": "/next-flight-academy/", "destination": "/next-fly-academy/", "permanent": false },
     { "source": "/next-flight-academy/:path+", "destination": "/next-fly-academy/:path+", "permanent": false },
