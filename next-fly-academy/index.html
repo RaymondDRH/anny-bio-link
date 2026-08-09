@@ -875,7 +875,11 @@ body {
 </section>
 
 <!-- ===== PAYMENT MODAL ===== -->
-<div id="payment-overlay" class="payment-overlay" onclick="handleOverlayClick(event)">
+<!-- El modal NO se cierra al tocar fuera, a proposito. Aqui ella escribe su
+     nombre, su correo, su telefono y los datos de su tarjeta: un roce en el
+     borde de la pantalla no puede borrarle todo eso. Para cerrar hay que
+     pulsar la X, que es un gesto deliberado. -->
+<div id="payment-overlay" class="payment-overlay">
   <div class="payment-modal">
     <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button>
     <div class="modal-eyebrow">Academia Digital</div>
@@ -1333,10 +1337,6 @@ body {
     document.getElementById('buyer-name').value  = '';
     document.getElementById('buyer-email').value = '';
     document.getElementById('buyer-phone').value = '';
-  }
-
-  function handleOverlayClick(e) {
-    if (e.target === document.getElementById('payment-overlay')) closeModal();
   }
 
   async function submitPayment() {
