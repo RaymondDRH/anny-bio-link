@@ -2,3 +2,9 @@
 .env.*
 *.env
 .stripe.env
+
+# Nada de esto hace falta en el servidor, y todo lo que se sube se sirve:
+# el repositorio se publica como estatico, asi que cualquier archivo que
+# llegue al despliegue es descargable desde internet.
+test/
+db/
