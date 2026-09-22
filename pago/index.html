@@ -175,7 +175,7 @@ body {
   <!-- ============ Estado del plan / inicio ============ -->
   <div id="v-plan" class="card anim hidden">
     <h1 class="title" id="plan-title">Tu pago en <em>2 partes</em></h1>
-    <p class="sub" id="plan-sub">Paga la primera parte hoy y la segunda cuando puedas, desde este mismo enlace.</p>
+    <p class="sub" id="plan-sub">Paga la primera parte hoy y completa la segunda desde este mismo enlace.</p>
 
     <div class="steps" id="plan-steps"></div>
 
@@ -309,7 +309,7 @@ body {
     if (yaPago) {
       $('plan-title').innerHTML = 'Te falta la <em>segunda parte</em>';
       $('plan-sub').textContent = (e.nombre ? e.nombre + ', tu' : 'Tu') +
-        ' primera parte ya está pagada. Cuando quieras, completa la segunda aquí mismo.';
+        ' primera parte ya está pagada. Completa la segunda aquí mismo para terminar tu inscripción.';
     }
     $('plan-btn').textContent = esPrimera ? 'Pagar 1ra parte ' + money(e.montoParte) : 'Pagar 2da parte ' + money(e.montoParte);
     $('plan-fields').classList.toggle('hidden', !!planId);
