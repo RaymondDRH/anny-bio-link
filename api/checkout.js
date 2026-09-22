@@ -40,6 +40,57 @@ async function attachCustomer({ paymentIntentId, name, email, phone }) {
   return { ok: true };
 }
 
+// ---------------------------------------------------------------------------
+// PLAN DE PAGO EN 2 PARTES (enlace privado que Anny envia caso por caso)
+//
+// DONDE VIVE EL ESTADO: en Stripe, no en una base de datos nuestra.
+// Para saber que pago una clienta se le pregunta a Stripe cuantos
+// PaymentIntents suyos estan en 'succeeded'. Una sola fuente de verdad.
+// Si el estado viviera en una tabla aparte, el dia que esa tabla y Stripe
+// no coincidan tendriamos un cobro doble o una clienta bloqueada sin deber
+// nada — y el que miente siempre es el registro que nadie actualiza.
+//
+// El "planId" es el id del Customer de Stripe. La pagina /pago/ lo lleva en
+// la URL (?p=cus_xxx) y tambien lo guarda el navegador de la clienta, para
+// que el MISMO enlace le sirva para las dos partes.
+// ---------------------------------------------------------------------------
+const PLAN_ID = '2-partes';
+const PLAN_PARTES = 2;
+const PLAN_PARTE_AMOUNT = 34850; // $348.50 x 2 = $697 — mismo precio, sin recargo
+
+// Numeros de parte ya pagados por este Customer, segun Stripe.
+async function planPartesPagadas(customerId) {
+  const lista = await stripe.paymentIntents.list({ customer: customerId, limit: 25 });
+  const pagados = (lista.data || []).filter(
+    (pi) => pi.status === 'succeeded' && pi.metadata && pi.metadata.plan === PLAN_ID,
+  );
+  // Set (no contador): si alguna vez existieran dos PI de la misma parte,
+  // contar sumaria 2 y daria el plan por completo sin estarlo.
+  return new Set(pagados.map((pi) => String(pi.metadata.parte || '')));
+}
+
+async function planEstado(customerId) {
+  const customer = await stripe.customers.retrieve(customerId);
+  if (!customer || customer.deleted) return { ok: false, motivo: 'no_existe' };
+  const pagadas = await planPartesPagadas(customerId);
+  const partes = [];
+  for (let n = 1; n <= PLAN_PARTES; n++) {
+    partes.push({ n, pagada: pagadas.has(String(n)), monto: PLAN_PARTE_AMOUNT });
+  }
+  const siguiente = partes.find((p) => !p.pagada);
+  return {
+    ok: true,
+    // Solo el primer nombre: el enlace puede reenviarse por WhatsApp y no
+    // tiene por que exponer el correo ni el nombre completo de nadie.
+    nombre: String(customer.name || '').trim().split(/\s+/)[0] || '',
+    partes,
+    siguiente: siguiente ? siguiente.n : null,
+    completo: !siguiente,
+    montoParte: PLAN_PARTE_AMOUNT,
+    total: PLAN_PARTE_AMOUNT * PLAN_PARTES,
+  };
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -63,6 +114,87 @@ module.exports = async (req, res) => {
       } catch (e) {
         console.error('attach-customer error:', e.message);
         return res.status(200).json({ ok: false, error: e.message }); // nunca bloquear el pago
+      }
+    }
+
+    // Rama: estado del plan de 2 partes. La consulta la pagina /pago/ al abrir,
+    // para pintar que parte ya esta pagada y cual toca.
+    if (body.action === 'plan-status') {
+      const planId = String(body.planId || '').trim();
+      if (!planId.startsWith('cus_')) return res.status(200).json({ ok: false, motivo: 'invalido' });
+      try {
+        return res.status(200).json(await planEstado(planId));
+      } catch (e) {
+        console.error('plan-status:', e.message);
+        return res.status(200).json({ ok: false, motivo: 'error' });
+      }
+    }
+
+    // Rama: cobrar la parte que toca. El SERVIDOR decide cual es —
+    // nunca el navegador. Si el numero de parte viniera del cliente,
+    // cualquiera podria pedir "parte 2" sin haber pagado la 1.
+    if (body.action === 'plan-pay') {
+      try {
+        let planId = String(body.planId || '').trim();
+        let customer;
+
+        if (planId.startsWith('cus_')) {
+          customer = await stripe.customers.retrieve(planId);
+          if (!customer || customer.deleted) return res.status(400).json({ error: 'plan_no_existe' });
+        } else {
+          const email = String(body.email || '').trim();
+          if (!email) return res.status(400).json({ error: 'falta_correo' });
+
+          // Si esta clienta YA empezo su plan (pago en el celular y ahora abre
+          // el enlace en otra computadora, o borro los datos del navegador),
+          // se retoma el que tiene. Sin esto pagaria la primera parte DOS VECES:
+          // el navegador no la reconoce, pero su correo si.
+          const previos = await stripe.customers.list({ email, limit: 10 });
+          const suyo = (previos.data || []).find(
+            (c) => c && !c.deleted && c.metadata && c.metadata.plan === PLAN_ID,
+          );
+
+          if (suyo) {
+            customer = suyo;
+            planId = suyo.id;
+          } else {
+            customer = await stripe.customers.create({
+              name: String(body.name || '').trim() || undefined,
+              email,
+              phone: String(body.phone || '').trim() || undefined,
+              metadata: { product: 'next-fly-academy', plan: PLAN_ID },
+            });
+            planId = customer.id;
+          }
+        }
+
+        const pagadas = await planPartesPagadas(planId);
+        let parte = 0;
+        for (let n = 1; n <= PLAN_PARTES; n++) {
+          if (!pagadas.has(String(n))) { parte = n; break; }
+        }
+        if (!parte) return res.status(200).json({ completo: true, planId });
+
+        const pi = await stripe.paymentIntents.create({
+          amount: PLAN_PARTE_AMOUNT,
+          currency: 'usd',
+          customer: planId,
+          receipt_email: customer.email || undefined,
+          automatic_payment_methods: { enabled: true },
+          description: `Next Flight Academy — parte ${parte} de ${PLAN_PARTES}`,
+          metadata: { product: 'next-fly-academy', plan: PLAN_ID, parte: String(parte) },
+        });
+
+        return res.status(200).json({
+          clientSecret: pi.client_secret,
+          planId,
+          parte,
+          amount: PLAN_PARTE_AMOUNT,
+          total: PLAN_PARTE_AMOUNT * PLAN_PARTES,
+        });
+      } catch (e) {
+        console.error('plan-pay:', e.message);
+        return res.status(500).json({ error: e.message });
       }
     }
 
