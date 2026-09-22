@@ -62,17 +62,76 @@ function resetEmailHtml(name) {
 // cadenas que parecen dominio o URL.
 function sanitizarResultado(html) {
   if (!html || typeof html !== 'string') return '';
-  let s = html.slice(0, 4000);
+  // 9000: el informe del test de nivel incluye un plan de 4 pasos y no cabe
+  // en 4000. Sigue siendo un tope duro frente a un cuerpo inflado a mano.
+  let s = html.slice(0, 9000);
   s = s.replace(/<(script|style|iframe|object|embed|link|meta)[\s\S]*?<\/\1\s*>/gi, '');
   s = s.replace(/<\/?(script|style|iframe|object|embed|link|meta)[^>]*>/gi, '');
   // [\s\/] y no solo \s: "<p/onerror=..." usa la barra como separador valido
   s = s.replace(/[\s/]on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '');
   s = s.replace(/(javascript|data|vbscript)\s*:/gi, '');
-  s = s.replace(/<(?!\/?(?:p|strong|em|span|br)\b)[^>]*>/gi, '');
+  // Lista blanca de etiquetas. div/h3/ol/li se suman por el plan del test de
+  // nivel; son etiquetas de estructura, no pueden ejecutar nada, y los
+  // manejadores on* y los esquemas javascript: ya se eliminaron arriba.
+  s = s.replace(/<(?!\/?(?:p|strong|em|span|br|div|h3|ol|ul|li)\b)[^>]*>/gi, '');
   // Autolinkificacion: romper URLs y dominios sueltos del texto
   s = s.replace(/\b(?:https?:\/\/|www\.)\S+/gi, '[enlace removido]');
   s = s.replace(/\b[\w.-]+\.(com|net|org|io|co|link|xyz|info|shop|app)\b/gi, '[enlace removido]');
   return s.trim();
+}
+
+/* Gmail y Outlook ignoran <style> y las clases CSS: TODO tiene que ir en
+   `style=` dentro de cada etiqueta. El informe llega con clases desde el
+   navegador, asi que aqui se traducen a estilos en linea. */
+function estilarInforme(html) {
+  return String(html || '')
+    .replace(/<div class="bloque-meta">/g,
+      '<div style="margin:22px 0;padding:16px 18px;border-radius:14px;background:#FBF6F2;border-left:3px solid #C4855A">')
+    .replace(/<span class="et">/g,
+      '<span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#A86C44;margin-bottom:6px">')
+    .replace(/<h3 class="plan-tit">/g,
+      '<h3 style="font-family:\'Playfair Display\',Georgia,serif;font-size:19px;color:#2E1A10;margin:28px 0 10px">')
+    .replace(/<ol class="plan">/g,
+      '<ol style="margin:0;padding-left:20px;color:#2E1A10">')
+    .replace(/<li>/g,
+      '<li style="margin-bottom:13px;line-height:1.6">')
+    .replace(/<p class="plan-cierre">/g,
+      '<p style="margin:16px 0 0;font-family:\'Playfair Display\',Georgia,serif;font-style:italic;font-size:15.5px;color:#A86C44">')
+    .replace(/<p class="tu-nota">/g,
+      '<p style="margin:24px 0 0;padding:15px 17px;border-radius:14px;background:#F6EFE7;font-size:14.5px;line-height:1.6;color:#5C4436">');
+}
+
+// Correo del test de nivel digital (/nivel). Misma paleta que el bio-link.
+function nivelEmailHtml(primerNombre, nivelNombre, frase, informeHtml) {
+  const hola = primerNombre ? `Hola ${escapeHtml(primerNombre)},` : 'Hola,';
+  return `<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head><body style="margin:0;padding:0;background:#FBF6F2;font-family:'Poppins',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#FBF6F2;padding:30px 12px"><tr><td align="center">
+<table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #E8D9CD">
+
+<tr><td style="padding:34px 38px 8px;text-align:center">
+  <p style="margin:0 0 6px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#A86C44;font-weight:600">Tu resultado</p>
+  <h1 style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:32px;font-weight:700;color:#2E1A10;line-height:1.2">
+    Nivel <em style="color:#A86C44">${escapeHtml(nivelNombre || '')}</em></h1>
+  ${frase ? `<p style="margin:12px 0 0;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:16px;color:#5C4436;line-height:1.45">${escapeHtml(frase)}</p>` : ''}
+</td></tr>
+
+<tr><td style="padding:22px 38px 6px">
+  <p style="margin:0 0 16px;font-size:15px;color:#2E1A10">${hola}</p>
+  <div style="font-size:15px;line-height:1.65;color:#2E1A10">${estilarInforme(informeHtml)}</div>
+</td></tr>
+
+<tr><td style="padding:10px 38px 32px;text-align:center">
+  <a href="https://instagram.com/annygomezleal" style="display:inline-block;background:#C4855A;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 28px;border-radius:999px">Sígueme para el siguiente paso &rarr;</a>
+</td></tr>
+
+<tr><td style="background:#FBF6F2;padding:18px 38px;text-align:center;border-top:1px solid #E8D9CD">
+  <p style="margin:0;font-size:11.5px;color:#8C6A58">Anny Gómez · <a href="https://annygomez.com" style="color:#A86C44">annygomez.com</a></p>
+</td></tr>
+
+</table></td></tr></table></body></html>`;
 }
 
 function quizEmailHtml(name, arqKey, resultadoLimpio) {
@@ -220,6 +279,12 @@ module.exports = async (req, res) => {
 
   if (source === 'reset' || source === 'quiz') {
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'Correo inválido' });
+  } else if (source === 'test-nivel') {
+    // El test avisa DOS veces: una al revelar el nivel (sin contacto, para no
+    // perder el dato de quien no deja el correo) y otra si lo deja. Sin este
+    // caso, la primera devolvia 400 y se perdia en silencio.
+    if (!email) return res.status(200).json({ ok: true, guardado: false });
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'Correo inválido' });
   } else if (!name || !email) {
     return res.status(400).json({ error: 'Nombre y correo son requeridos' });
   }
@@ -264,6 +329,30 @@ module.exports = async (req, res) => {
       );
       if (!mail.ok) return res.status(500).json({ error: 'No se pudo enviar el correo' });
       await subscribeToBlog(email, name);
+    } else if (source === 'test-nivel') {
+      // Test de nivel digital (/nivel). Sin este caso caeria al `else` final
+      // y le llegaria la guia de habitos en vez de su informe.
+      await subscribeToBlog(email, name);
+      try {
+        const nivelNombre = body && body.nivel_nombre ? String(body.nivel_nombre).slice(0, 40) : '';
+        const frase = body && body.nivel_frase ? String(body.nivel_frase).slice(0, 300) : '';
+        const informe = sanitizarResultado(body && body.informe_html);
+        if (informe) {
+          const primerNombre = name ? name.split(/\s+/)[0] : '';
+          const asunto = nivelNombre
+            ? (primerNombre ? `${primerNombre}, eres Nivel ${nivelNombre}` : `Eres Nivel ${nivelNombre}`)
+            : 'Tu resultado del test de nivel digital';
+          await enviarCorreo(
+            {
+              from: 'Anny Gómez <hola@annygomez.com>',
+              to: [email],
+              subject: asunto,
+              html: nivelEmailHtml(primerNombre, nivelNombre, frase, informe),
+            },
+            { critico: false, etiqueta: 'informe de nivel digital' },
+          );
+        }
+      } catch (e) { console.error('[leads] nivel email:', e.message); }
     } else if (source === 'checkout') {
       // Nada mas que hacer: el lead ya quedo guardado arriba.
       // NO se envia correo ni se suscribe a la lista: todavia no es cliente
