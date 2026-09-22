@@ -58,6 +58,15 @@ const PLAN_ID = '2-partes';
 const PLAN_PARTES = 2;
 const PLAN_PARTE_AMOUNT = 34850; // $348.50 x 2 = $697 — mismo precio, sin recargo
 
+// Monto de cada parte para ESTE plan. Un plan marcado como prueba cobra $1
+// por parte: sin esto, probar el ciclo completo costaria $697 reales.
+// La marca va en el Customer, no en la peticion, para que las dos partes
+// cobren siempre lo mismo — no se puede empezar en prueba y terminar en real.
+function montoParteDe(customer) {
+  const esPrueba = customer && customer.metadata && customer.metadata.prueba === '1';
+  return esPrueba ? 100 : PLAN_PARTE_AMOUNT;
+}
+
 // Numeros de parte ya pagados por este Customer, segun Stripe.
 async function planPartesPagadas(customerId) {
   const lista = await stripe.paymentIntents.list({ customer: customerId, limit: 25 });
@@ -72,10 +81,11 @@ async function planPartesPagadas(customerId) {
 async function planEstado(customerId) {
   const customer = await stripe.customers.retrieve(customerId);
   if (!customer || customer.deleted) return { ok: false, motivo: 'no_existe' };
+  const monto = montoParteDe(customer);
   const pagadas = await planPartesPagadas(customerId);
   const partes = [];
   for (let n = 1; n <= PLAN_PARTES; n++) {
-    partes.push({ n, pagada: pagadas.has(String(n)), monto: PLAN_PARTE_AMOUNT });
+    partes.push({ n, pagada: pagadas.has(String(n)), monto });
   }
   const siguiente = partes.find((p) => !p.pagada);
   return {
@@ -86,8 +96,8 @@ async function planEstado(customerId) {
     partes,
     siguiente: siguiente ? siguiente.n : null,
     completo: !siguiente,
-    montoParte: PLAN_PARTE_AMOUNT,
-    total: PLAN_PARTE_AMOUNT * PLAN_PARTES,
+    montoParte: monto,
+    total: monto * PLAN_PARTES,
   };
 }
 
@@ -158,11 +168,19 @@ module.exports = async (req, res) => {
             customer = suyo;
             planId = suyo.id;
           } else {
+            // Plan de prueba ($1 por parte): solo si existe la env LIVE_TEST_CODE
+            // y la piden con ese codigo. Sin la variable, ningun codigo sirve.
+            const clave = process.env.LIVE_TEST_CODE;
+            const esPrueba = !!clave &&
+              String(body.code || '').trim().toUpperCase() === String(clave).trim().toUpperCase();
+
             customer = await stripe.customers.create({
               name: String(body.name || '').trim() || undefined,
               email,
               phone: String(body.phone || '').trim() || undefined,
-              metadata: { product: 'next-fly-academy', plan: PLAN_ID },
+              metadata: esPrueba
+                ? { product: 'next-fly-academy', plan: PLAN_ID, prueba: '1' }
+                : { product: 'next-fly-academy', plan: PLAN_ID },
             });
             planId = customer.id;
           }
@@ -175,8 +193,9 @@ module.exports = async (req, res) => {
         }
         if (!parte) return res.status(200).json({ completo: true, planId });
 
+        const monto = montoParteDe(customer);
         const pi = await stripe.paymentIntents.create({
-          amount: PLAN_PARTE_AMOUNT,
+          amount: monto,
           currency: 'usd',
           customer: planId,
           receipt_email: customer.email || undefined,
@@ -189,8 +208,8 @@ module.exports = async (req, res) => {
           clientSecret: pi.client_secret,
           planId,
           parte,
-          amount: PLAN_PARTE_AMOUNT,
-          total: PLAN_PARTE_AMOUNT * PLAN_PARTES,
+          amount: monto,
+          total: monto * PLAN_PARTES,
         });
       } catch (e) {
         console.error('plan-pay:', e.message);

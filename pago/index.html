@@ -81,7 +81,7 @@ body {
 .step.paid .step-badge { background: var(--ok); color: #10301d; border-color: var(--ok); }
 .step.next .step-badge { background: var(--gold); color: var(--bg); border-color: var(--gold); }
 .step-badge svg { width: 15px; height: 15px; fill: currentColor; }
-.step-body { flex: 1; min-width: 0; }
+.step-body { flex: 1; min-width: 0; text-align: left; }
 .step-name { font-size: 13.5px; font-weight: 500; }
 .step-amount { font-size: 12px; font-weight: 300; color: var(--text); margin-top: 1px; }
 .step-tag {
@@ -223,7 +223,7 @@ body {
     <div class="steps" id="done-steps"></div>
     <div class="total-row">
       <span>Total pagado</span>
-      <b>$697.00 USD</b>
+      <b id="done-total">$697.00 USD</b>
     </div>
     <p class="note">Si tienes alguna duda, escríbenos por WhatsApp al <strong style="color:rgba(245,237,216,0.78)">+1 251 650 9950</strong>.</p>
   </div>
@@ -239,6 +239,7 @@ body {
 
   var qs        = new URLSearchParams(location.search);
   var planId    = qs.get('p') || localStorage.getItem(STORE) || '';
+  var codigo    = qs.get('code') || ''; // solo para el plan de prueba de $1
   var redirected = qs.get('redirect_status') === 'succeeded';
 
   var stripe = null, elements = null, clientSecret = null, parteActual = 0;
@@ -294,6 +295,7 @@ body {
     $('plan-total').textContent = money(e.total) + ' USD';
 
     if (e.completo) {
+      $('done-total').textContent = money(e.total) + ' USD';
       pintarPasos($('done-steps'), e.partes, null);
       if (e.nombre) $('done-sub').textContent =
         '¡Gracias, ' + e.nombre + '! Pagaste las dos partes. Tus accesos ya están en camino.';
@@ -410,7 +412,7 @@ body {
     btn.disabled = true;
     btn.textContent = 'Preparando…';
 
-    post(Object.assign({ action: 'plan-pay', planId: planId }, datos)).then(function (r) {
+    post(Object.assign({ action: 'plan-pay', planId: planId, code: codigo }, datos)).then(function (r) {
       if (r && r.completo) { cargarEstado(0); return; }
       if (!r || !r.clientSecret) throw new Error(r && r.error ? r.error : 'sin_secret');
 

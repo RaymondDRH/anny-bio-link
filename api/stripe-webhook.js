@@ -129,9 +129,12 @@ module.exports = async (req, res) => {
 
         // Parte del plan de 2 pagos (0 = compra normal de contado).
         const parte = (pi.metadata && pi.metadata.plan === PLAN_2P) ? Number(pi.metadata.parte || 0) : 0;
+        // El total se calcula del monto real, no se escribe fijo: en un plan de
+        // prueba de $1 un "$697" a mano seria mentira en el correo y en el recibo.
+        const totalPlan = (Number(amount) * 2).toFixed(2);
         const nota = parte === 1
           ? `PAGO EN 2 PARTES — pagó la 1ra de 2. Le falta $${amount} USD.`
-          : (parte === 2 ? 'PAGO EN 2 PARTES — completó el pago ($697.00 USD en total).' : '');
+          : (parte === 2 ? `PAGO EN 2 PARTES — completó el pago ($${totalPlan} USD en total).` : '');
 
         await notifyAnny({
           name: nombre,
@@ -149,7 +152,7 @@ module.exports = async (req, res) => {
             // y aun debe la mitad. Va el correo de la 1ra parte con su enlace.
             await sendParte1(correo, nombre, amount, amount, enlacePlan(custId));
           } else if (parte === 2) {
-            await sendWelcome(correo, nombre, '697.00');
+            await sendWelcome(correo, nombre, totalPlan);
           } else {
             await sendWelcome(correo, nombre, amount);
           }
