@@ -412,7 +412,7 @@ body {
       guardar.catch(function () {}).then(function () {
         return stripe.confirmPayment({
           elements: elements,
-          confirmParams: { return_url: location.origin + '/pago/?p=' + encodeURIComponent(planId) },
+          confirmParams: { return_url: location.origin + '/pago-en-2-partes/?p=' + encodeURIComponent(planId) },
         });
       }).then(function (res) {
         if (res && res.error) {
@@ -447,7 +447,7 @@ body {
       planId       = r.planId;
       // El enlace queda personal: mismo enlace para la 2da parte.
       localStorage.setItem(STORE, planId);
-      history.replaceState(null, '', '/pago/?p=' + encodeURIComponent(planId));
+      history.replaceState(null, '', '/pago-en-2-partes/?p=' + encodeURIComponent(planId));
 
       return montarPago(clientSecret).then(function () {
         // Los campos NO se esconden: hasta que pulse pagar debe poder

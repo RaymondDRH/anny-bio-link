@@ -50,7 +50,7 @@ async function attachCustomer({ paymentIntentId, name, email, phone }) {
 // no coincidan tendriamos un cobro doble o una clienta bloqueada sin deber
 // nada — y el que miente siempre es el registro que nadie actualiza.
 //
-// El "planId" es el id del Customer de Stripe. La pagina /pago/ lo lleva en
+// El "planId" es el id del Customer de Stripe. La pagina /pago-en-2-partes/ lo lleva en
 // la URL (?p=cus_xxx) y tambien lo guarda el navegador de la clienta, para
 // que el MISMO enlace le sirva para las dos partes.
 // ---------------------------------------------------------------------------
@@ -127,7 +127,7 @@ module.exports = async (req, res) => {
       }
     }
 
-    // Rama: estado del plan de 2 partes. La consulta la pagina /pago/ al abrir,
+    // Rama: estado del plan de 2 partes. La consulta la pagina /pago-en-2-partes/ al abrir,
     // para pintar que parte ya esta pagada y cual toca.
     if (body.action === 'plan-status') {
       const planId = String(body.planId || '').trim();

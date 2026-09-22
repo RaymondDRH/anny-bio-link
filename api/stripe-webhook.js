@@ -82,7 +82,7 @@ async function sendWelcome(toEmail, name, amount) {
 const PLAN_2P = '2-partes';
 
 function enlacePlan(customerId) {
-  return `https://annygomez.com/pago/?p=${encodeURIComponent(customerId)}`;
+  return `https://annygomez.com/pago-en-2-partes/?p=${encodeURIComponent(customerId)}`;
 }
 
 // Bienvenida + saldo pendiente en UN SOLO correo.
