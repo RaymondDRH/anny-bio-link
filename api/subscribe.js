@@ -1,66 +1,102 @@
-const crypto = require('crypto');
-const { enviarCorreo } = require('../lib/mailer');
+// Suscripción al blog, con confirmación por correo.
+//
+// ─────────────────────────────────────────────────────────────────────────
+// QUÉ CAMBIÓ Y POR QUÉ (22-sep-2026)
+//
+// Antes esto creaba el miembro DIRECTAMENTE con la API de administración de
+// Ghost (`POST /ghost/api/admin/members/` con `subscribed: true`) y le mandaba
+// el correo de bienvenida al instante. Suscripción simple, sin confirmar.
+//
+// El formulario del blog, en cambio, sí pedía confirmación. Dos puertas a la
+// misma lista comportándose distinto.
+//
+// Ahora las dos llaman al mismo sitio: el endpoint público de Ghost
+// `/members/api/send-magic-link/`. Ghost manda el correo de confirmación —en
+// español y con el cobre de la marca— y solo crea a la persona cuando pulsa.
+//
+// POR QUÉ CONFIRMAR, SI NO ES OBLIGATORIO:
+//
+// En Estados Unidos y Latinoamérica basta con que escriban su correo. Pero sin
+// confirmar entran erratas, direcciones falsas y correos de terceros escritos
+// por error. Todo eso rebota o se marca como spam, y esa reputación se apunta
+// contra annygomez.com — el mismo dominio por el que la tienda manda las
+// descargas que la gente ya pagó.
+//
+// El precio es real: entre un 20% y un 40% no pulsa. Se acepta a propósito
+// mientras la lista es pequeña, que es cuando una reputación se construye.
+//
+// EL CORREO DE BIENVENIDA YA NO SE MANDA AQUÍ.
+// Vive en api/member-added.js, que Ghost llama por webhook cuando la persona
+// confirma de verdad. Mandarlo desde aquí sería darle la bienvenida a alguien
+// que todavía no ha entrado.
+// ─────────────────────────────────────────────────────────────────────────
 
-const GHOST_KEY = process.env.GHOST_ADMIN_KEY;
-const GHOST_URL = 'https://blog.annygomez.com/ghost/api/admin';
+const GHOST_MAGIC_LINK = 'https://blog.annygomez.com/members/api/send-magic-link/';
 
-const WELCOME_HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#FBF6F2;font-family:Georgia,serif"><div style="max-width:560px;margin:0 auto;background:#fff"><div style="background:#FBF6F2;padding:36px 40px 24px;text-align:center;border-bottom:1px solid #E8D9CD"><div style="font-family:Georgia,serif;font-size:28px;color:#2E1A10;letter-spacing:0.04em">Anny G&oacute;mez</div><div style="font-size:12px;color:#8C6A58;letter-spacing:0.12em;text-transform:uppercase;margin-top:6px">Fe &middot; H&aacute;bitos &middot; Prop&oacute;sito</div></div><div style="padding:40px 40px 32px"><p style="font-size:22px;color:#2E1A10;margin:0 0 20px">&iexcl;Bienvenida a la comunidad!</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">Qu&eacute; alegr&iacute;a tenerte aqu&iacute;. Cada viernes vas a recibir una reflexi&oacute;n sobre Fe, h&aacute;bitos y prop&oacute;sito &mdash; pensada para mujeres que quieren crecer con intenci&oacute;n.</p><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">No es spam. No son listas de consejos vac&iacute;os. Es lo que vivo, aprendo y practico cada semana.</p><div style="background:#FBF6F2;border-radius:8px;padding:24px 28px;margin:24px 0"><h3 style="margin:0 0 14px;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;color:#8C6A58">Qu&eacute; esperar</h3><ul style="margin:0;padding:0 0 0 18px"><li style="font-size:14px;color:#4a3020;line-height:1.8;margin-bottom:4px">Una reflexi&oacute;n semanal cada viernes</li><li style="font-size:14px;color:#4a3020;line-height:1.8;margin-bottom:4px">Recursos pr&aacute;cticos de Fe y organizaci&oacute;n</li><li style="font-size:14px;color:#4a3020;line-height:1.8;margin-bottom:4px">Acceso anticipado a gu&iacute;as y retos</li></ul></div><p style="font-size:15px;line-height:1.7;color:#4a3020;margin:0 0 16px">Mientras tanto, te invito a leer el blog:</p><div style="text-align:center;margin:32px 0 24px"><a href="https://blog.annygomez.com" style="display:inline-block;background:#C4855A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:4px;font-size:14px;letter-spacing:0.06em;text-transform:uppercase">Leer el blog</a></div><hr style="border:none;border-top:1px solid #E8D9CD;margin:28px 0"><p style="font-size:13px;color:#8C6A58;margin:0">Con cari&ntilde;o,<br><strong style="font-family:Georgia,serif;font-size:16px;color:#2E1A10">Anny G&oacute;mez</strong></p></div><div style="background:#FBF6F2;padding:24px 40px;text-align:center;border-top:1px solid #E8D9CD"><p style="font-size:12px;color:#8C6A58;margin:0;line-height:1.6">Recibiste este correo porque te suscribiste en <a href="https://annygomez.com" style="color:#8C6A58">annygomez.com</a><br>&copy; 2026 Anny G&oacute;mez &middot; Todos los derechos reservados</p></div></div></body></html>`;
-
-async function sendWelcomeEmail(email) {
-  // Critico: ya quedo suscrita en Ghost. Si el correo no sale, se suscribio
-  // y no recibio nada — la peor primera impresion posible.
-  return enviarCorreo(
-    {
-      from: 'Anny Gómez <hola@annygomez.com>',
-      to: [email],
-      subject: '¡Bienvenida! Tu primera reflexión llega el viernes ✦',
-      html: WELCOME_HTML,
-    },
-    { critico: true, etiqueta: `bienvenida a la comunidad (${email})` },
-  );
-}
-
-function ghostToken() {
-  const [id, secret] = GHOST_KEY.split(':');
-  const now = Math.floor(Date.now() / 1000);
-  const header  = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT', kid: id })).toString('base64url');
-  const payload = Buffer.from(JSON.stringify({ iat: now, exp: now + 300, aud: '/admin/' })).toString('base64url');
-  const sig = crypto.createHmac('sha256', Buffer.from(secret, 'hex')).update(`${header}.${payload}`).digest('base64url');
-  return `${header}.${payload}.${sig}`;
-}
+// Validación mínima. No se intenta ser exhaustivo: quien decide de verdad si
+// una dirección existe es el servidor de correo, y Ghost valida otra vez.
+// Esto solo evita gastar una llamada en algo que claramente no es un correo.
+const PARECE_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  const { email } = req.body || {};
-  if (!email?.trim()) return res.status(400).json({ error: 'El correo es requerido' });
+  const correo = (req.body?.email || '').trim().toLowerCase();
+
+  if (!correo) {
+    return res.status(400).json({ error: 'El correo es requerido' });
+  }
+
+  if (!PARECE_CORREO.test(correo)) {
+    return res.status(400).json({ error: 'Ese correo no parece válido' });
+  }
 
   try {
-    const response = await fetch(`${GHOST_URL}/members/`, {
+    const respuesta = await fetch(GHOST_MAGIC_LINK, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Ghost ${ghostToken()}`,
-      },
-      body: JSON.stringify({ members: [{ email: email.trim(), subscribed: true }] }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: correo,
+        emailType: 'subscribe',
+        labels: ['bio-link'],   // para saber por dónde entró
+        name: '',
+      }),
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      const msg = data.errors?.[0]?.message || '';
-      if (msg.toLowerCase().includes('already')) {
-        return res.json({ success: true, alreadyRegistered: true });
-      }
-      return res.status(500).json({ error: msg || 'Error al suscribirse' });
+    // Ghost devuelve 201 tanto si es alguien nuevo como si ya estaba: no
+    // revela quién está en la lista, y eso está bien. En los dos casos la
+    // persona recibe un correo con un enlace que funciona.
+    if (respuesta.ok) {
+      return res.json({ success: true, requiereConfirmacion: true });
     }
 
-    await sendWelcomeEmail(email.trim()).catch(err =>
-      console.error('[subscribe] Welcome email error:', err)
-    );
+    const cuerpo = await respuesta.text();
+    let mensaje = '';
+    try {
+      mensaje = JSON.parse(cuerpo)?.errors?.[0]?.message || '';
+    } catch {
+      mensaje = cuerpo.slice(0, 200);
+    }
 
-    res.json({ success: true });
+    console.error(`[subscribe] Ghost respondió ${respuesta.status}: ${mensaje}`);
+
+    // Ghost limita los intentos para frenar el spam. Merece su propio mensaje:
+    // "hubo un error" haría que la persona reintentara y lo empeorara.
+    if (respuesta.status === 429) {
+      return res.status(429).json({
+        error: 'Demasiados intentos. Espera unos minutos y vuelve a probar.',
+      });
+    }
+
+    return res.status(502).json({
+      error: 'No pude suscribirte ahora mismo. Inténtalo en un momento.',
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('[subscribe] error de red:', err.message);
+    return res.status(502).json({
+      error: 'No pude suscribirte ahora mismo. Inténtalo en un momento.',
+    });
   }
 };
