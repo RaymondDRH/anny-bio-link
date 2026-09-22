@@ -201,6 +201,26 @@ html { scroll-behavior: smooth; }
 }
 .quiz-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rosa-arena); }
 
+/* Mapa del test: las 4 islas, la muñequita en la primera y la meta al final.
+   Se reutilizan los mismos archivos que usa /nivel/ — no hay copias. */
+.quiz-mapa { position: relative; line-height: 0; margin: 2px 0 18px; }
+.quiz-mapa .tira { width: 100%; height: auto; display: block; }
+.quiz-mapa .wk {
+  position: absolute; left: 8.2%; top: 64.8%; width: 4.6%;
+  transform: translate(-50%, -88%); line-height: 0;
+  animation: wkSalta 3.4s ease-in-out infinite;
+}
+.quiz-mapa .wk img {
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 3px 6px rgba(46,26,16,0.35));
+}
+@keyframes wkSalta {
+  0%, 72%, 100% { transform: translate(-50%, -88%); }
+  80% { transform: translate(-50%, -104%) rotate(-6deg); }
+  88% { transform: translate(-50%, -92%) rotate(3deg); }
+}
+@media (prefers-reduced-motion: reduce) { .quiz-mapa .wk { animation: none; } }
+
 /* Buttons */
 .btn {
   display: block; width: 100%; padding: 14px 20px;
@@ -512,7 +532,7 @@ html { scroll-behavior: smooth; }
         <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="Instagram">
           <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
-        <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="hero-social-btn" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="TikTok">
           <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
         </a>
         <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="hero-social-btn" aria-label="YouTube">
@@ -527,34 +547,21 @@ html { scroll-behavior: smooth; }
     <div class="quiz-card fade-in">
       <div class="quiz-body">
         <div class="quiz-eyebrow">Test gratuito</div>
-        <div class="quiz-title">¿Qué tipo de mujer eres <em>en realidad</em>?</div>
-        <div class="quiz-desc">Responde con sinceridad y descubre tu arquetipo — con un mensaje y un versículo escritos solo para ti, y tu medalla para compartir.</div>
+        <div class="quiz-title">No estás perdida.<br>Estás <em>sin mapa</em>.</div>
+        <div class="quiz-desc">Descubre en qué nivel digital estás hoy y qué tan lejos estás de llegar a la meta.</div>
+        <div class="quiz-mapa" aria-hidden="true">
+          <img class="tira" src="/nivel/img/tira.webp" alt="" width="1344" height="576" loading="lazy" decoding="async">
+          <span class="wk"><img src="/nivel/img/walker.webp" alt="" width="88" height="180" loading="lazy" decoding="async"></span>
+        </div>
         <div class="quiz-meta">
-          <span>7 preguntas</span><span class="sep"></span>
+          <span>6 preguntas</span><span class="sep"></span>
           <span>2 minutos</span><span class="sep"></span>
           <span>gratis</span>
         </div>
-        <a href="/quiz/mujer-construccion/" class="btn btn-quiz">Descubrir mi tipo ✦</a>
+        <a href="/nivel/" class="btn btn-quiz">Ver qué tan lejos estoy ✦</a>
       </div>
     </div>
 
-    <div class="reto-card fade-in">
-      <div class="coming-badge"><span class="pulse-dot"></span>Próximamente</div>
-      <div class="reto-title">Reto · <em>7 Días para<br>Volver a Ti</em></div>
-      <div class="reto-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fe y disciplina como guía.</div>
-      <div id="waitlist-form-wrap">
-        <div class="waitlist-fields" id="wl-fields">
-          <input id="wl-name"  type="text"  placeholder="Tu nombre" class="wl-input" autocomplete="name">
-          <input id="wl-email" type="email" placeholder="Tu correo" class="wl-input" autocomplete="email">
-        </div>
-        <button type="button" class="btn btn-solid" id="wl-btn" onclick="handleWaitlist(this)">
-          <span class="wl-label">Avísame cuando esté listo</span>
-          <span class="wl-loading" style="display:none">Guardando…</span>
-        </button>
-        <div id="wl-error" class="wl-error"></div>
-      </div>
-      <div id="waitlist-success" style="display:none" class="wl-success">¡Listo! Te avisamos cuando el reto abra sus puertas.</div>
-    </div>
 
     <div class="blog-card fade-in">
       <div class="blog-watermark">Blog</div>
@@ -576,7 +583,7 @@ html { scroll-behavior: smooth; }
           </div>
           <div id="blog-sub-error" class="blog-sub-error"></div>
         </div>
-        <div id="blog-sub-ok" style="display:none" class="blog-sub-ok">¡Listo! Ya estás suscrita.</div>
+        <div id="blog-sub-ok" style="display:none" class="blog-sub-ok">Te mandé un correo. Ábrelo, confirma, y ya estamos.</div>
       </div>
     </div>
 
@@ -621,7 +628,7 @@ html { scroll-behavior: smooth; }
     <div class="footer-divider"></div>
     <div class="footer-social">
       <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="footer-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-      <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" class="footer-icon" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg></a>
+      <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" class="footer-icon" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg></a>
       <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="footer-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
     </div>
     <div class="footer-copy">© 2026 Anny Gómez · Todos los derechos reservados</div>
@@ -648,7 +655,7 @@ html { scroll-behavior: smooth; }
         <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" aria-label="Instagram">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a href="https://www.tiktok.com/@anny.gmez7" target="_blank" rel="noopener" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" aria-label="TikTok">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M15 3c0 2.5 2 4.5 4.5 4.5"/></svg>
         </a>
         <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" aria-label="YouTube">
@@ -666,37 +673,21 @@ html { scroll-behavior: smooth; }
       <p>Encuentra mis recursos, retos y reflexiones — pensados para ayudarte a vivir con propósito.</p>
     </div>
 
-    <!-- Quiz -->
+    <!-- Test de nivel digital -->
     <article class="d-card d-card-quiz reveal">
       <div class="d-badge">Test gratuito</div>
-      <h2>¿Qué tipo de mujer eres <em>en realidad</em>?</h2>
-      <p class="d-desc">Responde con sinceridad y descubre tu arquetipo — con un mensaje y un versículo escritos solo para ti, y tu medalla para compartir.</p>
+      <h2>No estás perdida.<br>Estás <em>sin mapa</em>.</h2>
+      <p class="d-desc">Descubre en qué nivel digital estás hoy y qué tan lejos estás de llegar a la meta.</p>
+      <div class="quiz-mapa" aria-hidden="true">
+        <img class="tira" src="/nivel/img/tira.webp" alt="" width="1344" height="576" loading="lazy" decoding="async">
+        <span class="wk"><img src="/nivel/img/walker.webp" alt="" width="88" height="180" loading="lazy" decoding="async"></span>
+      </div>
       <div class="d-quiz-meta">
-        <span>7 preguntas</span><span class="sep"></span>
+        <span>6 preguntas</span><span class="sep"></span>
         <span>2 minutos</span><span class="sep"></span>
         <span>gratis</span>
       </div>
-      <a href="/quiz/mujer-construccion/" class="d-btn d-btn-primary">Descubrir mi tipo <span class="arrow">→</span></a>
-    </article>
-
-    <!-- Reto -->
-    <article class="d-card d-card-reto reveal">
-      <div class="d-badge"><span class="d-pulse-dot"></span>Próximamente</div>
-      <h2>Reto <span class="div">·</span> <em>7 Días para Volver a Ti</em></h2>
-      <p class="d-desc">Un reto diseñado para ayudarte a reconectar con tu propósito, fortalecer tus hábitos y redescubrir tu identidad — con Fe y disciplina como guía.</p>
-      <div id="d-waitlist-form-wrap">
-        <div class="d-wl-fields" id="d-wl-fields">
-          <input id="d-wl-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
-          <input id="d-wl-email" type="email" placeholder="Tu correo" class="d-input" autocomplete="email">
-        </div>
-        <button type="button" class="d-btn d-btn-primary" onclick="dHandleWaitlist(this)">
-          <span class="d-wl-label">Avísame cuando esté listo</span>
-          <span class="d-wl-loading" style="display:none">Guardando…</span>
-          <span class="arrow">→</span>
-        </button>
-        <div id="d-wl-error" class="d-err"></div>
-      </div>
-      <div id="d-waitlist-success" style="display:none" class="d-ok">¡Listo! Te avisamos cuando el reto abra sus puertas.</div>
+      <a href="/nivel/" class="d-btn d-btn-primary">Ver qué tan lejos estoy <span class="arrow">→</span></a>
     </article>
 
     <!-- Blog -->
@@ -723,7 +714,7 @@ html { scroll-behavior: smooth; }
           </div>
           <div id="d-blog-sub-err" class="d-blog-sub-err"></div>
         </div>
-        <div id="d-blog-sub-ok" style="display:none" class="d-blog-sub-ok">¡Listo! Ya estás suscrita.</div>
+        <div id="d-blog-sub-ok" style="display:none" class="d-blog-sub-ok">Te mandé un correo. Ábrelo, confirma, y ya estamos.</div>
       </div>
     </article>
 
