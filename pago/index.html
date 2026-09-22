@@ -369,7 +369,10 @@ body {
       });
       elements.create('payment', {
         layout: 'tabs',
-        wallets: { applePay: 'never', googlePay: 'never', link: 'never' },
+        // Apple/Google Pay SI van aqui: las dos partes las paga la clienta
+        // presente (on-session). El motivo para bloquearlos era el cobro
+        // automatico sin ella delante, y ese diseno se descarto.
+        wallets: { applePay: 'auto', googlePay: 'auto', link: 'never' },
       }).mount('#payment-element');
     });
   }
