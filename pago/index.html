@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Pago en 2 partes — Next Flight Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #330C15;
+  --panel:   #2a0a12;
+  --gold:    #C49A3C;
+  --gold-lt: #DDB860;
+  --cream:   #F5EDD8;
+  --text:    rgba(245,237,216,0.72);
+  --dim:     rgba(245,237,216,0.45);
+  --line:    rgba(196,154,60,0.22);
+  --ok:      #6FBF8B;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 36px 18px 60px;
+}
+
+.wrap { width: 100%; max-width: 480px; }
+
+@keyframes fadeUp { from { opacity:0; transform: translateY(16px);} to {opacity:1; transform:none;} }
+@keyframes spin { to { transform: rotate(360deg); } }
+.anim { animation: fadeUp .5s ease both; }
+
+/* ---------- Encabezado ---------- */
+.head { text-align: center; margin-bottom: 26px; }
+.logo { font-family:'Alex Brush', cursive; font-size: 40px; color: var(--gold-lt); line-height:1; }
+.eyebrow {
+  font-size: 10px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase;
+  color: rgba(196,154,60,0.6); margin-top: 4px;
+}
+
+/* ---------- Tarjeta ---------- */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 24px;
+}
+.title {
+  font-family:'Playfair Display', serif; font-size: 23px; font-weight: 600;
+  text-align: center; line-height: 1.3; margin-bottom: 6px;
+}
+.title em { font-style: italic; color: var(--gold); }
+.sub { font-size: 13.5px; font-weight: 300; color: var(--text); text-align:center; line-height:1.65; }
+
+/* ---------- Progreso de las 2 partes ---------- */
+.steps { margin: 24px 0 4px; display: flex; flex-direction: column; gap: 10px; }
+.step {
+  display: flex; align-items: center; gap: 14px;
+  border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  transition: border-color .2s, background .2s;
+}
+.step.paid   { border-color: rgba(111,191,139,0.5); background: rgba(111,191,139,0.08); }
+.step.next   { border-color: var(--gold); background: rgba(196,154,60,0.10); }
+.step-badge {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 12px; font-weight: 700; font-family:'Poppins',sans-serif;
+  background: rgba(255,255,255,0.07); color: var(--dim);
+  border: 1px solid var(--line);
+}
+.step.paid .step-badge { background: var(--ok); color: #10301d; border-color: var(--ok); }
+.step.next .step-badge { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.step-badge svg { width: 15px; height: 15px; fill: currentColor; }
+.step-body { flex: 1; min-width: 0; text-align: left; }
+.step-name { font-size: 13.5px; font-weight: 500; }
+.step-amount { font-size: 12px; font-weight: 300; color: var(--text); margin-top: 1px; }
+.step-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+  background: rgba(255,255,255,0.06); color: var(--dim);
+}
+.step.paid .step-tag { background: rgba(111,191,139,0.18); color: var(--ok); }
+.step.next .step-tag { background: rgba(196,154,60,0.2); color: var(--gold-lt); }
+
+.total-row {
+  display:flex; justify-content:space-between; align-items:center;
+  border-top: 1px solid var(--line); margin-top: 16px; padding-top: 14px;
+  font-size: 13px; color: var(--text);
+}
+.total-row b { color: var(--cream); font-size: 15px; font-family:'Playfair Display',serif; }
+
+/* ---------- Formulario ---------- */
+.fields { margin-top: 20px; display: flex; flex-direction: column; gap: 13px; }
+.field-label {
+  display:block; font-size: 11px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 6px;
+}
+.input {
+  width: 100%; padding: 12px 14px; border-radius: 11px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--line);
+  color: var(--cream); font-family:'Poppins',sans-serif; font-size: 14.5px; font-weight: 300;
+  outline: none; transition: border-color .18s;
+}
+.input::placeholder { color: rgba(245,237,216,0.32); }
+.input:focus { border-color: var(--gold); }
+
+/* ---------- Botón ---------- */
+.btn {
+  display:block; width: 100%; margin-top: 20px; padding: 15px 22px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--bg); border: none; border-radius: 13px; cursor: pointer;
+  font-family:'Poppins',sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  transition: transform .16s, box-shadow .2s, opacity .2s;
+}
+.btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(196,154,60,0.3); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent; border: 1px solid rgba(196,154,60,0.35);
+  color: rgba(196,154,60,0.8); text-decoration: none; text-align: center;
+}
+.btn-ghost:hover { transform: none; box-shadow: none; }
+
+/* ---------- Estados auxiliares ---------- */
+.spinner {
+  width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 18px;
+  border: 3px solid rgba(196,154,60,0.22); border-top-color: var(--gold);
+  animation: spin .9s linear infinite;
+}
+.center { text-align: center; }
+.error {
+  display: none; margin-top: 14px; padding: 11px 14px; border-radius: 11px;
+  background: rgba(224,80,80,0.12); border: 1px solid rgba(224,80,80,0.35);
+  color: #ffb4b4; font-size: 13px; font-weight: 300; line-height: 1.5;
+}
+.note { margin-top: 16px; font-size: 11.5px; line-height: 1.6; color: var(--dim); text-align:center; }
+.secure { margin-top: 14px; display:flex; align-items:center; justify-content:center; gap: 7px; font-size: 11px; color: var(--dim); }
+.secure svg { width: 13px; height: 13px; fill: currentColor; }
+
+.icon-ok {
+  width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 20px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(111,191,139,0.12); border: 2px solid var(--ok);
+}
+.icon-ok svg { width: 28px; height: 28px; fill: var(--ok); }
+
+#payment-element { margin-top: 20px; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head anim">
+    <div class="logo">Anny Gómez</div>
+    <div class="eyebrow">Next Flight Academy</div>
+  </div>
+
+  <!-- ============ Cargando ============ -->
+  <div id="v-loading" class="card center anim">
+    <div class="spinner"></div>
+    <div class="sub">Consultando tu pago…</div>
+  </div>
+
+  <!-- ============ Estado del plan / inicio ============ -->
+  <div id="v-plan" class="card anim hidden">
+    <h1 class="title" id="plan-title">Tu pago en <em>2 partes</em></h1>
+    <p class="sub" id="plan-sub">Paga la primera parte hoy y completa la segunda desde este mismo enlace.</p>
+
+    <div class="steps" id="plan-steps"></div>
+
+    <div class="total-row">
+      <span>Total del curso</span>
+      <b id="plan-total">$697.00 USD</b>
+    </div>
+
+    <!-- Datos: solo la primera vez -->
+    <div class="fields hidden" id="plan-fields">
+      <div>
+        <label class="field-label" for="f-name">Nombre completo</label>
+        <input id="f-name" class="input" type="text" placeholder="Tu nombre completo" autocomplete="name">
+      </div>
+      <div>
+        <label class="field-label" for="f-email">Correo electrónico</label>
+        <input id="f-email" class="input" type="email" placeholder="tu@correo.com" autocomplete="email">
+      </div>
+      <div>
+        <label class="field-label" for="f-phone">Número de teléfono</label>
+        <input id="f-phone" class="input" type="tel" placeholder="+1 (555) 000-0000" autocomplete="tel">
+      </div>
+    </div>
+
+    <div id="payment-element"></div>
+    <div id="plan-error" class="error"></div>
+
+    <button id="plan-btn" class="btn">Pagar 1ra parte</button>
+
+    <div class="secure" style="margin-top:20px">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      Pago 100% seguro y encriptado
+    </div>
+  </div>
+
+  <!-- ============ Plan completado ============ -->
+  <div id="v-done" class="card center anim hidden">
+    <div class="icon-ok">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <h1 class="title">Pago <em>completado</em></h1>
+    <p class="sub" id="done-sub">Pagaste las dos partes. ¡Gracias por confiar en este vuelo!</p>
+    <div class="steps" id="done-steps"></div>
+    <div class="total-row">
+      <span>Total pagado</span>
+      <b id="done-total">$697.00 USD</b>
+    </div>
+    <p class="note">Si tienes alguna duda, escríbenos por WhatsApp al <strong style="color:rgba(245,237,216,0.78)">+1 251 650 9950</strong>.</p>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var API   = '/api/checkout';
+  var STORE = 'nf_plan_2partes';
+
+  var qs        = new URLSearchParams(location.search);
+  var planId    = qs.get('p') || localStorage.getItem(STORE) || '';
+  var codigo    = qs.get('code') || ''; // solo para el plan de prueba de $1
+  var redirected = qs.get('redirect_status') === 'succeeded';
+
+  var stripe = null, elements = null, clientSecret = null, parteActual = 0;
+  var estado = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (c) { return '$' + (c / 100).toFixed(2); };
+
+  function show(id) {
+    ['v-loading', 'v-plan', 'v-done'].forEach(function (v) {
+      $(v).classList.toggle('hidden', v !== id);
+    });
+  }
+  function error(msg) {
+    var el = $('plan-error');
+    el.textContent = msg;
+    el.style.display = msg ? 'block' : 'none';
+  }
+
+  function post(payload) {
+    return fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(function (r) { return r.json(); });
+  }
+
+  // --- Pinta las 2 partes con su estado ---
+  function pintarPasos(cont, partes, siguiente) {
+    cont.innerHTML = '';
+    partes.forEach(function (p) {
+      var esSig = p.n === siguiente;
+      var d = document.createElement('div');
+      d.className = 'step' + (p.pagada ? ' paid' : (esSig ? ' next' : ''));
+      d.innerHTML =
+        '<div class="step-badge">' +
+          (p.pagada
+            ? '<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+            : p.n) +
+        '</div>' +
+        '<div class="step-body">' +
+          '<div class="step-name">' + (p.n === 1 ? 'Primera parte' : 'Segunda parte') + '</div>' +
+          '<div class="step-amount">' + money(p.monto) + ' USD</div>' +
+        '</div>' +
+        '<span class="step-tag">' + (p.pagada ? 'Pagada' : (esSig ? 'Te toca' : 'Pendiente')) + '</span>';
+      cont.appendChild(d);
+    });
+  }
+
+  // --- Render segun el estado que devuelve Stripe ---
+  function render(e) {
+    estado = e;
+    $('plan-total').textContent = money(e.total) + ' USD';
+
+    if (e.completo) {
+      $('done-total').textContent = money(e.total) + ' USD';
+      pintarPasos($('done-steps'), e.partes, null);
+      if (e.nombre) $('done-sub').textContent =
+        '¡Gracias, ' + e.nombre + '! Pagaste las dos partes. Tus accesos ya están en camino.';
+      show('v-done');
+      return;
+    }
+
+    pintarPasos($('plan-steps'), e.partes, e.siguiente);
+
+    var esPrimera = e.siguiente === 1;
+    var yaPago    = e.partes.some(function (p) { return p.pagada; });
+
+    if (yaPago) {
+      $('plan-title').innerHTML = 'Te falta la <em>segunda parte</em>';
+      $('plan-sub').textContent = (e.nombre ? e.nombre + ', tu' : 'Tu') +
+        ' primera parte ya está pagada. Aquí mismo puedes completar la segunda.';
+    }
+    $('plan-btn').textContent = esPrimera ? 'Pagar 1ra parte ' + money(e.montoParte) : 'Pagar 2da parte ' + money(e.montoParte);
+    $('plan-fields').classList.toggle('hidden', !!planId);
+    show('v-plan');
+  }
+
+  // --- Primera carga: preguntarle a Stripe que pago ---
+  function cargarEstado(reintentos) {
+    if (!planId) {
+      render({
+        ok: true, nombre: '', completo: false, siguiente: 1,
+        montoParte: 34850, total: 69700,
+        partes: [{ n: 1, pagada: false, monto: 34850 }, { n: 2, pagada: false, monto: 34850 }],
+      });
+      return;
+    }
+    post({ action: 'plan-status', planId: planId }).then(function (e) {
+      if (!e || !e.ok) {
+        // El enlace no corresponde a ningun plan: se empieza de cero.
+        localStorage.removeItem(STORE);
+        planId = '';
+        cargarEstado(0);
+        return;
+      }
+      // Justo despues de pagar, Stripe puede tardar un instante en reflejarlo.
+      // Sin este reintento la clienta veria "pendiente" lo que acaba de pagar.
+      var algoPagado = e.partes.some(function (p) { return p.pagada; });
+      if (redirected && !algoPagado && reintentos < 4) {
+        setTimeout(function () { cargarEstado(reintentos + 1); }, 1200);
+        return;
+      }
+      render(e);
+    }).catch(function () {
+      error('No pudimos consultar tu pago. Revisa tu conexión y recarga la página.');
+      show('v-plan');
+    });
+  }
+
+  // --- Montar el formulario de tarjeta ---
+  function montarPago(secret) {
+    return fetch('/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
+      if (!cfg || !cfg.publishableKey) throw new Error('config');
+      stripe = Stripe(cfg.publishableKey);
+      elements = stripe.elements({
+        clientSecret: secret,
+        appearance: {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#C49A3C',
+            colorBackground: '#2a0a12',
+            colorText: '#F5EDD8',
+            colorDanger: '#e05050',
+            fontFamily: 'Poppins, sans-serif',
+            borderRadius: '11px',
+          },
+        },
+      });
+      elements.create('payment', {
+        layout: 'tabs',
+        wallets: { applePay: 'never', googlePay: 'never', link: 'never' },
+      }).mount('#payment-element');
+    });
+  }
+
+  // --- Click del boton ---
+  function onPagar() {
+    var btn = $('plan-btn');
+    error('');
+
+    // Ya hay tarjeta montada: confirmar el pago.
+    if (clientSecret && elements) {
+      btn.disabled = true;
+      btn.textContent = 'Procesando…';
+      stripe.confirmPayment({
+        elements: elements,
+        confirmParams: { return_url: location.origin + '/pago/?p=' + encodeURIComponent(planId) },
+      }).then(function (res) {
+        if (res.error) {
+          error(res.error.message || 'No se pudo procesar el pago.');
+          btn.disabled = false;
+          btn.textContent = 'Pagar ' + (parteActual === 1 ? '1ra' : '2da') + ' parte ' + money(estado.montoParte);
+        }
+      });
+      return;
+    }
+
+    // Primera vez: validar datos.
+    var datos = {};
+    if (!planId) {
+      var name  = $('f-name').value.trim();
+      var email = $('f-email').value.trim();
+      var phone = $('f-phone').value.trim();
+      if (!name)  { error('Escribe tu nombre completo.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { error('Escribe un correo electrónico válido.'); return; }
+      datos = { name: name, email: email, phone: phone };
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Preparando…';
+
+    post(Object.assign({ action: 'plan-pay', planId: planId, code: codigo }, datos)).then(function (r) {
+      if (r && r.completo) { cargarEstado(0); return; }
+      if (!r || !r.clientSecret) throw new Error(r && r.error ? r.error : 'sin_secret');
+
+      clientSecret = r.clientSecret;
+      parteActual  = r.parte;
+      planId       = r.planId;
+      // El enlace queda personal: mismo enlace para la 2da parte.
+      localStorage.setItem(STORE, planId);
+      history.replaceState(null, '', '/pago/?p=' + encodeURIComponent(planId));
+
+      return montarPago(clientSecret).then(function () {
+        $('plan-fields').classList.add('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Pagar ' + (parteActual === 1 ? '1ra' : '2da') + ' parte ' + money(r.amount);
+      });
+    }).catch(function (e) {
+      error('No pudimos preparar el pago. Intenta de nuevo en un momento.');
+      btn.disabled = false;
+      btn.textContent = 'Reintentar';
+      console.error(e);
+    });
+  }
+
+  $('plan-btn').addEventListener('click', onPagar);
+  cargarEstado(0);
+})();
+</script>
+</body>
+</html>
