@@ -140,6 +140,32 @@ module.exports = async (req, res) => {
       }
     }
 
+    // Rama: corregir los datos de la clienta ANTES de cobrar.
+    // El correo es lo mas critico de todo el plan: por ahi recibe el enlace
+    // para pagar la segunda parte. Una letra mal tecleada la deja sin enlace,
+    // sin recibo y sin forma de que Anny la ubique. Por eso se puede corregir
+    // hasta el ultimo segundo, y el cambio viaja tambien al PaymentIntent.
+    if (body.action === 'plan-datos') {
+      try {
+        const planId = String(body.planId || '').trim();
+        if (!planId.startsWith('cus_')) return res.status(200).json({ ok: false });
+        const email = String(body.email || '').trim();
+        await stripe.customers.update(planId, {
+          name: String(body.name || '').trim() || undefined,
+          email: email || undefined,
+          phone: String(body.phone || '').trim() || undefined,
+        });
+        const piId = String(body.paymentIntentId || '').trim();
+        if (piId.startsWith('pi_') && email) {
+          await stripe.paymentIntents.update(piId, { receipt_email: email });
+        }
+        return res.status(200).json({ ok: true });
+      } catch (e) {
+        console.error('plan-datos:', e.message);
+        return res.status(200).json({ ok: false, error: e.message }); // nunca bloquear el pago
+      }
+    }
+
     // Rama: cobrar la parte que toca. El SERVIDOR decide cual es —
     // nunca el navegador. Si el numero de parte viniera del cliente,
     // cualquiera podria pedir "parte 2" sin haber pagado la 1.

@@ -185,6 +185,7 @@ body {
     </div>
 
     <!-- Datos: solo la primera vez -->
+    <p id="plan-aviso" style="display:none;margin:20px 0 -4px;font-size:11.5px;line-height:1.6;color:rgba(196,154,60,0.85);text-align:center">Revisa tu correo antes de pagar: ahí te llega el enlace para completar la segunda parte.</p>
     <div class="fields hidden" id="plan-fields">
       <div>
         <label class="field-label" for="f-name">Nombre completo</label>
@@ -384,13 +385,37 @@ body {
 
     // Ya hay tarjeta montada: confirmar el pago.
     if (clientSecret && elements) {
+      // Los campos siguen visibles hasta el final: si corrigio algo (sobre
+      // todo el correo), se guarda AHORA, justo antes de cobrar.
+      var campos = $('plan-fields');
+      var editable = campos && !campos.classList.contains('hidden');
+      var guardar = Promise.resolve();
+
+      if (editable) {
+        var n2 = $('f-name').value.trim();
+        var e2 = $('f-email').value.trim();
+        var t2 = $('f-phone').value.trim();
+        if (!n2) { error('Escribe tu nombre completo.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e2)) { error('Escribe un correo electrónico válido.'); return; }
+        guardar = post({
+          action: 'plan-datos',
+          planId: planId,
+          paymentIntentId: clientSecret.split('_secret_')[0],
+          name: n2, email: e2, phone: t2,
+        });
+      }
+
       btn.disabled = true;
       btn.textContent = 'Procesando…';
-      stripe.confirmPayment({
-        elements: elements,
-        confirmParams: { return_url: location.origin + '/pago/?p=' + encodeURIComponent(planId) },
+
+      // Si guardar falla no se bloquea el cobro: ya tiene la tarjeta puesta.
+      guardar.catch(function () {}).then(function () {
+        return stripe.confirmPayment({
+          elements: elements,
+          confirmParams: { return_url: location.origin + '/pago/?p=' + encodeURIComponent(planId) },
+        });
       }).then(function (res) {
-        if (res.error) {
+        if (res && res.error) {
           error(res.error.message || 'No se pudo procesar el pago.');
           btn.disabled = false;
           btn.textContent = 'Pagar ' + (parteActual === 1 ? '1ra' : '2da') + ' parte ' + money(estado.montoParte);
@@ -425,7 +450,10 @@ body {
       history.replaceState(null, '', '/pago/?p=' + encodeURIComponent(planId));
 
       return montarPago(clientSecret).then(function () {
-        $('plan-fields').classList.add('hidden');
+        // Los campos NO se esconden: hasta que pulse pagar debe poder
+        // corregir un correo mal escrito, que es su unica via de vuelta.
+        var aviso = $('plan-aviso');
+        if (aviso) aviso.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Pagar ' + (parteActual === 1 ? '1ra' : '2da') + ' parte ' + money(r.amount);
       });
