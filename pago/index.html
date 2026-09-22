@@ -309,7 +309,7 @@ body {
     if (yaPago) {
       $('plan-title').innerHTML = 'Te falta la <em>segunda parte</em>';
       $('plan-sub').textContent = (e.nombre ? e.nombre + ', tu' : 'Tu') +
-        ' primera parte ya está pagada. Completa la segunda aquí mismo para terminar tu inscripción.';
+        ' primera parte ya está pagada. Aquí mismo puedes completar la segunda.';
     }
     $('plan-btn').textContent = esPrimera ? 'Pagar 1ra parte ' + money(e.montoParte) : 'Pagar 2da parte ' + money(e.montoParte);
     $('plan-fields').classList.toggle('hidden', !!planId);
