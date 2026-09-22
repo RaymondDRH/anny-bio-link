@@ -25,35 +25,40 @@ module.exports = async (req, res) => {
   if (!prompt || !filename) return res.status(400).json({ error: 'prompt and filename required' });
 
   try {
-    // 1. Generate image with Gemini Imagen 4
+    // 1. Generate image with Gemini (generateContent — Imagen 4 :predict fue deprecado por Google)
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${GEMINI_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          instances: [{ prompt }],
-          parameters: { sampleCount: 1, aspectRatio: aspectRatio || '4:3' }
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseModalities: ['IMAGE'],
+            imageConfig: { aspectRatio: aspectRatio || '4:3' }
+          }
         })
       }
     );
 
     const geminiData = await geminiRes.json();
-    if (!geminiData.predictions?.[0]?.bytesBase64Encoded) {
+    const imagePart = geminiData.candidates?.[0]?.content?.parts?.find((p) => p.inlineData);
+    if (!imagePart) {
       return res.status(500).json({ error: 'Gemini failed: ' + JSON.stringify(geminiData).substring(0, 200) });
     }
 
-    const imageBuffer = Buffer.from(geminiData.predictions[0].bytesBase64Encoded, 'base64');
+    const imageMime = imagePart.inlineData.mimeType || 'image/jpeg';
+    const imageBuffer = Buffer.from(imagePart.inlineData.data, 'base64');
 
     // Si solo se pide el base64 (sin subir a Ghost)
     if (req.body.returnBase64) {
-      return res.json({ base64: geminiData.predictions[0].bytesBase64Encoded });
+      return res.json({ base64: imagePart.inlineData.data });
     }
 
     // 2. Upload to Ghost
     const jwt = makeGhostJWT();
     const form = new FormData();
-    form.append('file', new Blob([imageBuffer], { type: 'image/jpeg' }), filename);
+    form.append('file', new Blob([imageBuffer], { type: imageMime }), filename);
     form.append('purpose', 'image');
 
     const ghostRes = await fetch(`${GHOST_URL}/ghost/api/admin/images/upload/`, {

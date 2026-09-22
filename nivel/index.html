@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>¿En qué nivel digital estás? · Anny Gómez</title>
+<meta name="description" content="No estás perdida. Estás sin mapa. Test de 2 minutos que te dice en qué nivel digital estás y cuál es tu siguiente paso. Con Anny Gómez." />
+<meta property="og:title" content="No estás perdida. Estás sin mapa." />
+<meta property="og:description" content="Seis preguntas, dos minutos, y sabes exactamente en qué nivel estás y qué te toca hacer ahora." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Poppins:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --crema:#FBF6F2;
+    --nude:#E8D9CD;
+    --arena:#D4BEB0;
+    --cobre:#C4855A;
+    --cobre-dark:#A86C44;
+    --espresso:#2E1A10;
+    --topo:#8C6A58;
+    --glass:rgba(255,255,255,.55);
+    --glass-line:rgba(255,255,255,.7);
+    --shadow:0 18px 50px -20px rgba(46,26,16,.30);
+    --shadow-soft:0 10px 30px -16px rgba(46,26,16,.25);
+    --r:22px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:"Poppins",system-ui,sans-serif;
+    color:var(--espresso);
+    background:var(--crema);
+    font-size:16px;line-height:1.6;
+    overflow-x:hidden;min-height:100vh;min-height:100dvh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .bg-aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .bg-aura span{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;}
+  .bg-aura .b1{width:60vw;height:60vw;top:-18vw;right:-15vw;background:radial-gradient(circle,var(--arena),transparent 70%);}
+  .bg-aura .b2{width:55vw;height:55vw;bottom:-20vw;left:-18vw;background:radial-gradient(circle,var(--nude),transparent 70%);}
+  .bg-aura .b3{width:40vw;height:40vw;top:35%;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(196,133,90,.18),transparent 70%);}
+
+  .app{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 22px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;}
+  .screen{display:none;flex:1;flex-direction:column;animation:fade .5s var(--ease);padding:34px 0 48px;}
+  .screen.active{display:flex;}
+  @keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  h1,h2,h3{font-family:"Playfair Display",serif;font-weight:700;line-height:1.12;margin:0;}
+  .serif{font-family:"Playfair Display",serif;}
+  .sign{font-family:"Alex Brush",cursive;}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--cobre-dark);font-weight:600;margin:0;}
+
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:500;color:var(--topo);
+    background:var(--glass);border:1px solid var(--glass-line);
+    padding:9px 16px;border-radius:999px;backdrop-filter:blur(10px);
+    box-shadow:var(--shadow-soft);
+  }
+  .chip b{color:var(--cobre-dark);font-weight:600;}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--arena);}
+
+  .btn{
+    appearance:none;border:none;cursor:pointer;font-family:inherit;
+    font-size:16px;font-weight:600;letter-spacing:.01em;
+    padding:18px 26px;border-radius:999px;min-height:56px;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s;
+  }
+  .btn-primary{background:linear-gradient(135deg,var(--cobre),var(--cobre-dark));color:#fff;box-shadow:0 14px 30px -10px rgba(196,133,90,.65);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 40px -12px rgba(196,133,90,.75);}
+  .btn-primary:active{transform:translateY(0);}
+  .btn-ghost{background:var(--glass);color:var(--espresso);border:1px solid var(--glass-line);backdrop-filter:blur(10px);}
+  .btn-ghost:hover{background:rgba(255,255,255,.8);}
+  .btn:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--cobre);outline-offset:3px;}
+  .solo-lectores{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+  /* ---------- HERO ---------- */
+  #hero{justify-content:center;align-items:center;text-align:center;gap:22px;}
+  #hero h1{font-size:clamp(32px,8.4vw,44px);}
+  #hero h1 em{font-style:italic;color:var(--cobre-dark);}
+  .hero-sub{color:var(--topo);font-size:16px;max-width:34ch;margin:0 auto;}
+  .hero-sign{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:4px;}
+  .hero-sign .sign{font-size:34px;color:var(--espresso);line-height:1;}
+  .hero-sign small{font-size:13px;color:var(--topo);letter-spacing:.02em;}
+  .social-count{font-size:12.5px;color:var(--topo);margin:0;}
+  .social-count b{color:var(--cobre-dark);font-weight:600;}
+  .hero-warn{
+    font-family:"Playfair Display",serif;font-style:italic;
+    font-size:16.5px;line-height:1.5;color:var(--topo);
+    max-width:30ch;margin:0 auto;
+  }
+  .hero-warn b{font-style:normal;font-weight:600;color:var(--espresso);}
+
+  /* Cierre de urgencia, despues del roadmap */
+  .urgencia{
+    margin:26px 0 0;padding:22px 20px;border-radius:var(--r);
+    background:rgba(196,133,90,.08);
+    border:1px solid rgba(196,133,90,.24);
+    border-left:3px solid var(--cobre);
+    animation:fade .6s .85s var(--ease) both;
+  }
+  .urgencia p{margin:0;font-size:15.5px;line-height:1.6;}
+  .urgencia p + p{margin-top:10px;}
+  .urgencia strong{color:var(--cobre-dark);font-weight:600;}
+  .urgencia .cierre{
+    font-family:"Playfair Display",serif;font-style:italic;font-size:17px;
+    color:var(--espresso);
+  }
+
+  /* ---------- CAMINO (sustituye la barra de progreso) ---------- */
+  /* ---------- MUNDO (una sola ilustracion, camara que sigue) ----------
+     El mundo entero es UNA imagen de Higgsfield. La "camara" es un
+     translate del contenedor interno: asi no hay collage ni piezas pegadas. */
+  .world{
+    position:relative;width:100%;overflow:hidden;border-radius:20px;
+    background:linear-gradient(180deg,#F6EFE6,#EFE3D6);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.55), var(--shadow-soft);
+  }
+  .world-layer{position:absolute;left:0;top:0;transition:transform 1s var(--ease);will-change:transform;}
+  .world-layer>img{display:block;width:100%;height:auto;}
+  .world-walker{
+    position:absolute;line-height:0;pointer-events:none;
+    transform:translate(-50%,-92%);
+    transition:left .85s var(--ease),top .85s var(--ease);
+  }
+  .world-walker img{
+    width:var(--wk,34px);height:auto;display:block;
+    filter:drop-shadow(0 6px 11px rgba(46,26,16,.35));
+  }
+  .world-walker.step img{animation:hop .6s var(--ease);}
+  .world-walker.leap img{animation:leap .85s cubic-bezier(.34,.8,.4,1);}
+  @keyframes hop{0%{transform:translateY(0) rotate(0);}32%{transform:translateY(-12px) rotate(-7deg);}68%{transform:translateY(-4px) rotate(4deg);}100%{transform:translateY(0) rotate(0);}}
+  @keyframes leap{
+    0%{transform:translateY(0) rotate(0) scaleY(.9);}
+    16%{transform:translateY(-40px) rotate(-14deg) scaleY(1.1);}
+    46%{transform:translateY(-54px) rotate(-6deg) scaleY(1.04);}
+    78%{transform:translateY(-8px) rotate(7deg) scaleY(.95);}
+    90%{transform:translateY(3px) rotate(2deg) scaleY(.84);}
+    100%{transform:translateY(0) rotate(0) scaleY(1);}
+  }
+  .world-dust{
+    position:absolute;width:34px;height:10px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(196,133,90,.6),rgba(196,133,90,0) 70%);
+    transform:translate(-50%,-50%);opacity:0;pointer-events:none;
+  }
+  .world-dust.go{animation:dust .7s ease-out forwards;}
+  @keyframes dust{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);}28%{opacity:.95;}100%{opacity:0;transform:translate(-50%,-50%) scale(2.6);}}
+
+  /* ---------- TIRA de islas (barra de progreso del juego) ---------- */
+  .tira{position:relative;width:100%;line-height:0;}
+  .tira-img{width:100%;height:auto;display:block;border-radius:16px;}
+  .tira-walker{
+    position:absolute;line-height:0;pointer-events:none;
+    transform:translate(-50%,-88%);
+    transition:left .8s var(--ease),top .8s var(--ease);
+  }
+  .tira-walker img{
+    width:var(--wk,20px);height:auto;display:block;
+    filter:drop-shadow(0 3px 6px rgba(46,26,16,.4));
+  }
+  .tira-walker.step img{animation:hop .6s var(--ease);}
+  .tira-walker.leap img{animation:leap .8s cubic-bezier(.34,.8,.4,1);}
+
+  /* ---------- TIRA del resultado: islas bloqueadas + etiquetas ---------- */
+  .tira-res{margin-bottom:6px;}
+  /* velo sobre las islas que todavia no alcanzo */
+  .isla-lock{
+    position:absolute;transform:translate(-50%,-50%);
+    width:var(--w,19%);aspect-ratio:1;
+    display:grid;place-items:center;pointer-events:none;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(251,246,242,.82) 55%,rgba(251,246,242,0) 78%);
+    backdrop-filter:grayscale(1) brightness(1.08);
+    -webkit-backdrop-filter:grayscale(1) brightness(1.08);
+  }
+  .isla-lock svg{width:22px;height:22px;opacity:.75;}
+  /* Marcador de ubicación tipo GPS, apuntando a la isla alcanzada */
+  .isla-aqui{
+    position:absolute;transform:translate(-50%,-100%);
+    pointer-events:none;text-align:center;line-height:1;
+    animation:pinDrop .7s .35s cubic-bezier(.3,1.3,.5,1) both;
+  }
+  .isla-aqui small{
+    display:block;margin-bottom:4px;
+    font-family:"Poppins",sans-serif;font-size:8.5px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--cobre-dark);
+    background:rgba(251,246,242,.92);padding:3px 8px;border-radius:999px;
+    white-space:nowrap;box-shadow:0 2px 8px -3px rgba(46,26,16,.35);
+  }
+  .isla-aqui .pin{
+    display:block;margin:0 auto;width:23px;height:23px;
+    filter:drop-shadow(0 4px 7px rgba(46,26,16,.45));
+    animation:pinFloat 2.4s ease-in-out infinite;
+  }
+  @keyframes pinDrop{
+    0%{opacity:0;transform:translate(-50%,-170%) scale(.7);}
+    100%{opacity:1;transform:translate(-50%,-100%) scale(1);}
+  }
+  @keyframes pinFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  /* pulso en la base del pin, como el GPS del teléfono */
+  .isla-pulso{
+    position:absolute;transform:translate(-50%,-50%);
+    width:14px;height:14px;border-radius:50%;pointer-events:none;
+    background:rgba(196,133,90,.45);
+    animation:pulso 2.2s ease-out infinite;
+  }
+  @keyframes pulso{
+    0%{transform:translate(-50%,-50%) scale(.5);opacity:.85;}
+    100%{transform:translate(-50%,-50%) scale(3.2);opacity:0;}
+  }
+  .tira-labels{
+    position:relative;display:flex;margin-top:2px;
+  }
+  .tira-lab{
+    position:absolute;transform:translateX(-50%);text-align:center;
+    font-family:"Playfair Display",serif;font-size:12.5px;line-height:1.15;
+    color:var(--topo);white-space:nowrap;
+  }
+  .tira-lab.on{color:var(--espresso);font-weight:700;}
+  .tira-lab small{
+    display:block;font-family:"Poppins",sans-serif;font-size:9.5px;
+    font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--cobre-dark);opacity:.8;margin-top:1px;
+  }
+  .meta-nota{
+    margin:34px 0 0;padding:16px 18px;border-radius:16px;
+    background:rgba(196,133,90,.08);border:1px solid rgba(196,133,90,.22);
+    text-align:center;
+  }
+  .meta-nota b{display:block;font-family:"Playfair Display",serif;font-size:16px;margin-bottom:3px;}
+  .meta-nota p{margin:0;font-size:13.5px;color:var(--topo);line-height:1.5;}
+
+  /* ---------- VIDEO inmersivo a pantalla completa ---------- */
+  .cine{
+    position:fixed;inset:0;z-index:90;background:#F3E7DA;
+    display:none;place-items:center;overflow:hidden;
+  }
+  .cine.on{display:grid;animation:fade .45s var(--ease);}
+  /* El video es vertical y nativo de ~720px. Estirarlo a una pantalla de
+     escritorio lo vuelve borroso, asi que se limita a su tamano util y el
+     resto queda en color de marca. En movil sigue ocupando todo. */
+  .cine video{
+    width:100%;height:100%;object-fit:cover;display:block;
+    max-width:min(100vw, 56.25vh);   /* 9:16 — nunca mas ancho que su relacion */
+    margin:0 auto;
+  }
+  .cine::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 40%, #F7EEE4, #E8D9CD);
+    z-index:-1;
+  }
+  /* Degradados que oscurecen SOLO donde va texto: se lee bien y el video
+     queda limpio en el centro, que es donde ocurre la acción. */
+  .cine-scrim-top,.cine-scrim-bot{
+    position:absolute;left:0;right:0;pointer-events:none;z-index:1;
+  }
+  .cine-scrim-top{
+    top:0;height:34vh;
+    background:linear-gradient(180deg,rgba(38,20,12,.78) 0%,rgba(38,20,12,.45) 45%,rgba(38,20,12,0) 100%);
+  }
+  .cine-scrim-bot{
+    bottom:0;height:42vh;
+    background:linear-gradient(0deg,rgba(38,20,12,.85) 0%,rgba(38,20,12,.55) 40%,rgba(38,20,12,0) 100%);
+  }
+
+  /* Título fijo arriba */
+  .cine-title{
+    position:absolute;left:22px;right:22px;top:7vh;z-index:2;text-align:center;
+  }
+  .cine-title .eyebrow{
+    color:rgba(255,255,255,.72);font-size:11px;letter-spacing:.24em;margin-bottom:9px;
+  }
+  .cine-title h2{
+    font-family:"Playfair Display",serif;font-weight:700;color:#fff;
+    font-size:clamp(27px,7.4vw,36px);line-height:1.18;margin:0;
+    text-shadow:0 4px 24px rgba(20,10,6,.75);
+  }
+  .cine-dots{
+    display:flex;justify-content:center;gap:6px;margin-top:14px;
+  }
+  .cine-dots i{
+    width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.85);
+    animation:cinedot 1.4s ease-in-out infinite;
+  }
+  .cine-dots i:nth-child(2){animation-delay:.2s;}
+  .cine-dots i:nth-child(3){animation-delay:.4s;}
+  @keyframes cinedot{0%,100%{opacity:.25;transform:translateY(0);}50%{opacity:1;transform:translateY(-4px);}}
+
+  /* Textos que fluyen abajo */
+  .cine-txt{
+    position:absolute;left:26px;right:26px;bottom:17vh;z-index:2;text-align:center;
+    font-family:"Playfair Display",serif;font-style:italic;
+    font-size:clamp(19px,5vw,25px);line-height:1.4;color:rgba(255,255,255,.96);
+    text-shadow:0 4px 22px rgba(20,10,6,.8),0 1px 5px rgba(20,10,6,.7);
+    min-height:2.6em;display:flex;align-items:center;justify-content:center;
+  }
+  .cine-txt.in{animation:cineIn .9s var(--ease) both;}
+  @keyframes cineIn{
+    0%{opacity:0;transform:translateY(20px);filter:blur(5px);}
+    100%{opacity:1;transform:none;filter:blur(0);}
+  }
+  /* barra de avance del video, fina, al pie */
+  .cine-bar{
+    position:absolute;left:0;right:0;bottom:0;height:3px;z-index:2;
+    background:rgba(255,255,255,.2);
+  }
+  .cine-bar i{display:block;height:100%;width:0;background:var(--cobre);}
+  /* Abajo y centrado: arriba a la derecha choca con el notch y la barra de
+     estado del móvil, y encima compite con el título. Aquí llega el pulgar. */
+  .cine-skip{
+    position:absolute;left:50%;bottom:calc(5vh + env(safe-area-inset-bottom));
+    transform:translateX(-50%);z-index:4;
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.42);
+    color:#fff;font-family:inherit;font-size:13px;font-weight:500;
+    padding:11px 22px;border-radius:999px;cursor:pointer;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    white-space:nowrap;
+    animation:skipIn .5s var(--ease) both;
+  }
+  .cine-skip:active{background:rgba(255,255,255,.28);}
+  @keyframes skipIn{from{opacity:0;transform:translate(-50%,12px);}to{opacity:1;transform:translate(-50%,0);}}
+
+  /* alturas del mundo antiguo (ya sin uso en el quiz) */
+  #world-tease{height:min(58vh,520px);}
+
+  /* ---------- MAPA ANTIGUO (sin uso, se conserva por el hero) ---------- */
+  .road{position:relative;width:100%;aspect-ratio:480/148;margin:2px 0;}
+  .road svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+  .rd-bg{fill:none;stroke:var(--arena);stroke-width:7;stroke-linecap:round;opacity:.85;}
+  .rd-dash{fill:none;stroke:rgba(255,255,255,.65);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:7 11;}
+  .rd-fg{
+    fill:none;stroke:url(#rdgrad);stroke-width:7;stroke-linecap:round;
+    transition:stroke-dashoffset .6s var(--ease);
+  }
+  /* nodos: un punto por pregunta */
+  .rd-node{fill:var(--nude);stroke:var(--arena);stroke-width:2;transition:all .4s var(--ease);}
+  .rd-node.on{fill:var(--cobre);stroke:#fff;stroke-width:2.5;}
+  .rd-node.now{fill:var(--cobre-dark);stroke:#fff;stroke-width:3;}
+
+  /* obstaculos: se caen cuando los pasa */
+  .rd-obs{transition:transform .5s var(--ease),opacity .5s var(--ease);transform-origin:center bottom;}
+  .rd-obs.cleared{transform:translateY(4px) rotate(58deg);opacity:.28;}
+
+  /* Islas sobre el camino. --isla escala todo el mapa de compacto a grande. */
+  .road{--isla:19%;}
+  .map-isla{
+    position:absolute;line-height:0;pointer-events:none;z-index:1;
+    width:var(--isla);
+    transform:translate(-50%,-64%);
+    transition:filter .6s var(--ease),opacity .6s var(--ease),transform .6s var(--ease);
+    filter:grayscale(.85) brightness(1.08) contrast(.82);
+    opacity:.42;
+  }
+  .map-isla img{width:100%;height:auto;display:block;}
+  .map-isla.abierta{filter:none;opacity:1;}
+  .map-isla.aqui{transform:translate(-50%,-64%) scale(1.1);}
+  .map-isla.aqui img{filter:drop-shadow(0 8px 16px rgba(196,133,90,.45));}
+
+  .map-walker,.map-goal{
+    position:absolute;line-height:0;pointer-events:none;
+    transform:translate(-50%,-100%);
+  }
+  .map-walker{transition:left .75s var(--ease),top .75s var(--ease);z-index:3;}
+  .map-walker img{
+    width:var(--wk,26px);height:auto;display:block;
+    filter:drop-shadow(0 5px 9px rgba(46,26,16,.28));
+  }
+  .map-goal img{width:var(--gl,27px);height:auto;display:block;filter:drop-shadow(0 4px 8px rgba(46,26,16,.22));}
+
+  /* Paso corto dentro de la misma isla */
+  .map-walker.step img{animation:hop .6s var(--ease);}
+  @keyframes hop{0%{transform:translateY(0) rotate(0);}32%{transform:translateY(-13px) rotate(-8deg);}68%{transform:translateY(-4px) rotate(5deg);}100%{transform:translateY(0) rotate(0);}}
+
+  /* Salto GRANDE al cambiar de isla: arco alto, giro y aterrizaje con rebote */
+  .map-walker.leap img{animation:leap .75s cubic-bezier(.34,.8,.4,1);}
+  @keyframes leap{
+    0%{transform:translateY(0) rotate(0) scaleY(.9);}
+    18%{transform:translateY(-34px) rotate(-12deg) scaleY(1.08);}
+    48%{transform:translateY(-46px) rotate(-6deg) scaleY(1.04);}
+    78%{transform:translateY(-8px) rotate(6deg) scaleY(.96);}
+    90%{transform:translateY(2px) rotate(2deg) scaleY(.86);}
+    100%{transform:translateY(0) rotate(0) scaleY(1);}
+  }
+  /* polvo del aterrizaje */
+  .map-dust{
+    position:absolute;width:26px;height:8px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(196,133,90,.55),rgba(196,133,90,0) 70%);
+    transform:translate(-50%,-50%);pointer-events:none;opacity:0;z-index:2;
+  }
+  .map-dust.go{animation:dust .6s ease-out forwards;}
+  @keyframes dust{0%{opacity:0;transform:translate(-50%,-50%) scale(.4);}30%{opacity:.9;}100%{opacity:0;transform:translate(-50%,-50%) scale(2.4);}}
+
+  /* Puentes entre islas */
+  .rd-bridge{stroke:var(--cobre-dark);stroke-width:2.2;stroke-linecap:round;opacity:.55;}
+
+  /* ---------- QUIZ ---------- */
+  #quiz{padding-top:26px;}
+  .quiz-top{display:flex;flex-direction:column;gap:6px;margin-bottom:26px;}
+  .counter{font-size:13px;font-weight:600;color:var(--topo);white-space:nowrap;text-align:right;}
+  .counter b{color:var(--cobre-dark);font-family:"Playfair Display",serif;font-size:16px;}
+  /* La pregunta entra desde la derecha y SALE hacia la izquierda: sin la
+     salida, el cambio se siente un corte seco. */
+  .q-wrap{animation:qin .5s var(--ease) both;}
+  @keyframes qin{
+    from{opacity:0;transform:translateX(26px);filter:blur(4px);}
+    to{opacity:1;transform:none;filter:blur(0);}
+  }
+  .q-wrap.out{animation:qout .36s var(--ease) forwards;}
+  @keyframes qout{
+    from{opacity:1;transform:none;filter:blur(0);}
+    to{opacity:0;transform:translateX(-28px);filter:blur(4px);}
+  }
+  /* Las opciones entran escalonadas, no todas de golpe */
+  .q-wrap .opt{animation:optIn .46s var(--ease) both;}
+  .q-wrap .opt:nth-child(1){animation-delay:.10s;}
+  .q-wrap .opt:nth-child(2){animation-delay:.17s;}
+  .q-wrap .opt:nth-child(3){animation-delay:.24s;}
+  .q-wrap .opt:nth-child(4){animation-delay:.31s;}
+  @keyframes optIn{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:none;}
+  }
+  /* al elegir, la seleccionada se marca y las demas se apagan */
+  .opt.dim{opacity:.32;transform:scale(.985);transition:opacity .3s,transform .3s;}
+  .opt.sel{animation:optPick .38s var(--ease);}
+  @keyframes optPick{0%{transform:scale(1);}40%{transform:scale(1.03);}100%{transform:scale(1);}}
+  .q-num{font-family:"Playfair Display",serif;font-style:italic;color:var(--cobre);font-size:18px;margin-bottom:8px;}
+  .q-text{font-size:clamp(22px,6vw,27px);line-height:1.22;margin-bottom:26px;}
+  .options{display:flex;flex-direction:column;gap:11px;}
+  .opt{
+    text-align:left;width:100%;font-family:inherit;cursor:pointer;
+    background:var(--glass);border:1px solid var(--glass-line);
+    border-radius:18px;padding:16px 17px;min-height:54px;
+    font-size:15.5px;line-height:1.4;color:var(--espresso);font-weight:400;
+    display:flex;align-items:center;gap:14px;backdrop-filter:blur(8px);
+    box-shadow:var(--shadow-soft);
+    transition:transform .2s var(--ease),background .2s,border-color .2s,box-shadow .2s;
+  }
+  .opt .mark{
+    flex:none;width:24px;height:24px;border-radius:50%;
+    border:1.5px solid var(--arena);display:grid;place-items:center;
+    font-size:11px;font-weight:600;color:var(--cobre-dark);
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .opt:hover{transform:translateY(-2px);border-color:var(--arena);background:rgba(255,255,255,.78);}
+  .opt.sel{background:linear-gradient(135deg,rgba(196,133,90,.16),rgba(212,190,176,.22));border-color:var(--cobre);}
+  .opt.sel .mark{background:var(--cobre);border-color:var(--cobre);color:#fff;}
+
+  /* Pregunta abierta opcional */
+  .open-field{
+    appearance:none;width:100%;font-family:inherit;font-size:16px;color:var(--espresso);
+    background:var(--glass);border:1px solid var(--glass-line);
+    padding:16px 18px;border-radius:18px;min-height:110px;resize:vertical;
+    backdrop-filter:blur(10px);line-height:1.5;
+  }
+  .open-field::placeholder{color:#6E5044;opacity:1;}
+  .open-field:focus{outline:none;border-color:var(--cobre);box-shadow:0 0 0 3px rgba(196,133,90,.18);}
+
+  /* ---------- INTRIGA ---------- */
+  #tease{justify-content:center;align-items:center;text-align:center;gap:24px;}
+  /* Mapa a pantalla completa: islas al doble de tamano y personaje mas grande */
+  .road-big{--isla:34%;--wk:42px;--gl:40px;width:100%;}
+  .road-big .rd-bg,.road-big .rd-fg{stroke-width:9;}
+  .tease-text{
+    font-family:"Playfair Display",serif;font-style:italic;
+    font-size:clamp(23px,6.4vw,30px);line-height:1.34;color:var(--espresso);
+    max-width:20ch;margin:0;
+    animation:teaseIn .75s var(--ease) both;
+  }
+  @keyframes teaseIn{
+    from{opacity:0;transform:translateY(16px) scale(.96);filter:blur(3px);}
+    to{opacity:1;transform:none;filter:blur(0);}
+  }
+  /* La barra comunica "espera, ya viene": sin ella la pausa se siente colgada */
+  .tease-wait{display:flex;flex-direction:column;align-items:center;gap:11px;animation:fade .6s .5s var(--ease) both;}
+  .tease-bar{width:128px;height:4px;border-radius:999px;background:var(--arena);overflow:hidden;}
+  .tease-bar i{
+    display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--cobre),var(--cobre-dark));
+  }
+  .tease-bar.run i{animation:teaseFill var(--tease-ms,2600ms) linear forwards;}
+  @keyframes teaseFill{from{width:0;}to{width:100%;}}
+  .tease-wait small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--topo);font-weight:500;}
+
+  /* ---------- LOADING ---------- */
+  #loading{justify-content:center;align-items:center;text-align:center;gap:30px;}
+  .loader{width:98px;height:98px;border-radius:50%;background:conic-gradient(from 0deg,rgba(196,133,90,0) 8%,var(--arena),var(--cobre));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 11px),#000 calc(100% - 10px));mask:radial-gradient(farthest-side,transparent calc(100% - 11px),#000 calc(100% - 10px));animation:spin 1.1s cubic-bezier(.5,.1,.5,.9) infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #loading h2{font-size:26px;}
+  #loading p{color:var(--topo);font-size:15px;margin:6px 0 0;min-height:22px;}
+
+  /* ---------- RESULTADO ---------- */
+  #result{padding-top:24px;}
+  .medal-stage{display:grid;place-items:center;margin:16px 0 8px;}
+  .medal-ring{position:relative;width:186px;height:186px;border-radius:50%;display:grid;place-items:center;}
+  .medal-ring::before{
+    content:"";position:absolute;inset:-2px;border-radius:50%;
+    background:radial-gradient(circle,rgba(196,133,90,.38),rgba(196,133,90,0) 70%);
+    filter:blur(10px);z-index:-1;
+  }
+  .medal-media{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+    border-radius:50%;
+    filter:drop-shadow(0 14px 26px rgba(46,26,16,.28));
+  }
+  /* El video ya ES la entrada (gira y se asienta): no se le suma otra animacion.
+     La imagen estatica si entra con escala, porque aparece sin aviso. */
+  #medal-still{animation:medalIn .5s var(--ease) both;}
+  @keyframes medalIn{0%{opacity:0;transform:scale(.4) rotate(-22deg);}60%{opacity:1;transform:scale(1.09) rotate(5deg);}100%{opacity:1;transform:scale(1) rotate(0);}}
+  .flash{position:absolute;inset:-22px;border-radius:50%;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(196,133,90,.55) 38%,transparent 70%);}
+  .sparkle{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px var(--cobre);opacity:0;pointer-events:none;}
+
+  .result-name{text-align:center;font-size:clamp(32px,9.2vw,44px);margin:10px 0 2px;animation:riseName .7s .25s var(--ease) both;}
+  .result-name em{font-style:italic;color:var(--cobre-dark);}
+  @keyframes riseName{from{opacity:0;transform:translateY(18px);letter-spacing:.06em;}to{opacity:1;transform:none;}}
+  .result-quote{
+    text-align:center;font-family:"Playfair Display",serif;font-style:italic;
+    font-size:19px;line-height:1.42;color:var(--espresso);
+    max-width:31ch;margin:12px auto 22px;animation:fade .6s .5s var(--ease) both;
+  }
+
+  .report{
+    background:var(--glass);border:1px solid var(--glass-line);
+    border-radius:var(--r);padding:8px 20px 20px;backdrop-filter:blur(12px);
+    box-shadow:var(--shadow-soft);animation:fade .6s .65s var(--ease) both;
+  }
+  .rep-block{padding:16px 0;border-bottom:1px solid rgba(212,190,176,.5);}
+  .rep-block:last-child{border-bottom:none;}
+  .rep-label{
+    display:flex;align-items:center;gap:9px;
+    font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:600;color:var(--cobre-dark);margin:0 0 7px;
+  }
+  .rep-label svg{width:15px;height:15px;flex:none;}
+  .rep-block p{margin:0;font-size:15.5px;line-height:1.55;}
+
+  /* ---------- ROADMAP ---------- */
+  .map{margin:30px 0 4px;animation:fade .6s .8s var(--ease) both;}
+  .map-title{text-align:center;font-size:22px;margin-bottom:6px;}
+  .map-sub{text-align:center;color:var(--topo);font-size:14px;margin:0 0 22px;}
+  /* Mapa vertical tipo videojuego: camino serpenteante a la izquierda,
+     texto legible a la derecha. El SVG va detras de las filas. */
+  .stations{position:relative;}
+  .stations-svg{position:absolute;left:0;top:0;width:76px;height:100%;overflow:visible;pointer-events:none;}
+  .sv-bg{fill:none;stroke:var(--arena);stroke-width:5;stroke-linecap:round;}
+  .sv-fg{fill:none;stroke:var(--cobre);stroke-width:5;stroke-linecap:round;}
+  .sv-dash{fill:none;stroke:rgba(255,255,255,.6);stroke-width:1.4;stroke-dasharray:6 9;stroke-linecap:round;}
+  .st-walker{
+    position:absolute;z-index:3;line-height:0;pointer-events:none;
+    transform:translate(-50%,-100%);
+    animation:walkIn .6s .4s var(--ease) both;
+  }
+  .st-walker img{width:30px;height:61px;display:block;filter:drop-shadow(0 6px 10px rgba(46,26,16,.3));}
+  @keyframes walkIn{from{opacity:0;transform:translate(-50%,-140%);}to{opacity:1;transform:translate(-50%,-100%);}}
+
+  .station{display:flex;align-items:flex-start;gap:14px;position:relative;z-index:2;}
+  .st-dot{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    display:grid;place-items:center;position:relative;z-index:1;
+    margin-left:8px;
+    background:var(--nude);border:2px solid var(--arena);
+    transition:all .3s var(--ease);
+  }
+  .st-dot svg{width:20px;height:20px;}
+  .station.done .st-dot{background:linear-gradient(135deg,var(--cobre),var(--cobre-dark));border-color:var(--cobre-dark);}
+  .station.done .st-dot svg{filter:brightness(0) invert(1);}
+  .station.now .st-dot{
+    background:linear-gradient(135deg,var(--cobre),var(--cobre-dark));border-color:#fff;
+    box-shadow:0 0 0 4px rgba(196,133,90,.28),0 8px 20px -6px rgba(196,133,90,.7);
+    animation:pulseNow 2.2s ease-in-out infinite;
+  }
+  .station.now .st-dot svg{filter:brightness(0) invert(1);}
+  @keyframes pulseNow{0%,100%{box-shadow:0 0 0 4px rgba(196,133,90,.28),0 8px 20px -6px rgba(196,133,90,.7);}50%{box-shadow:0 0 0 9px rgba(196,133,90,.12),0 8px 20px -6px rgba(196,133,90,.5);}}
+  .st-body{padding-top:2px;min-width:0;}
+  .st-name{font-family:"Playfair Display",serif;font-weight:700;font-size:17px;line-height:1.2;}
+  .st-note{font-size:13px;color:var(--topo);margin:2px 0 0;line-height:1.45;}
+  .station.locked .st-dot{background:rgba(232,217,205,.55);border-color:rgba(212,190,176,.7);}
+  .station.locked .st-name{color:var(--topo);opacity:.75;}
+  .station.locked .st-note{opacity:.7;}
+  .you-tag{
+    display:inline-block;margin-left:8px;font-family:"Poppins",sans-serif;
+    font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+    color:#fff;background:var(--cobre-dark);padding:3px 9px;border-radius:999px;vertical-align:middle;
+  }
+
+  /* ---------- COMPARTIR ---------- */
+  .share-img-wrap{margin:26px auto 0;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--glass-line);background:var(--nude);max-width:360px;}
+  .share-img-wrap canvas{display:block;width:100%;height:auto;}
+  .share-hint{text-align:center;color:var(--topo);font-size:12px;margin:10px 0 16px;}
+  .share-guia{
+    margin:12px 0 0;padding:13px 16px;border-radius:14px;
+    background:rgba(196,133,90,.10);border:1px solid rgba(196,133,90,.24);
+    font-size:13.5px;line-height:1.55;color:var(--espresso);text-align:center;
+    animation:fade .45s var(--ease);
+  }
+  .share-guia b{color:var(--cobre-dark);}
+  .actions{display:flex;gap:12px;margin-bottom:6px;}
+  .actions .btn{flex:1;font-size:15px;padding:16px 18px;}
+  .restart{background:none;border:none;color:var(--topo);font-size:13px;text-decoration:underline;cursor:pointer;font-family:inherit;margin:18px auto 0;display:block;}
+
+  /* ---------- LLAVE / GATE ---------- */
+  .key-box{
+    margin:26px 0 0;padding:24px 22px;border-radius:var(--r);
+    background:linear-gradient(135deg,rgba(212,190,176,.45),rgba(232,217,205,.65));
+    border:1px solid var(--glass-line);text-align:center;
+    animation:fade .6s .9s var(--ease) both;
+  }
+  .key-box h3{font-size:21px;line-height:1.2;margin-bottom:8px;}
+  .key-box p{color:var(--topo);font-size:14px;margin:0 0 18px;line-height:1.5;}
+
+  .gate-form{display:flex;flex-direction:column;gap:12px;}
+  .gate-input{
+    appearance:none;width:100%;font-family:inherit;font-size:16px;color:var(--espresso);
+    background:rgba(255,255,255,.72);border:1px solid var(--glass-line);
+    padding:17px 20px;border-radius:var(--r);min-height:56px;
+    transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
+  }
+  .gate-input::placeholder{color:#6E5044;opacity:1;}
+  .gate-input:focus{outline:none;border-color:var(--cobre);box-shadow:0 0 0 3px rgba(196,133,90,.18);}
+  .gate-input[aria-invalid="true"]{border-color:#B3452B;}
+  .gate-error{color:#B3452B;font-size:13px;line-height:1.4;min-height:18px;text-align:center;margin:0;}
+  .gate-note{font-size:11.5px;line-height:1.55;color:var(--topo);opacity:.85;text-align:center;margin-top:14px;}
+  .gate-spin{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;animation:gate-rot .7s linear infinite;}
+  @keyframes gate-rot{to{transform:rotate(360deg);}}
+  .consent{display:flex;align-items:flex-start;gap:10px;text-align:left;font-size:12.5px;color:var(--topo);line-height:1.45;}
+  .consent input{flex:none;width:18px;height:18px;margin-top:2px;accent-color:var(--cobre);}
+
+  .unlocked{text-align:center;animation:fade .5s var(--ease);}
+  .unlocked .big{font-family:"Playfair Display",serif;font-size:22px;margin-bottom:6px;}
+  .unlocked p{color:var(--topo);font-size:14px;margin:0 0 18px;}
+
+  .follow{
+    text-align:center;margin-top:26px;padding:22px;border-radius:var(--r);
+    background:linear-gradient(135deg,rgba(212,190,176,.4),rgba(232,217,205,.6));
+    border:1px solid var(--glass-line);
+  }
+  .follow .sign{font-size:30px;display:block;line-height:1;margin-bottom:4px;}
+  .follow p{color:var(--topo);font-size:14px;margin:0 0 16px;}
+  .follow a{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+    font-weight:600;font-size:15px;color:#fff;
+    background:linear-gradient(135deg,var(--cobre),var(--cobre-dark));
+    padding:14px 24px;border-radius:999px;min-height:52px;
+    box-shadow:0 12px 26px -10px rgba(196,133,90,.6);transition:transform .25s var(--ease);
+  }
+  .follow a:hover{transform:translateY(-2px);}
+  .footer-note{text-align:center;color:var(--topo);font-size:11.5px;margin-top:26px;opacity:.8;}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .rd-fg,.map-walker,.sv-fg{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-aura"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+
+<!-- ===== VIDEO INMERSIVO (encima de todo) ===== -->
+<div class="cine" id="cine" aria-hidden="true">
+  <video id="cine-video" muted playsinline preload="auto"></video>
+  <div class="cine-scrim-top"></div>
+  <div class="cine-scrim-bot"></div>
+
+  <div class="cine-title">
+    <p class="eyebrow">Tu resultado está casi listo</p>
+    <h2>Estamos calculando<br>tu nivel</h2>
+    <div class="cine-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+
+  <p class="cine-txt" id="cine-txt"></p>
+  <div class="cine-bar" aria-hidden="true"><i id="cine-bar-fill"></i></div>
+  <button class="cine-skip" id="cine-skip" type="button">Saltar ›</button>
+</div>
+
+<main class="app">
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="screen active" aria-label="Bienvenida">
+    <p class="eyebrow">Test de nivel digital · por Anny Gómez</p>
+    <h1>No estás perdida.<br>Estás <em>sin mapa</em>.</h1>
+    <p class="hero-sub">Descubre <b>en qué nivel digital estás hoy</b> y <b>qué tan lejos estás</b> de llegar a la meta.</p>
+    <span class="chip"><b>6 preguntas</b><span class="dot"></span>2 minutos</span>
+
+    <!-- vista previa del mapa, quieta, con el personaje en la salida -->
+    <div style="width:100%;max-width:380px">
+      <div class="tira" id="tira-hero" aria-hidden="true"></div>
+    </div>
+
+    <p class="hero-warn">El mundo digital no avanza despacio.<br><b>La pregunta no es si vas a llegar — es qué estás haciendo para llegar.</b></p>
+
+    <button class="btn btn-primary" id="start-btn">Ver qué tan lejos estoy</button>
+    <p class="social-count" id="social-count" hidden></p>
+  </section>
+
+  <!-- ===== QUIZ ===== -->
+  <section id="quiz" class="screen" aria-label="Cuestionario">
+    <div class="quiz-top">
+      <span class="counter">Pregunta <b id="q-current">1</b> de 6</span>
+      <div class="tira" id="tira-quiz" aria-hidden="true"></div>
+    </div>
+    <div id="q-container" aria-live="polite"></div>
+  </section>
+
+  <!-- ===== LOADING ===== -->
+  <section id="loading" class="screen" aria-label="Calculando tu nivel">
+    <div class="loader" aria-hidden="true"></div>
+    <div>
+      <h2 class="serif">Calculando tu nivel…</h2>
+      <p id="loading-text">Cruzando tus respuestas</p>
+    </div>
+  </section>
+
+  <!-- ===== RESULTADO ===== -->
+  <section id="result" class="screen" aria-label="Tu resultado">
+    <p class="eyebrow" style="text-align:center">Tu nivel</p>
+
+    <div class="medal-stage">
+      <div class="medal-ring" id="medal-ring">
+        <video id="medal-video" class="medal-media" muted playsinline preload="auto" aria-hidden="true"></video>
+        <img id="medal-still" class="medal-media" alt="" style="display:none">
+        <div class="flash" id="flash"></div>
+      </div>
+    </div>
+
+    <h2 class="result-name">Nivel <em id="r-name">Constructora</em></h2>
+    <p class="result-quote" id="r-quote"></p>
+
+    <div class="report" id="report">
+      <div class="rep-block">
+        <p class="rep-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A86C44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.4 2.3 7.2-6.3-4.6L5.7 21 8 13.8 2 9.4h7.6L12 2z"/></svg>
+          Tu ventaja
+        </p>
+        <p id="r-ventaja"></p>
+      </div>
+      <div class="rep-block">
+        <p class="rep-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A86C44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 20v-6l6-4 6 4v6"/><path d="M9.5 20v-4h5v4"/></svg>
+          Tu obstáculo
+        </p>
+        <p id="r-freno"></p>
+      </div>
+      <div class="rep-block">
+        <p class="rep-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A86C44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          Tu siguiente paso
+        </p>
+        <p id="r-paso"></p>
+      </div>
+    </div>
+
+    <!-- ===== ROADMAP ===== -->
+    <div class="map">
+      <h3 class="map-title serif">Tu camino</h3>
+      <p class="map-sub">Aquí estás hoy — y esto es lo que te falta por desbloquear.</p>
+
+      <!-- la MISMA tira del test: islas de lado a lado -->
+      <div class="tira tira-res" id="tira-res" aria-hidden="true"></div>
+      <div class="tira-labels" id="tira-labels"></div>
+
+      <div class="meta-nota">
+        <b id="meta-titulo">Tu próxima meta</b>
+        <p id="meta-texto"></p>
+      </div>
+
+      <div class="urgencia">
+        <p id="r-urgencia"></p>
+        <p class="cierre" id="r-urgencia-cierre"></p>
+      </div>
+    </div>
+
+    <!-- ===== LLAVE (captura) ===== -->
+    <div class="key-box" id="key-box">
+      <h3 class="serif">Recibe cómo llegar al siguiente nivel</h3>
+      <p id="key-sub">Te mando el plan concreto para pasar de tu nivel al que sigue. Sin relleno.</p>
+
+      <form class="gate-form" id="gate-form" novalidate>
+        <label class="solo-lectores" for="gate-name">Tu nombre</label>
+        <input class="gate-input" id="gate-name" type="text" name="name"
+               placeholder="Tu nombre" autocomplete="given-name" aria-describedby="gate-error" required>
+        <label class="solo-lectores" for="gate-email">Tu correo</label>
+        <input class="gate-input" id="gate-email" type="email" name="email"
+               placeholder="Tu correo" autocomplete="email" inputmode="email" aria-describedby="gate-error" required>
+        <label class="consent">
+          <input type="checkbox" id="gate-consent" checked>
+          <span>Quiero recibir el plan y los correos de Anny. Puedo darme de baja cuando quiera.</span>
+        </label>
+        <p class="gate-error" id="gate-error" role="alert"></p>
+        <button class="btn btn-primary" id="gate-submit" type="submit" style="width:100%">
+          <span id="gate-label">Recibir mi plan</span>
+        </button>
+        <p class="solo-lectores" id="gate-status" role="status"></p>
+      </form>
+
+      <p class="gate-note">Nunca compartimos tu correo. Lee nuestro <a href="/legal/privacidad" style="color:var(--cobre-dark)">aviso de privacidad</a>.</p>
+    </div>
+
+    <!-- ===== COMPARTIR ===== -->
+    <div class="share-img-wrap" id="share-wrap">
+      <canvas id="share-canvas" width="1080" height="1920" role="img" aria-label="Imagen para compartir tu nivel"></canvas>
+    </div>
+    <p class="share-hint">Formato historia · súbela y etiqueta a @annygomezleal</p>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="share-btn">Compartir en mi historia</button>
+    </div>
+    <p class="share-guia" id="share-guia" style="display:none"></p>
+    <a class="btn btn-ghost" id="ig-btn" href="https://instagram.com/annygomezleal"
+       target="_blank" rel="noopener" style="display:none;width:100%;margin-top:10px">Abrir Instagram</a>
+    <button class="restart" id="download-btn">o descargar la imagen</button>
+    <button class="btn btn-ghost" id="invite-btn" style="width:100%;margin-top:16px">Invitar a una amiga a hacer el test</button>
+
+    <div class="follow">
+      <span class="sign">Anny Gómez</span>
+      <p>Aquí te muestro cómo construyo hábitos, organización e ingresos digitales — sin humo y sin fórmulas mágicas.</p>
+      <a href="https://instagram.com/annygomezleal" target="_blank" rel="noopener">Seguir a @annygomezleal</a>
+    </div>
+
+    <button class="restart" id="restart-btn">Volver a hacer el test</button>
+    <p class="footer-note">Este test es orientativo. Tu nivel no te define: te ubica.</p>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     DATOS
+     ========================================================= */
+
+  // 6 preguntas. `p` = puntos que aporta cada opcion al nivel.
+  // La pregunta 5 ademas define el FRENO personalizado (campo `freno`).
+  var QUESTIONS = [
+    {
+      q: "¿Cómo describirías lo que haces hoy?",
+      options: [
+        { t: "Trabajo para alguien más", p: 0 },
+        { t: "Tengo mi propio negocio, pero todo es físico", p: 1 },
+        { t: "Vendo algo por internet de vez en cuando", p: 2 },
+        { t: "Ya genero ingresos digitales, pero quiero más", p: 3 }
+      ]
+    },
+    {
+      q: "Al final del día, ¿qué sientes?",
+      options: [
+        { t: "Que el día se me fue y no sé en qué", p: 0 },
+        { t: "Que trabajé mucho pero avancé poco", p: 1 },
+        { t: "Que estoy avanzando, lento pero seguro", p: 2 },
+        { t: "Que voy bien y con control", p: 3 }
+      ]
+    },
+    {
+      q: "¿Cuánto llevas queriendo generar ingresos por internet?",
+      options: [
+        { t: "Apenas se me ocurrió", p: 0 },
+        { t: "Más de un año pensándolo", p: 1 },
+        { t: "Más de tres años intentándolo", p: 2 },
+        { t: "Ya lo logré, quiero escalar", p: 3 }
+      ]
+    },
+    {
+      q: "¿Conoces a alguien que ya viva de ingresos digitales?",
+      options: [
+        { t: "No conozco a nadie", p: 0 },
+        { t: "Sí, pero creo que tuvo suerte", p: 1 },
+        { t: "Sí, y me impresiona cómo lo hizo", p: 2 },
+        { t: "Sí, y yo también voy en camino", p: 3 }
+      ]
+    },
+    {
+      q: "¿Qué es lo que más te ha frenado?",
+      options: [
+        { t: "No sé por dónde empezar", p: 0, freno: "empezar" },
+        { t: "No tengo dinero para empezar", p: 1, freno: "dinero" },
+        { t: "Empiezo cosas y las dejo a medias", p: 1, freno: "terminar" },
+        { t: "No tengo tiempo", p: 2, freno: "tiempo" }
+      ]
+    },
+    {
+      q: "Si todo sigue exactamente igual, ¿dónde te ves en un año?",
+      options: [
+        { t: "No quiero ni pensarlo", p: 0 },
+        { t: "En el mismo lugar, y eso me preocupa", p: 1 },
+        { t: "Un poco mejor, supongo", p: 2 },
+        { t: "Mucho mejor, ya estoy en movimiento", p: 3 }
+      ]
+    }
+  ];
+
+  // Etiqueta bajo la barra de espera. Rotan para que no se sienta un cargador.
+  var ESPERAS = [
+    "Anotando tu respuesta…",
+    "Preparando tu siguiente pregunta…",
+    "Esto se está poniendo interesante…",
+    "Ajustando tu mapa…"
+  ];
+  var esperaIdx = 0;
+
+  // Frases de intriga. Clave = indice de la pregunta que acaba de responderse.
+  var TEASES = {
+    0: "Interesante… eso ya me dice algo.",
+    1: "Mmm, esa respuesta cambia las cosas.",
+    2: "Vas a mitad de camino, y lo que viene te va a sorprender.",
+    4: "Última pregunta, y es la que lo define todo."
+  };
+
+  // Los 4 niveles, de menor a mayor. `min` = puntaje minimo para caer aqui.
+  var LEVELS = [
+    {
+      key: "despertar",
+      name: "Despertar",
+      min: 0,
+      color: "#C4855A",
+      quote: "Llegaste justo a tiempo. La mayoría se entera cuando ya es tarde — tú no.",
+      note: "El punto de partida honesto",
+      ventaja: "Empiezas limpia. Sin años de métodos que no funcionaron encima.",
+      freno: "Confundes consumir información con avanzar. Guardar reels se siente como progreso. No lo es.",
+      paso: "Elige UNA habilidad y dale 30 días. Una. No tres."
+    },
+    {
+      key: "constructora",
+      name: "Constructora",
+      min: 5,
+      color: "#B87A50",
+      quote: "Ya te moviste — eso te pone por delante de la mayoría que solo mira.",
+      note: "Ya pasaste de pensarlo a hacerlo",
+      ventaja: "Ya actuaste. Ahí es donde se queda casi todo el mundo.",
+      freno: "Te dispersas. Cada idea nueva parece mejor que la anterior, y ninguna madura.",
+      paso: "Termina una antes de empezar otra. Aunque ya no te emocione."
+    },
+    {
+      key: "imparable",
+      name: "Imparable",
+      min: 10,
+      color: "#A86C44",
+      quote: "Ya tienes tracción real — poca gente llega hasta aquí.",
+      note: "Ya generas resultados",
+      ventaja: "No adivinas: ya sabes qué funciona para ti. Eso no se compra.",
+      freno: "Si paras, para todo. No tienes un sistema: tienes tu tiempo convertido en dinero.",
+      paso: "Automatiza lo repetitivo. Empieza por lo que haces cada semana sin pensar."
+    },
+    {
+      key: "estratega",
+      name: "Estratega",
+      min: 14,
+      color: "#8E5A38",
+      quote: "Estás en el escalón más alto — ahora el juego es otro.",
+      note: "Ya vives de lo digital",
+      ventaja: "Distingues una oportunidad real de una moda. Eso te ahorra años.",
+      freno: "Creces sumando horas. El hábito que te trajo hasta aquí es el que ahora te frena.",
+      paso: "Construye activos que trabajen sin ti. ¿Qué pasaría con tus ingresos si desaparecieras un mes?"
+    }
+  ];
+
+  // Freno personalizado segun la pregunta 5. Se antepone al freno del nivel.
+  // Se antepone al freno del nivel. Una sola frase: si son dos, nadie lo lee.
+  var FRENOS = {
+    empezar:  "No existe el primer paso perfecto. Existe el primero.",
+    dinero:   "Casi todo lo que necesitas para empezar hoy es gratis.",
+    terminar: "Dejar cosas a medias no es falta de disciplina: es haber empezado demasiadas.",
+    tiempo:   "No es que no tengas tiempo. Es que eso todavía no tiene hora en tu semana."
+  };
+
+  /* Cierre de urgencia. Sin cuenta regresiva inventada y sin insultar a nadie:
+     el costo de no moverse es real y no hace falta exagerarlo para que pese. */
+  var URGENCIA = {
+    despertar: {
+      texto:  "Nadie se queda atrás de un día para otro. Se queda atrás quien deja pasar <strong>otro año haciendo exactamente lo mismo</strong> — y un año se va sin avisar.",
+      cierre: "Dentro de doce meses vas a estar en otro nivel o en este mismo. Las dos son una decisión; una se toma sin darse cuenta."
+    },
+    constructora: {
+      texto:  "Ya diste el paso difícil. Pero <strong>moverse sin terminar nada se parece demasiado a no moverse</strong>, y desde afuera se ven igual.",
+      cierre: "Un año más empezando cosas te deja donde estás. Un año terminando una sola te cambia de nivel."
+    },
+    imparable: {
+      texto:  "Tu techo ya no es el conocimiento: es <strong>tu propio tiempo</strong>. Y ese techo no sube por trabajar más horas, porque no hay más horas.",
+      cierre: "Lo que no delegues ni automatices este año, lo vas a seguir haciendo tú el que viene."
+    },
+    estratega: {
+      texto:  "A este nivel el riesgo cambia de cara: ya no es quedarse atrás, es <strong>quedarse ocupada</strong> — atrapada administrando lo que construiste.",
+      cierre: "La pregunta ya no es cuánto puedes hacer. Es cuánto puede seguir funcionando sin ti."
+    }
+  };
+
+  /* =========================================================
+     ICONOS (SVG inline, se dibujan tambien en el canvas)
+     ========================================================= */
+  var ICONS = {
+    despertar:  '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/>',
+    constructora:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.6v2.6M12 18.8v2.6M21.4 12h-2.6M5.2 12H2.6M18.6 5.4l-1.8 1.8M7.2 16.8l-1.8 1.8M18.6 18.6l-1.8-1.8M7.2 7.2L5.4 5.4"/>',
+    imparable:  '<path d="M13 2L4.5 13.5H11l-1 8.5L19.5 10H13l0-8z"/>',
+    estratega:  '<path d="M3 8l4.5 3.5L12 5l4.5 6.5L21 8l-1.7 10.5H4.7L3 8z"/><path d="M4.7 21h14.6"/>'
+  };
+  function iconSvg(key,stroke,size){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="'+stroke+'" stroke-width="1.7" '
+      + 'stroke-linecap="round" stroke-linejoin="round" width="'+(size||20)+'" height="'+(size||20)+'">'
+      + ICONS[key] + '</svg>';
+  }
+  // Render 3D de Higgsfield, recortado y servido a 180px de alto (24 KB y 19 KB):
+  // pesa menos que el SVG equivalente animado y se ve infinitamente mejor.
+  /* =========================================================
+     MAPA: camino serpenteante con nodos y obstaculos.
+     El personaje se coloca con getPointAtLength() sobre el path real,
+     asi que sigue la curva exacta en vez de una linea recta.
+     ========================================================= */
+  var MAP_W = 480, MAP_H = 148;
+  var MAP_D = "M 26 104 C 78 104 84 34 140 34 S 214 108 268 108 S 344 30 398 30 S 452 66 462 66";
+
+  // Obstaculos colocados por fraccion del recorrido (0-1)
+  var OBSTACULOS = [
+    { at: 0.20, tipo: "piedra" },
+    { at: 0.45, tipo: "valla"  },
+    { at: 0.72, tipo: "piedra" }
+  ];
+
+  // Las 4 islas, colocadas sobre el camino por fraccion del recorrido.
+  var ISLAS_AT = [0.055, 0.345, 0.635, 0.945];
+
+  /* =========================================================
+     TIRA — las 4 islas en fila, la muneca saltando entre ellas.
+     Vive arriba del cuestionario: de un vistazo se ve todo el camino.
+     ========================================================= */
+  var TIRA_RATIO = 576 / 1344;
+
+  /* 7 paradas: isla, puente, isla, puente... Cada 2 preguntas sube una isla,
+     asi TODAS llegan al final. El nivel se revela solo en el resultado. */
+  /* Calibrado contra el final REAL de cada video, no a ojo:
+     el video 1 la deja a mitad del primer puente; el 2 la deja cruzando
+     la isla, en su BORDE DE SALIDA (no en el centro), y asi los demas. */
+  var PASOS = [
+    { x: 0.082, y: 0.648, isla: 0 },   // inicio: isla del brote
+    { x: 0.175, y: 0.672, isla: -1 },  // v1 → mitad del puente 1
+    { x: 0.318, y: 0.652, isla: 1 },   // v2 → borde de SALIDA de la isla 2
+    { x: 0.400, y: 0.676, isla: -1 },  // v3 → mitad del puente 2
+    { x: 0.545, y: 0.652, isla: 2 },   // v4 → borde de SALIDA de la isla 3
+    { x: 0.640, y: 0.682, isla: -1 },  // v5 → mitad del puente 3
+    { x: 0.775, y: 0.650, isla: 3 }    // v6 → la meta, junto a la bandera
+  ];
+
+  function buildTira(id){
+    var root = document.getElementById(id);
+    if(!root || root.dataset.built) return root;
+    root.dataset.built = "1";
+    root.innerHTML =
+        '<img class="tira-img" src="img/tira.webp" alt="" decoding="async">'
+      + '<div class="tira-walker"><img src="img/walker.webp" alt="" decoding="async"></div>';
+    root._walker = root.querySelector(".tira-walker");
+    root._paso = -1;
+    return root;
+  }
+
+  /* Coloca a la muneca en la parada `n` (0..6). */
+  function irAPaso(id, n, animar){
+    var root = document.getElementById(id);
+    if(!root || !root._walker) return;
+    n = Math.max(0, Math.min(PASOS.length - 1, n));
+    var p = PASOS[n];
+
+    var w = root._walker;
+    w.style.left = (p.x * 100) + "%";
+    w.style.top  = (p.y * 100) + "%";
+
+    if(animar && root._paso >= 0){
+      // llegar a una isla es un salto; avanzar por el puente es un paso
+      var esSalto = (p.isla >= 0);
+      w.classList.remove("step", "leap");
+      void w.offsetWidth;
+      w.classList.add(esSalto ? "leap" : "step");
+    }
+    root._paso = n;
+  }
+
+  // Donde se para el personaje en cada isla, en fraccion de la imagen (0-1).
+  // Medidas sobre la ilustracion con rejilla, no estimadas a ojo.
+  var ISLAS_XY = [
+    { x: 0.150, y: 0.878 },   // Despertar    — junto al brote, abajo izquierda
+    { x: 0.300, y: 0.668 },   // Constructora — pasto, a la derecha del arbol
+    { x: 0.460, y: 0.470 },   // Imparable    — bajo el arbol florido
+    { x: 0.585, y: 0.198 }    // Estratega    — camino de piedra, NO el estanque
+  ];
+  var MUNDO_RATIO = 1344 / 752;   // alto/ancho de la ilustracion
+
+  function buildWorld(id, zoom){
+    var root = document.getElementById(id);
+    if(!root || root.dataset.built) return root;
+    root.dataset.built = "1";
+    root._zoom = zoom;
+
+    var layer = document.createElement("div");
+    layer.className = "world-layer";
+    layer.innerHTML = '<img src="img/mundo.webp" alt="" decoding="async">';
+
+    var w = document.createElement("div");
+    w.className = "world-walker";
+    w.innerHTML = '<img src="img/walker.webp" alt="" decoding="async">';
+    layer.appendChild(w);
+
+    root.appendChild(layer);
+    root._layer = layer; root._walker = w; root._isla = -1;
+    return root;
+  }
+
+  /* Mueve la camara a la isla `i` y planta ahi al personaje. */
+  function irAIsla(id, i, animar){
+    var root = document.getElementById(id);
+    if(!root || !root._layer) return;
+
+    i = Math.max(0, Math.min(ISLAS_XY.length - 1, i));
+    var pos = ISLAS_XY[i];
+
+    /* Si la pantalla aun esta oculta, clientWidth es 0 y no se puede medir.
+       Se reintenta en el siguiente fotograma en vez de dejar el marco vacio. */
+    var Wc = root.clientWidth, Hc = root.clientHeight;
+    if(!Wc || !Hc){
+      if(!root._retry){
+        root._retry = true;
+        requestAnimationFrame(function(){
+          root._retry = false;
+          irAIsla(id, i, animar);
+        });
+      }
+      return;
+    }
+    root._ultima = i;   // para recolocar al girar el telefono
+
+    // La capa mide zoom veces el ancho del contenedor
+    var Wi = Wc * (root._zoom || 3.1), Hi = Wi * MUNDO_RATIO;
+    root._layer.style.width = Wi + "px";
+
+    // desplaza para dejar el punto de la isla en el centro de la ventana
+    var tx = Wc / 2 - pos.x * Wi;
+    var ty = Hc / 2 - pos.y * Hi;
+    root._layer.style.transform = "translate(" + tx + "px," + ty + "px)";
+
+    var w = root._walker;
+    w.style.left = (pos.x * 100) + "%";
+    w.style.top  = (pos.y * 100) + "%";
+
+    var salto = (root._isla >= 0 && i !== root._isla);
+    if(animar){
+      var cls = salto ? "leap" : "step";
+      w.classList.remove("step", "leap");
+      void w.offsetWidth;
+      w.classList.add(cls);
+      if(salto) polvoMundo(root, pos);
+    }
+    root._isla = i;
+  }
+
+  function polvoMundo(root, pos){
+    var d = document.createElement("div");
+    d.className = "world-dust";
+    d.style.left = (pos.x * 100) + "%";
+    d.style.top  = (pos.y * 100) + "%";
+    root._layer.appendChild(d);
+    setTimeout(function(){ d.classList.add("go"); }, 540);
+    setTimeout(function(){ d.remove(); }, 1400);
+  }
+
+  /* Traduce el avance (0-1) a numero de isla. */
+  function islaDeAvance(av){
+    var i = 0;
+    for(var k=0;k<ISLAS_AT.length;k++){ if(av >= ISLAS_AT[k] - 0.04) i = k; }
+    return i;
+  }
+
+  /* AVANCE — la clave del juego.
+     No avanza quien responde, avanza quien responde ALTO. Se mezcla un 35% de
+     progreso por responder (para que siempre se sienta movimiento) con un 65%
+     de desempeno real, asi la posicion final coincide con el nivel obtenido. */
+  var PUNTOS_MAX = (function(){
+    var t = 0;
+    for(var i=0;i<QUESTIONS.length;i++){
+      var m = 0;
+      for(var j=0;j<QUESTIONS[i].options.length;j++){
+        if(QUESTIONS[i].options[j].p > m) m = QUESTIONS[i].options[j].p;
+      }
+      t += m;
+    }
+    return t;
+  })();
+
+  function avanceActual(){
+    var pts = 0;
+    for(var i=0;i<answers.length;i++) pts += (answers[i] || 0);
+    var respondidas = answers.length;
+    return 0.35 * (respondidas / QUESTIONS.length) + 0.65 * (pts / PUNTOS_MAX);
+  }
+
+  function obstaculoSvg(tipo){
+    if(tipo === "valla"){
+      return '<path d="M-7 0v-11M7 0v-11M-9 -8h18M-9 -3.5h18" stroke="#A86C44" '
+           + 'stroke-width="2.2" stroke-linecap="round" fill="none"/>';
+    }
+    return '<path d="M-8 0c0-5 3.4-8.5 8-8.5S8 -5 8 0z" fill="#B99A86"/>'
+         + '<path d="M-3.5 -3.2c1-2 3-3.2 5-2.6" stroke="#FBF6F2" stroke-width="1.5" '
+         + 'stroke-linecap="round" fill="none" opacity=".7"/>';
+  }
+
+  /* Construye el mapa dentro de un contenedor. Idempotente. */
+  function buildRoad(rootId){
+    var root = document.getElementById(rootId);
+    if(!root || root.dataset.built) return;
+    root.dataset.built = "1";
+
+    var ns = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 " + MAP_W + " " + MAP_H);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+    svg.innerHTML =
+        '<defs><linearGradient id="rdgrad-' + rootId + '" x1="0" y1="0" x2="1" y2="0">'
+      + '<stop offset="0%" stop-color="#C4855A"/><stop offset="100%" stop-color="#A86C44"/>'
+      + '</linearGradient></defs>'
+      + '<path class="rd-bg" d="' + MAP_D + '"/>'
+      + '<path class="rd-fg" d="' + MAP_D + '" style="stroke:url(#rdgrad-' + rootId + ')"/>'
+      + '<path class="rd-dash" d="' + MAP_D + '"/>'
+      + '<g class="rd-obs-g"></g><g class="rd-node-g"></g>';
+    root.appendChild(svg);
+
+    var base = svg.querySelector(".rd-bg");
+    var len  = base.getTotalLength();
+
+    // pinta el avance con dashoffset: 0 = camino completo recorrido
+    var fg = svg.querySelector(".rd-fg");
+    fg.style.strokeDasharray = len;
+    fg.style.strokeDashoffset = len;
+
+    // obstaculos
+    var og = svg.querySelector(".rd-obs-g");
+    OBSTACULOS.forEach(function(o, i){
+      var p = base.getPointAtLength(len * o.at);
+      var g = document.createElementNS(ns, "g");
+      g.setAttribute("class", "rd-obs");
+      g.setAttribute("data-at", o.at);
+      g.setAttribute("transform", "translate(" + p.x + "," + (p.y - 3) + ")");
+      g.innerHTML = obstaculoSvg(o.tipo);
+      og.appendChild(g);
+    });
+
+    // travesanos del puente entre islas: peldanos perpendiculares al camino
+    var bg2 = svg.querySelector(".rd-obs-g");
+    for(var b=0; b<3; b++){
+      var desde = ISLAS_AT[b] + 0.055, hasta = ISLAS_AT[b+1] - 0.055;
+      for(var t=0; t<=6; t++){
+        var f  = desde + (hasta - desde) * (t/6);
+        var pA = base.getPointAtLength(len * f);
+        var pB = base.getPointAtLength(len * Math.min(1, f + 0.004));
+        var ang = Math.atan2(pB.y - pA.y, pB.x - pA.x) + Math.PI/2;
+        var dx = Math.cos(ang) * 5.5, dy = Math.sin(ang) * 5.5;
+        var ln = document.createElementNS(ns, "line");
+        ln.setAttribute("class", "rd-bridge");
+        ln.setAttribute("x1", pA.x - dx); ln.setAttribute("y1", pA.y - dy);
+        ln.setAttribute("x2", pA.x + dx); ln.setAttribute("y2", pA.y + dy);
+        bg2.appendChild(ln);
+      }
+    }
+
+    // las 4 islas, sobre el camino
+    for(var k=0; k<LEVELS.length; k++){
+      var ip = base.getPointAtLength(len * ISLAS_AT[k]);
+      var isla = document.createElement("div");
+      isla.className = "map-isla";
+      isla.setAttribute("data-i", k);
+      isla.innerHTML = '<img src="img/isla-' + LEVELS[k].key + '.webp" alt="" decoding="async">';
+      isla.style.left = (ip.x / MAP_W * 100) + "%";
+      isla.style.top  = (ip.y / MAP_H * 100) + "%";
+      root.appendChild(isla);
+    }
+
+    // personaje y meta, en HTML sobre el SVG
+    var w = document.createElement("div");
+    w.className = "map-walker";
+    w.innerHTML = '<img src="img/walker.webp" alt="" width="88" height="180" decoding="async">';
+    root.appendChild(w);
+
+    var g2 = document.createElement("div");
+    g2.className = "map-goal";
+    g2.innerHTML = '<img src="img/meta.webp" alt="" width="105" height="180" decoding="async">';
+    var end = base.getPointAtLength(len);
+    g2.style.left = (end.x / MAP_W * 100) + "%";
+    g2.style.top  = (end.y / MAP_H * 100) + "%";
+    root.appendChild(g2);
+
+    root._path = base; root._len = len; root._fg = fg; root._walker = w;
+  }
+
+  /* Nube de polvo donde aterriza el salto. Se limpia sola. */
+  function polvoEn(root, pt){
+    var d = document.createElement("div");
+    d.className = "map-dust";
+    d.style.left = (pt.x / MAP_W * 100) + "%";
+    d.style.top  = (pt.y / MAP_H * 100) + "%";
+    root.appendChild(d);
+    setTimeout(function(){ d.classList.add("go"); }, 480);   // al tocar suelo
+    setTimeout(function(){ d.remove(); }, 1200);
+  }
+
+  /* Coloca el personaje en la fraccion `pct` del camino y actualiza todo. */
+  function paintRoad(rootId, pct, hop){
+    buildRoad(rootId);
+    var root = document.getElementById(rootId);
+    if(!root || !root._path) return;
+
+    var p = Math.max(0, Math.min(1, pct));
+    // se detiene antes de la meta: la bandera es el destino, no su posicion
+    var eff = p * 0.93;
+    var pt = root._path.getPointAtLength(root._len * eff);
+
+    root._fg.style.strokeDashoffset = root._len * (1 - eff);
+
+    // que isla alcanza con este avance
+    var alcanzada = 0;
+    for(var a=0;a<ISLAS_AT.length;a++){ if(eff >= ISLAS_AT[a] - 0.04) alcanzada = a; }
+    var cambioDeIsla = (root._alcanzada !== undefined && alcanzada > root._alcanzada);
+
+    var w = root._walker;
+    w.style.left = (pt.x / MAP_W * 100) + "%";
+    w.style.top  = (pt.y / MAP_H * 100) + "%";
+
+    if(hop){
+      var clase = cambioDeIsla ? "leap" : "step";
+      w.classList.remove("step","leap");
+      void w.offsetWidth;
+      w.classList.add(clase);
+
+      if(cambioDeIsla) polvoEn(root, pt);   // aterriza levantando polvo
+    }
+
+    // obstaculos superados
+    var obs = root.querySelectorAll(".rd-obs");
+    for(var i=0;i<obs.length;i++){
+      obs[i].classList.toggle("cleared", parseFloat(obs[i].getAttribute("data-at")) <= eff);
+    }
+
+    // islas: la alcanzada se ilumina, las de adelante siguen bloqueadas
+    var islas = root.querySelectorAll(".map-isla");
+    for(var j=0;j<islas.length;j++){
+      var idx = parseInt(islas[j].getAttribute("data-i"), 10);
+      islas[j].classList.toggle("abierta", idx <= alcanzada);
+      islas[j].classList.toggle("aqui", idx === alcanzada);
+    }
+    root._alcanzada = alcanzada;
+  }
+
+  /* =========================================================
+     ESTADO
+     ========================================================= */
+  var current = 0;
+  var answers = [];        // puntos por pregunta
+  var answerTexts = [];    // textos, para guardarlos en el lead
+  var frenoKey = null;
+  var openAnswer = "";
+  var islaAnterior = 0;   // de que isla venia, para animar el salto
+  /* Cierra el video del final. Se declara aqui a proposito: el script corre en
+     "use strict", donde asignar a una variable no declarada lanza ReferenceError
+     y aborta la funcion sin que se vea ningun error. */
+  var cineFin = null;
+  var currentLevel = null;
+  var pendingLevel = null;
+  var gateDone = false;
+  var ORIGEN = (function(){
+    try{
+      var p = new URLSearchParams(location.search);
+      return p.get("utm_source") || p.get("origen") || "directo";
+    }catch(e){ return "directo"; }
+  })();
+  var MC_ID = (function(){
+    // ManyChat puede pasar el id del contacto para cerrar el circulo despues.
+    try{ return new URLSearchParams(location.search).get("mc") || null; }
+    catch(e){ return null; }
+  })();
+
+  /* =========================================================
+     PANTALLAS
+     ========================================================= */
+  function show(id){
+    var s = document.querySelectorAll(".screen");
+    for(var i=0;i<s.length;i++) s[i].classList.remove("active");
+    document.getElementById(id).classList.add("active");
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  /* =========================================================
+     CUESTIONARIO
+     ========================================================= */
+  function renderQuestion(){
+    var q = QUESTIONS[current];
+    var letters = ["A","B","C","D"];
+    var html = '<div class="q-wrap">'
+      + '<p class="q-num">Pregunta ' + (current+1) + '</p>'
+      + '<h2 class="q-text">' + q.q + '</h2>'
+      + '<div class="options" role="group" aria-label="Opciones">';
+    for(var i=0;i<q.options.length;i++){
+      html += '<button class="opt" type="button" data-i="' + i + '">'
+           +  '<span class="mark" aria-hidden="true">' + letters[i] + '</span>'
+           +  '<span>' + q.options[i].t + '</span></button>';
+    }
+    html += '</div></div>';
+    document.getElementById("q-container").innerHTML = html;
+    document.getElementById("q-current").textContent = current + 1;
+    irAPaso("tira-quiz", answers.length, false);
+
+    var opts = document.querySelectorAll("#q-container .opt");
+    for(var j=0;j<opts.length;j++){
+      opts[j].addEventListener("click", onPick);
+    }
+  }
+
+  function onPick(e){
+    var btn = e.currentTarget;
+    if(btn.classList.contains("sel")) return;   // evita doble toque
+    var idx = parseInt(btn.getAttribute("data-i"), 10);
+    var opt = QUESTIONS[current].options[idx];
+
+    // la elegida se marca, las demas se apagan: se ve QUE eligio
+    var all = document.querySelectorAll("#q-container .opt");
+    for(var i=0;i<all.length;i++){
+      all[i].classList.remove("sel");
+      all[i].disabled = true;
+      if(all[i] !== btn) all[i].classList.add("dim");
+    }
+    btn.classList.add("sel");
+
+    islaAnterior = islaDeAvance(avanceActual());   // antes de sumar
+    answers[current] = opt.p;
+    answerTexts[current] = QUESTIONS[current].q + " → " + opt.t;
+    if(opt.freno) frenoKey = opt.freno;
+
+    irAPaso("tira-quiz", answers.length, true);
+
+    /* Se deja ver la selección un instante, luego la pregunta sale hacia la
+       izquierda y solo entonces entra la siguiente. */
+    setTimeout(function(){
+      var wrap = document.querySelector("#q-container .q-wrap");
+      if(wrap) wrap.classList.add("out");
+    }, 330);
+    setTimeout(next, 690);
+  }
+
+  /* Sin pantallas intermedias: de una pregunta a la siguiente, directo. */
+  function next(){
+    current++;                       // sin esto se repinta la misma pregunta
+    if(current < QUESTIONS.length) renderQuestion();
+    else askOpen();
+  }
+
+  /* Pregunta abierta opcional — se puede saltar sin coste */
+  function askOpen(){
+    document.getElementById("q-current").textContent = QUESTIONS.length;
+    irAPaso("tira-quiz", answers.length, true);
+    document.getElementById("q-container").innerHTML =
+        '<div class="q-wrap">'
+      + '<p class="q-num">Una última cosa (opcional)</p>'
+      + '<h2 class="q-text">¿Qué es lo que más te detiene ahorita?</h2>'
+      + '<label class="solo-lectores" for="open-field">Lo que más te detiene</label>'
+      + '<textarea class="open-field" id="open-field" '
+      + 'placeholder="Escríbelo como lo sientas. Yo te entiendo."></textarea>'
+      + '<button class="btn btn-primary" id="open-send" style="width:100%;margin-top:14px">Ver mi nivel</button>'
+      + '<button class="restart" id="open-skip" type="button">Saltar esta pregunta</button>'
+      + '</div>';
+    show("quiz");
+    document.getElementById("open-send").addEventListener("click", function(){
+      openAnswer = (document.getElementById("open-field").value || "").trim().slice(0, 600);
+      startLoading();
+    });
+    document.getElementById("open-skip").addEventListener("click", startLoading);
+  }
+
+  /* =========================================================
+     CALCULO Y RESULTADO
+     ========================================================= */
+  function computeLevel(){
+    var total = 0;
+    for(var i=0;i<answers.length;i++) total += (answers[i] || 0);
+    var lvl = LEVELS[0];
+    for(var j=0;j<LEVELS.length;j++){ if(total >= LEVELS[j].min) lvl = LEVELS[j]; }
+    return { level: lvl, score: total };
+  }
+
+  /* El viaje completo se reproduce MIENTRAS se calcula el nivel: la espera
+     deja de ser un truco y pasa a ser la recompensa. Con salida a los 7s
+     para quien tenga prisa, y con respaldo si el video no carga. */
+  /* Los 31 segundos del viaje son el momento de mayor atención de todo el test:
+     ella ya respondió y está esperando. Aquí no se rellena, se conecta. */
+  /* Frases de proceso: describen lo que "está pasando" mientras corre el
+     viaje. Cada una habla del mapa, que es el mundo del test. */
+  var LOADING_LINES = [
+    "Trazando tu camino en el mapa…",
+    "Midiendo la distancia hasta tu meta…",
+    "Leyendo entre líneas lo que respondiste…",
+    "Buscando el obstáculo que se te repite…",
+    "Calculando en qué isla te quedaste…",
+    "Preparando tu siguiente paso…"
+  ];
+
+  function startLoading(){
+    pendingLevel = computeLevel();
+
+    var cine = document.getElementById("cine");
+    var vid  = document.getElementById("cine-video");
+    var skip = document.getElementById("cine-skip");
+    var txt  = document.getElementById("cine-txt");
+
+    var cerrado = false;
+    cineFin = function(){
+      if(cerrado) return; cerrado = true;
+      clearTimeout(respaldo); clearInterval(rot);
+      cine.classList.remove("on");
+      cine.setAttribute("aria-hidden", "true");
+      try{ vid.pause(); }catch(e){}
+      revealResult();
+    };
+
+    /* Rotacion de las frases: 6 frases repartidas en los ~31s del viaje.
+       innerHTML es seguro aqui: son constantes del archivo, no entra nada
+       escrito por la usuaria. */
+    var i = 0;
+    txt.style.display = "";
+    function pintarFrase(){
+      txt.classList.remove("in");
+      void txt.offsetWidth;                 // reinicia la animacion de entrada
+      txt.innerHTML = LOADING_LINES[i];
+      txt.classList.add("in");
+    }
+    pintarFrase();
+    var rot = setInterval(function(){
+      i++;
+      if(i < LOADING_LINES.length) pintarFrase();
+      else clearInterval(rot);
+    }, 4900);
+
+    // barra de avance real del video, al pie
+    var barra = document.getElementById("cine-bar-fill");
+    if(barra){
+      barra.style.width = "0%";
+      vid.ontimeupdate = function(){
+        if(vid.duration) barra.style.width = (vid.currentTime / vid.duration * 100) + "%";
+      };
+    }
+
+    // el boton de salida aparece a los 7s, no antes: que vea algo del viaje
+    skip.textContent = "Ver mi nivel ›";
+    skip.style.display = "none";
+    setTimeout(function(){ if(!cerrado) skip.style.display = ""; }, 7000);
+
+    cine.classList.add("on");
+    cine.setAttribute("aria-hidden", "false");
+
+    vid.onended = cineFin;
+    vid.onerror = cineFin;
+    vid.src = "img/viaje.mp4";
+
+    // si el video no arranca en 4s, no se le hace esperar a nadie
+    var respaldo = setTimeout(function(){
+      if(vid.currentTime < 0.2) cineFin();
+    }, 4000);
+
+    var p = vid.play();
+    if(p && p.catch) p.catch(cineFin);
+  }
+
+  function revealResult(){
+    var lvl = pendingLevel.level;
+    currentLevel = lvl;
+    var idx = LEVELS.indexOf(lvl);
+
+    mostrarMedalla(lvl);
+
+    document.getElementById("r-name").textContent   = lvl.name;
+    document.getElementById("r-quote").textContent  = lvl.quote;
+    document.getElementById("r-ventaja").textContent = lvl.ventaja;
+    document.getElementById("r-paso").textContent    = lvl.paso;
+
+    var frenoTxt = lvl.freno;
+    if(frenoKey && FRENOS[frenoKey]) frenoTxt = FRENOS[frenoKey] + " " + lvl.freno;
+    document.getElementById("r-freno").textContent = frenoTxt;
+
+    var urg = URGENCIA[lvl.key];
+    if(urg){
+      // innerHTML aqui es seguro: los textos son constantes del propio archivo,
+      // no entra nada escrito por la usuaria.
+      document.getElementById("r-urgencia").innerHTML = urg.texto;
+      document.getElementById("r-urgencia-cierre").textContent = urg.cierre;
+    }
+
+    var meta = METAS[lvl.key];
+    if(meta){
+      document.getElementById("meta-titulo").textContent = meta.titulo;
+      document.getElementById("meta-texto").textContent  = meta.texto;
+    }
+    document.getElementById("key-sub").textContent =
+      PROMESA[lvl.key] || "Te mando el plan concreto para tu siguiente paso.";
+
+    renderStations(idx);
+    drawCard(lvl);
+    show("result");
+    fireFlash();
+    saveLead(false);   // guarda el nivel aunque nunca deje el correo
+  }
+
+  /* Medalla: render 3D de Higgsfield, recortado en circulo y servido en WebP
+     (~30 KB cada una). Se precargan todas para que la revelacion no espere. */
+  var MEDAL_SRC = {}, MEDAL_IMG = {}, medallasPedidas = false;
+  for(var mi=0; mi<LEVELS.length; mi++){
+    MEDAL_SRC[LEVELS[mi].key] = "img/medalla-" + LEVELS[mi].key + ".webp";
+  }
+  /* Se precargan al EMPEZAR el test, no al abrir la pagina: quien solo mira el
+     hero no paga 120 KB, y los ~2 minutos del test sobran para descargarlas. */
+  function precargarMedallas(){
+    if(medallasPedidas) return; medallasPedidas = true;
+    for(var i=0;i<LEVELS.length;i++){
+      var k = LEVELS[i].key;
+      var im = new Image();
+      im.src = MEDAL_SRC[k];
+      MEDAL_IMG[k] = im;   // el canvas reutiliza esta misma instancia ya cargada
+    }
+  }
+
+  /* Revelacion: se reproduce el video del giro UNA vez y al terminar se cambia
+     por el PNG estatico. Si el video falla, tarda o el navegador bloquea el
+     autoplay, se muestra la imagen directamente — nadie se queda sin medalla. */
+  function mostrarMedalla(lvl){
+    var vid   = document.getElementById("medal-video");
+    var still = document.getElementById("medal-still");
+
+    still.src = MEDAL_SRC[lvl.key];
+    still.alt = "Medalla de Nivel " + lvl.name;
+
+    var hecho = false;
+    function aEstatica(){
+      if(hecho) return; hecho = true;
+      vid.style.display = "none";
+      still.style.display = "";
+      try{ vid.pause(); }catch(e){}
+    }
+
+    // Si en 6s el video no termino, se corta igual: la pagina no espera a nadie.
+    var guarda = setTimeout(aEstatica, 6000);
+    vid.onended = function(){ clearTimeout(guarda); aEstatica(); };
+    vid.onerror = function(){ clearTimeout(guarda); aEstatica(); };
+
+    vid.style.display = "";
+    still.style.display = "none";
+    vid.src = "img/medalla-" + lvl.key + ".mp4";
+    var p = vid.play();
+    if(p && p.catch) p.catch(function(){ clearTimeout(guarda); aEstatica(); });
+  }
+
+  function fireFlash(){
+    var f = document.getElementById("flash");
+    if(!f) return;
+    f.animate(
+      [{opacity:0,transform:"scale(.6)"},{opacity:.85,transform:"scale(1)"},{opacity:0,transform:"scale(1.25)"}],
+      {duration:700,easing:"cubic-bezier(.22,.61,.36,1)"}
+    );
+  }
+
+  /* La meta NO es la misma para todas: es el siguiente escalón real.
+     A quien empieza, "automatizar sistemas" le queda enorme; lo suyo es
+     publicar algo. Solo la Estratega ve la meta final. */
+  var METAS = {
+    despertar: {
+      titulo: "Tu próxima meta",
+      texto: "Sacar UNA cosa a la calle. Imperfecta, pero publicada — porque hasta que no publicas, nada de lo que aprendiste cuenta."
+    },
+    constructora: {
+      titulo: "Tu próxima meta",
+      texto: "Terminar una sola cosa y sostenerla tres meses. Que deje de depender de tu entusiasmo del lunes."
+    },
+    imparable: {
+      titulo: "Tu próxima meta",
+      texto: "Que algo siga produciendo cuando tú no estés empujando. Un proceso, una plantilla, una automatización — lo que sea que no te necesite."
+    },
+    estratega: {
+      titulo: "Tu meta",
+      texto: "Sistemas que trabajan sin ti — dejar de estar ocupada administrando lo que construiste."
+    }
+  };
+
+  /* EL PLAN que se promete en el botón. Sin esto el correo repite lo que ya
+     leyó en pantalla y la promesa queda incumplida. */
+  var PLAN = {
+    despertar: {
+      titulo: "Tus próximos 30 días",
+      pasos: [
+        "<strong>Días 1 a 3 — Elige UNA.</strong> Escribe en un papel las tres cosas que te llaman. Tacha dos. La que queda es la única en la que vas a mirar este mes.",
+        "<strong>Días 4 a 10 — Aprende lo mínimo.</strong> Lo justo para poder hacer algo, no para saberlo todo. En cuanto puedas producir algo feo, deja de estudiar.",
+        "<strong>Días 11 a 20 — Publica algo imperfecto.</strong> Un post, un video, una oferta. Va a estar mal y no importa: lo que aprendes publicando no se aprende mirando.",
+        "<strong>Días 21 a 30 — Repite cuatro veces más.</strong> La primera no cuenta. La quinta ya te dice si esto es lo tuyo."
+      ],
+      cierre: "Si en 30 días publicaste cinco veces, ya no eres Nivel Despertar."
+    },
+    constructora: {
+      titulo: "Cómo terminar lo que empezaste",
+      pasos: [
+        "<strong>Haz la lista honesta.</strong> Todo lo que tienes a medias. Todo, aunque dé vergüenza verlo junto.",
+        "<strong>Elige la que está más avanzada</strong>, no la que más te emociona. La emoción es justo lo que te hizo empezar las otras.",
+        "<strong>Ponle fecha de cierre y dísela a alguien.</strong> Una fecha que no le dices a nadie no es una fecha.",
+        "<strong>Regla dura: no empiezas nada nuevo hasta terminar esa.</strong> Las ideas que lleguen mientras tanto, se anotan y se guardan. No se tocan."
+      ],
+      cierre: "Terminar algo mediano vale más que empezar cinco cosas brillantes."
+    },
+    imparable: {
+      titulo: "Cómo dejar de ser el cuello de botella",
+      pasos: [
+        "<strong>Anota una semana entera</strong> todo lo que haces por tu negocio. Sin filtrar, aunque sean cinco minutos.",
+        "<strong>Marca lo que se repite.</strong> Eso que haces cada semana igual es tu candidato.",
+        "<strong>Elige UNA y conviértela en algo que no te necesite:</strong> una plantilla, un guion fijo, una automatización.",
+        "<strong>Mide cuánto tiempo recuperaste</strong> y repite con la siguiente. Una al mes son doce al año."
+      ],
+      cierre: "Cada cosa que no automatices este año la vas a seguir haciendo tú el que viene."
+    },
+    estratega: {
+      titulo: "Cómo construir lo que funciona sin ti",
+      pasos: [
+        "<strong>Responde en frío:</strong> si desaparecieras un mes, ¿qué pasa con tus ingresos? Escribe el número, no la sensación.",
+        "<strong>Lista lo que se cae</strong> en ese escenario. Esa lista es tu verdadero techo.",
+        "<strong>Toma lo primero y decide:</strong> se documenta, se delega o se automatiza. No hay cuarta opción.",
+        "<strong>Construye un activo que no dependa de ti</strong> — un producto, un sistema, un equipo. Y protégelo de tu propio impulso de ir más rápido."
+      ],
+      cierre: "La pregunta ya no es cuánto puedes hacer. Es cuánto sigue funcionando sin ti."
+    }
+  };
+
+  /* Lo que se promete en el correo, distinto para cada nivel. */
+  var PROMESA = {
+    despertar:    "Te mando el plan de 30 días para elegir tu única habilidad y publicar tu primera cosa. Paso por paso.",
+    constructora: "Te mando el método para terminar lo que ya empezaste, antes de sumar una idea más.",
+    imparable:    "Te mando cómo sistematizar lo que hoy solo funciona si tú estás delante.",
+    estratega:    "Te mando cómo construir activos que sigan produciendo sin ti."
+  };
+
+  var FILA_H = 92;   // alto fijo por fila: permite calcular el camino
+
+  /* Centro de cada isla en la tira, para colocar candados y etiquetas. */
+  var ISLA_CENTRO = [0.082, 0.272, 0.490, 0.775];
+
+  /* Resultado: la MISMA tira horizontal, con la muneca en su isla,
+     las siguientes apagadas con candado, y los nombres debajo. */
+  function renderTiraResultado(activeIdx){
+    buildTira("tira-res");
+    var root = document.getElementById("tira-res");
+    if(!root) return;
+
+    // la muneca se planta en la isla del nivel alcanzado
+    var paso = [0, 2, 4, 6][activeIdx];
+    irAPaso("tira-res", paso, false);
+
+    // limpia superposiciones de una ronda anterior
+    var viejos = root.querySelectorAll(".isla-lock,.isla-aqui,.isla-pulso");
+    for(var v=0; v<viejos.length; v++) viejos[v].remove();
+
+    var candado = '<svg viewBox="0 0 24 24" fill="none" stroke="#8C6A58" stroke-width="2.2" '
+                + 'stroke-linecap="round" stroke-linejoin="round">'
+                + '<rect x="5" y="11" width="14" height="10" rx="2"/>'
+                + '<path d="M8 11V7.5a4 4 0 018 0V11"/></svg>';
+
+    for(var i=0;i<ISLA_CENTRO.length;i++){
+      if(i > activeIdx){
+        var lk = document.createElement("div");
+        lk.className = "isla-lock";
+        lk.style.left = (ISLA_CENTRO[i]*100) + "%";
+        lk.style.top  = "52%";
+        lk.innerHTML = candado;
+        root.appendChild(lk);
+      }
+    }
+
+    // pulso en la isla, como el GPS del telefono
+    var pul = document.createElement("div");
+    pul.className = "isla-pulso";
+    pul.style.left = (ISLA_CENTRO[activeIdx]*100) + "%";
+    pul.style.top  = "56%";
+    root.appendChild(pul);
+
+    // marcador de ubicacion apuntando a su isla
+    var tag = document.createElement("div");
+    tag.className = "isla-aqui";
+    tag.style.left = (ISLA_CENTRO[activeIdx]*100) + "%";
+    tag.style.top  = "56%";
+    tag.innerHTML =
+        '<small>Aquí estás</small>'
+      + '<svg class="pin" viewBox="0 0 24 24" fill="none">'
+      + '<path d="M12 22s7.5-7.1 7.5-12.6A7.5 7.5 0 0 0 4.5 9.4C4.5 14.9 12 22 12 22z" '
+      + 'fill="#A86C44" stroke="#FBF6F2" stroke-width="1.4"/>'
+      + '<circle cx="12" cy="9.3" r="2.7" fill="#FBF6F2"/></svg>';
+    root.appendChild(tag);
+
+    // nombres bajo cada isla
+    var labs = document.getElementById("tira-labels");
+    var h = "";
+    for(var k=0;k<LEVELS.length;k++){
+      h += '<div class="tira-lab' + (k === activeIdx ? " on" : "") + '" '
+        +  'style="left:' + (ISLA_CENTRO[k]*100) + '%">'
+        +  LEVELS[k].name
+        +  (k === activeIdx ? "<small>tu nivel</small>" : "")
+        +  '</div>';
+    }
+    labs.innerHTML = h;
+    // la fila necesita alto propio porque sus hijos van absolutos
+    labs.style.height = (activeIdx >= 0 ? 34 : 20) + "px";
+  }
+
+  function renderStations(activeIdx){
+    renderTiraResultado(activeIdx);
+  }
+
+  /* =========================================================
+     IMAGEN PARA COMPARTIR (1080 x 1920, zona segura de Instagram)
+     ========================================================= */
+  /* El canvas se pinta DOS veces: una ya, para que nunca se vea vacio, y otra
+     cuando Playfair y Poppins terminan de cargar. Sin esto la imagen que la
+     usuaria comparte sale en la fuente del sistema — y ahi se pierde la marca. */
+  function drawCard(lvl){
+    paintCard(lvl);
+    var esperas = [];
+    if(document.fonts && document.fonts.ready) esperas.push(document.fonts.ready);
+    var im = MEDAL_IMG[lvl.key];
+    if(im && !im.complete){
+      esperas.push(new Promise(function(r){ im.onload = r; im.onerror = r; }));
+    }
+    if(esperas.length) Promise.all(esperas).then(function(){ paintCard(lvl); });
+  }
+
+  function paintCard(lvl){
+    var c = document.getElementById("share-canvas");
+    var ctx = c.getContext("2d");
+    var W = 1080, H = 1920;
+    ctx.clearRect(0,0,W,H);
+
+    // fondo
+    var g = ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0,"#FBF6F2"); g.addColorStop(.55,"#F3E6DA"); g.addColorStop(1,"#E8D9CD");
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    // halo
+    var halo = ctx.createRadialGradient(W/2,760,60,W/2,760,520);
+    halo.addColorStop(0,"rgba(196,133,90,.22)"); halo.addColorStop(1,"rgba(196,133,90,0)");
+    ctx.fillStyle = halo; ctx.fillRect(0,300,W,940);
+
+    ctx.textAlign = "center";
+
+    // eyebrow — arriba de 260px para respetar la zona segura superior
+    ctx.fillStyle = "#A86C44";
+    ctx.font = "600 30px Poppins, sans-serif";
+    ctx.letterSpacing = "6px";
+    ctx.fillText("MI NIVEL DIGITAL", W/2, 330);
+    ctx.letterSpacing = "0px";
+
+    // medalla
+    drawMedalOnCanvas(ctx, lvl, W/2, 700, 250);
+
+    // nombre del nivel
+    ctx.fillStyle = "#2E1A10";
+    ctx.font = "700 108px 'Playfair Display', Georgia, serif";
+    ctx.fillText("Nivel", W/2, 1055);
+    ctx.fillStyle = lvl.color;
+    ctx.font = "italic 700 112px 'Playfair Display', Georgia, serif";
+    ctx.fillText(lvl.name, W/2, 1180);
+
+    // frase
+    ctx.fillStyle = "#5C4436";
+    ctx.font = "italic 400 40px 'Playfair Display', Georgia, serif";
+    wrapText(ctx, lvl.quote, W/2, 1300, 820, 58);
+
+    // separador
+    ctx.strokeStyle = "rgba(196,133,90,.45)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(W/2-90,1462); ctx.lineTo(W/2+90,1462); ctx.stroke();
+
+    /* Llamada a la accion: la historia la sube ELLA, asi que el texto habla
+       a quien la ve, no a quien hizo el test. La palabra clave va en grande
+       porque es lo unico que hay que recordar. */
+    ctx.fillStyle = "#8C6A58";
+    ctx.font = "500 28px Poppins, sans-serif";
+    ctx.letterSpacing = "2px";
+    ctx.fillText("ENVÍALE UN DM A", W/2, 1508);
+    ctx.letterSpacing = "0px";
+
+    ctx.fillStyle = "#A86C44";
+    ctx.font = "600 40px Poppins, sans-serif";
+    ctx.fillText("@annygomezleal", W/2, 1560);
+
+    ctx.fillStyle = "#8C6A58";
+    ctx.font = "400 28px Poppins, sans-serif";
+    ctx.fillText("con la palabra", W/2, 1606);
+
+    // La palabra clave, en grande
+    ctx.fillStyle = "#A86C44";
+    ctx.font = "700 88px 'Playfair Display', Georgia, serif";
+    ctx.fillText("NIVEL", W/2, 1686);
+
+    ctx.fillStyle = "#5C4436";
+    ctx.font = "400 29px Poppins, sans-serif";
+    // 1732 es el limite: por debajo choca con la interfaz de Instagram
+    ctx.fillText("y descubre en cuál estás tú", W/2, 1732);
+  }
+
+  function drawMedalOnCanvas(ctx, lvl, cx, cy, r){
+    var im = MEDAL_IMG[lvl.key];
+    if(im && im.complete && im.naturalWidth){
+      ctx.save();
+      ctx.shadowColor = "rgba(46,26,16,.30)"; ctx.shadowBlur = 46; ctx.shadowOffsetY = 18;
+      ctx.drawImage(im, cx-r, cy-r, r*2, r*2);
+      ctx.restore();
+      return;
+    }
+    // Respaldo: si la imagen aun no cargo, un disco con la marca. paintCard se
+    // vuelve a llamar cuando termina de cargar, asi que esto casi nunca se ve.
+    var g = ctx.createLinearGradient(cx-r,cy-r,cx+r,cy+r);
+    g.addColorStop(0,"#E8C9A8"); g.addColorStop(.45,lvl.color); g.addColorStop(1,"#7E4F30");
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fillStyle = g; ctx.fill();
+    var gi = ctx.createLinearGradient(cx,cy-r,cx,cy+r);
+    gi.addColorStop(0,"#FFF6EC"); gi.addColorStop(1,"#F2DCC6");
+    ctx.beginPath(); ctx.arc(cx,cy,r*0.845,0,Math.PI*2); ctx.fillStyle = gi; ctx.fill();
+  }
+
+  function wrapText(ctx,text,x,y,maxW,lh){
+    var words = String(text).split(" "), line = "", lines = [];
+    for(var i=0;i<words.length;i++){
+      var test = line + words[i] + " ";
+      if(ctx.measureText(test).width > maxW && line !== ""){ lines.push(line); line = words[i] + " "; }
+      else line = test;
+    }
+    lines.push(line);
+    lines.forEach(function(l,i){ ctx.fillText(l.trim(), x, y + i*lh); });
+  }
+
+  function getShareBlob(){
+    return new Promise(function(resolve){
+      document.getElementById("share-canvas").toBlob(function(b){ resolve(b); }, "image/png");
+    });
+  }
+
+  /* =========================================================
+     GUARDADO
+     ========================================================= */
+  /* Arma el informe que va por correo. Se construye aqui porque es el mismo
+     texto que ella acaba de leer en pantalla: si lo rehiciera el servidor,
+     acabarian divergiendo. */
+  /* El correo trae DOS cosas: su diagnóstico (lo que ya leyó, para que lo
+     tenga guardado) y EL PLAN que se le prometió en el botón. Sin el plan,
+     el correo repite la pantalla y la promesa queda incumplida. */
+  function informeHtml(){
+    if(!currentLevel) return null;
+    var k = currentLevel.key;
+    var frenoTxt = currentLevel.freno;
+    if(frenoKey && FRENOS[frenoKey]) frenoTxt = FRENOS[frenoKey] + " " + currentLevel.freno;
+    var meta = METAS[k] || {};
+    var plan = PLAN[k] || {};
+
+    var h = ''
+      + '<p><strong>Tu ventaja:</strong> ' + currentLevel.ventaja + '</p>'
+      + '<p><strong>Tu obstáculo:</strong> ' + frenoTxt + '</p>'
+      + '<p><strong>Tu siguiente paso:</strong> ' + currentLevel.paso + '</p>';
+
+    if(meta.texto){
+      h += '<div class="bloque-meta"><span class="et">' + (meta.titulo || 'Tu próxima meta')
+         + '</span>' + meta.texto + '</div>';
+    }
+
+    if(plan.pasos){
+      h += '<h3 class="plan-tit">' + plan.titulo + '</h3><ol class="plan">';
+      for(var i=0;i<plan.pasos.length;i++) h += '<li>' + plan.pasos[i] + '</li>';
+      h += '</ol>';
+      if(plan.cierre) h += '<p class="plan-cierre"><em>' + plan.cierre + '</em></p>';
+    }
+
+    if(openAnswer){
+      h += '<p class="tu-nota"><strong>Me dijiste que lo que más te detiene es:</strong> '
+         + '«' + openAnswer.replace(/[<>]/g,'') + '». Lo leí. Y el plan de arriba empieza justo por ahí.</p>';
+    }
+    return h;
+  }
+
+  function saveLead(withContact, name, email){
+    var body = {
+      source: "test-nivel",
+      origen: ORIGEN,
+      mc_id: MC_ID,
+      nivel: currentLevel ? currentLevel.key : null,
+      nivel_nombre: currentLevel ? currentLevel.name : null,
+      nivel_frase: currentLevel ? currentLevel.quote : null,
+      informe_html: informeHtml(),
+      score: pendingLevel ? pendingLevel.score : null,
+      freno: frenoKey,
+      respuestas: answerTexts,
+      respuesta_abierta: openAnswer || null
+    };
+    if(withContact){ body.name = name; body.email = email; }
+    return fetch("/api/leads", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(body),
+      keepalive: true
+    }).catch(function(){ /* fail-open: nunca bloquea el resultado */ });
+  }
+
+  /* =========================================================
+     ACCIONES
+     ========================================================= */
+  document.getElementById("cine-skip").addEventListener("click", function(){
+    if(cineFin) cineFin();
+  });
+
+  document.getElementById("start-btn").addEventListener("click", function(){
+    current = 0; answers = []; answerTexts = []; frenoKey = null; openAnswer = "";
+    precargarMedallas();
+    buildTira("tira-quiz");
+    // el viaje completo empieza a bajar ya: cuando ella termine, estara listo
+    var pre = document.createElement("video");
+    pre.preload = "auto"; pre.muted = true; pre.src = "img/viaje.mp4";
+    renderQuestion();
+    show("quiz");
+  });
+
+  document.getElementById("gate-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(gateDone) return;
+    var nameEl = document.getElementById("gate-name");
+    var mailEl = document.getElementById("gate-email");
+    var errEl  = document.getElementById("gate-error");
+    var name = nameEl.value.trim(), email = mailEl.value.trim();
+
+    nameEl.setAttribute("aria-invalid","false");
+    mailEl.setAttribute("aria-invalid","false");
+    if(!name){
+      errEl.textContent = "¿Cómo te llamas?";
+      nameEl.setAttribute("aria-invalid","true"); nameEl.focus(); return;
+    }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+      errEl.textContent = "Revisa tu correo, parece que le falta algo.";
+      mailEl.setAttribute("aria-invalid","true"); mailEl.focus(); return;
+    }
+    if(!document.getElementById("gate-consent").checked){
+      errEl.textContent = "Marca la casilla para que pueda enviarte el plan.";
+      return;
+    }
+    errEl.textContent = "";
+
+    var btn = document.getElementById("gate-submit");
+    btn.disabled = true;
+    btn.setAttribute("aria-busy","true");
+    btn.setAttribute("aria-label","Enviando tu plan");
+    document.getElementById("gate-label").innerHTML = '<span class="gate-spin" aria-hidden="true"></span>';
+    document.getElementById("gate-status").textContent = "Enviando tu plan…";
+
+    // Nadie se queda esperando: a los 6s damos el acuse igual.
+    var closed = false;
+    function close(){
+      if(closed) return; closed = true; gateDone = true;
+      document.getElementById("key-box").innerHTML =
+          '<div class="unlocked">'
+        + '<p class="big serif">Listo, ' + escapeHtml(name.split(" ")[0]) + '.</p>'
+        + '<p>Tu plan para pasar de Nivel ' + escapeHtml(currentLevel ? currentLevel.name : "")
+        + ' al siguiente va en camino a <strong>' + escapeHtml(email) + '</strong>.<br>'
+        + 'Si no lo ves en unos minutos, revisa promociones o spam.</p>'
+        + '</div>';
+    }
+    var guard = setTimeout(close, 6000);
+    saveLead(true, name, email).then(function(){ clearTimeout(guard); close(); });
+  });
+
+  function escapeHtml(s){
+    return String(s || "").replace(/[&<>"']/g, function(m){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
+    });
+  }
+
+  /* Desde la web NO se puede abrir Instagram Stories directamente: no existe
+     forma de hacerlo desde un navegador. Lo maximo es abrir el menu del
+     telefono para que ella elija Instagram ahi. En escritorio ni eso, asi que
+     se descarga y se le explica el paso siguiente. */
+  function puedeCompartirArchivo(){
+    try{
+      var f = new File([new Blob([""])], "t.png", {type:"image/png"});
+      return !!(navigator.canShare && navigator.canShare({files:[f]}));
+    }catch(e){ return false; }
+  }
+
+  function guiaDespues(modo){
+    var g = document.getElementById("share-guia");
+    if(!g) return;
+    g.innerHTML = modo === "descarga"
+      ? '<b>Ya tienes tu imagen guardada.</b><br>Ábrela desde tu teléfono y súbela a tu historia etiquetando a <b>@annygomezleal</b>.'
+      : '<b>Elige Instagram</b> en el menú que se abrió.<br>Y si no aparece, guárdala y súbela a tu historia.';
+    g.style.display = "";
+    var ig = document.getElementById("ig-btn");
+    if(ig) ig.style.display = "";
+  }
+
+  document.getElementById("share-btn").addEventListener("click", function(){
+    getShareBlob().then(function(blob){
+      var nm = currentLevel ? currentLevel.key : "nivel";
+      var file = new File([blob], "mi-nivel-" + nm + ".png", {type:"image/png"});
+      var txt = "Hice el test de Anny Gómez y soy Nivel " + (currentLevel ? currentLevel.name : "") +
+                ". Mándale un DM con la palabra NIVEL a @annygomezleal y descubre en cuál estás tú.";
+      if(puedeCompartirArchivo()){
+        navigator.share({files:[file], title:"Mi nivel digital", text:txt})
+          .then(function(){ guiaDespues("compartir"); })
+          .catch(function(){ /* cancelo: no se le dice nada */ });
+      } else {
+        // Sin compartir de archivos: se descarga y se explica que sigue
+        downloadBlob(blob);
+        guiaDespues("descarga");
+      }
+    });
+  });
+
+  document.getElementById("download-btn").addEventListener("click", function(){
+    getShareBlob().then(function(blob){
+      var nm = currentLevel ? currentLevel.key : "nivel";
+      var file = new File([blob], "mi-nivel-" + nm + ".png", {type:"image/png"});
+      if(puedeCompartirArchivo()){
+        navigator.share({files:[file], title:"Mi nivel"}).catch(function(){ downloadBlob(blob); });
+      } else { downloadBlob(blob); }
+      guiaDespues("descarga");
+    });
+  });
+
+  document.getElementById("invite-btn").addEventListener("click", function(){
+    var url = "https://annygomez.com/nivel/";
+    var text = "Hice el test de Anny Gómez: te dice en qué nivel digital estás y cuál es tu siguiente paso real.\n\n"
+             + "Son 6 preguntas, 2 minutos. Hazlo tú:";
+    if(navigator.share){
+      navigator.share({title:"¿En qué nivel digital estás?", text:text, url:url}).catch(function(){});
+    } else if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text + " " + url).then(function(){
+        var b = document.getElementById("invite-btn");
+        var old = b.textContent; b.textContent = "¡Enlace copiado!";
+        setTimeout(function(){ b.textContent = old; }, 2200);
+      });
+    } else {
+      window.prompt("Copia y envía este enlace a tu amiga:", url);
+    }
+  });
+
+  function downloadBlob(blob){
+    var url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = "mi-nivel-" + (currentLevel ? currentLevel.key : "resultado") + ".png";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+  }
+
+  document.getElementById("restart-btn").addEventListener("click", function(){
+    current = 0; answers = []; answerTexts = []; frenoKey = null; openAnswer = "";
+    currentLevel = null; pendingLevel = null; gateDone = false;
+    show("hero");
+  });
+
+  /* Al rotar el movil cambian las medidas: se recoloca cada mundo visible. */
+  var reTimer = null;
+  window.addEventListener("resize", function(){
+    clearTimeout(reTimer);
+    reTimer = setTimeout(function(){
+      // la tira usa porcentajes, asi que se recoloca sola; solo se repinta
+      // la posicion del personaje por si cambio el alto del contenedor
+      ["tira-hero","tira-quiz","tira-res"].forEach(function(id){
+        var r = document.getElementById(id);
+        if(r && r._walker && r._paso >= 0) irAPaso(id, r._paso, false);
+      });
+    }, 180);
+  });
+
+  /* Pinta el camino inicial del hero */
+  buildTira("tira-hero"); irAPaso("tira-hero", 0, false);
+
+})();
+</script>
+</body>
+</html>
