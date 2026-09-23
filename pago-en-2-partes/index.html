@@ -247,6 +247,30 @@ body {
   var $ = function (id) { return document.getElementById(id); };
   var money = function (c) { return '$' + (c / 100).toFixed(2); };
 
+  // Limpia el correo antes de validarlo. Una clienta escribio
+  // "...@gmail.com." con punto final y Stripe lo rechazo diez veces:
+  // el teclado del telefono pone ese punto solo al terminar una frase,
+  // y pegar desde WhatsApp arrastra caracteres invisibles.
+  // Ningun correo valido termina en punto, asi que quitarlo es seguro.
+  function limpiarCorreo(v) {
+    return String(v || '')
+      .replace(/[​-‍﻿ ]/g, '') // invisibles y espacio duro
+      .trim()
+      .replace(/[.,;:]+$/, '')                      // puntuacion final
+      .toLowerCase();
+  }
+
+  // Mas estricta que la anterior: cada parte del dominio sin puntos sueltos,
+  // y obliga a que termine en algo real (.com, .mx), nunca en punto.
+  var CORREO_OK = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
+
+  // Deja el correo limpio a la vista, para que ella vea la correccion.
+  function correoDelCampo() {
+    var limpio = limpiarCorreo($('f-email').value);
+    $('f-email').value = limpio;
+    return limpio;
+  }
+
   function show(id) {
     ['v-loading', 'v-plan', 'v-done'].forEach(function (v) {
       $(v).classList.toggle('hidden', v !== id);
@@ -393,10 +417,10 @@ body {
 
       if (editable) {
         var n2 = $('f-name').value.trim();
-        var e2 = $('f-email').value.trim();
+        var e2 = correoDelCampo();
         var t2 = $('f-phone').value.trim();
         if (!n2) { error('Escribe tu nombre completo.'); return; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e2)) { error('Escribe un correo electrónico válido.'); return; }
+        if (!CORREO_OK.test(e2)) { error('Revisa tu correo electrónico: parece que tiene un error.'); return; }
         guardar = post({
           action: 'plan-datos',
           planId: planId,
@@ -428,10 +452,10 @@ body {
     var datos = {};
     if (!planId) {
       var name  = $('f-name').value.trim();
-      var email = $('f-email').value.trim();
+      var email = correoDelCampo();
       var phone = $('f-phone').value.trim();
       if (!name)  { error('Escribe tu nombre completo.'); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { error('Escribe un correo electrónico válido.'); return; }
+      if (!CORREO_OK.test(email)) { error('Revisa tu correo electrónico: parece que tiene un error.'); return; }
       datos = { name: name, email: email, phone: phone };
     }
 
@@ -458,7 +482,13 @@ body {
         btn.textContent = 'Pagar ' + (parteActual === 1 ? '1ra' : '2da') + ' parte ' + money(r.amount);
       });
     }).catch(function (e) {
-      error('No pudimos preparar el pago. Intenta de nuevo en un momento.');
+      // Mostrar el motivo REAL, no un "intenta mas tarde". Ese mensaje
+      // generico hizo que una clienta reintentara DIEZ veces con el mismo
+      // correo invalido: el sistema sabia que estaba mal y no se lo dijo.
+      var msg = (e && e.message) ? String(e.message) : '';
+      error(msg && msg !== 'sin_secret'
+        ? msg
+        : 'No pudimos preparar el pago. Revisa tus datos e inténtalo de nuevo.');
       btn.disabled = false;
       btn.textContent = 'Reintentar';
       console.error(e);

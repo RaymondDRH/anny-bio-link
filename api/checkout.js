@@ -67,6 +67,18 @@ function montoParteDe(customer) {
   return esPrueba ? 100 : PLAN_PARTE_AMOUNT;
 }
 
+// Limpia el correo antes de mandarlo a Stripe. Se repite aqui aunque la
+// pagina ya lo haga: el servidor NUNCA confia en que el navegador limpio nada.
+// Caso real: una clienta escribio "...@gmail.com." con punto final (el teclado
+// del telefono lo pone solo) y Stripe rechazo el cobro diez veces seguidas.
+function limpiarCorreo(v) {
+  return String(v || '')
+    .replace(/[​-‍﻿ ]/g, '') // invisibles al pegar desde WhatsApp
+    .trim()
+    .replace(/[.,;:]+$/, '')                     // puntuacion final
+    .toLowerCase();
+}
+
 // Numeros de parte ya pagados por este Customer, segun Stripe.
 async function planPartesPagadas(customerId) {
   const lista = await stripe.paymentIntents.list({ customer: customerId, limit: 25 });
@@ -149,7 +161,7 @@ module.exports = async (req, res) => {
       try {
         const planId = String(body.planId || '').trim();
         if (!planId.startsWith('cus_')) return res.status(200).json({ ok: false });
-        const email = String(body.email || '').trim();
+        const email = limpiarCorreo(body.email);
         await stripe.customers.update(planId, {
           name: String(body.name || '').trim() || undefined,
           email: email || undefined,
@@ -178,7 +190,7 @@ module.exports = async (req, res) => {
           customer = await stripe.customers.retrieve(planId);
           if (!customer || customer.deleted) return res.status(400).json({ error: 'plan_no_existe' });
         } else {
-          const email = String(body.email || '').trim();
+          const email = limpiarCorreo(body.email);
           if (!email) return res.status(400).json({ error: 'falta_correo' });
 
           // Si esta clienta YA empezo su plan (pago en el celular y ahora abre
@@ -239,7 +251,14 @@ module.exports = async (req, res) => {
         });
       } catch (e) {
         console.error('plan-pay:', e.message);
-        return res.status(500).json({ error: e.message });
+        // Decirle a la clienta QUE esta mal. Un "intentalo mas tarde" generico
+        // la dejo reintentando diez veces con un correo que nunca iba a pasar.
+        const esCorreo = /email/i.test(e.message || '');
+        return res.status(esCorreo ? 400 : 500).json({
+          error: esCorreo
+            ? 'Revisa tu correo electrónico: no parece válido. Comprueba que no tenga un punto o un espacio de más.'
+            : 'No pudimos preparar el pago. Inténtalo de nuevo en un momento.',
+        });
       }
     }
 
