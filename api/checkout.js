@@ -1,4 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { normalizarTelefono } = require('../lib/telefono');
 
 // Catálogo de códigos secretos → precio en CENTAVOS. Sin código = precio normal.
 const CODES = {};
@@ -77,6 +78,25 @@ function limpiarCorreo(v) {
     .trim()
     .replace(/[.,;:]+$/, '')                     // puntuacion final
     .toLowerCase();
+}
+
+// Telefono en E.164 (+525551234567), que es el formato que necesita WhatsApp
+// y el que evita que "+52 555 123 4567", "5551234567" y "(555) 123-4567"
+// queden como tres personas distintas.
+//
+// El pais viene DECLARADO por ella (el selector o el '+' que escribio); si no
+// alcanza para componerlo, lib/telefono.js devuelve vacio a proposito y aqui
+// se guarda el texto crudo. Un hueco honesto vale mas que un numero inventado.
+//
+// NUNCA bloquea: el telefono es un dato de contacto, no un canal de entrega.
+// Se marca si quedo verificado para que Anny sepa de cual puede fiarse.
+function telefonoNormalizado(valor, pais) {
+  try {
+    const t = normalizarTelefono(valor, pais);
+    return { valor: t.e164 || String(valor == null ? '' : valor).trim(), verificado: !!t.valido };
+  } catch (e) {
+    return { valor: String(valor == null ? '' : valor).trim(), verificado: false };
+  }
 }
 
 // Numeros de parte ya pagados por este Customer, segun Stripe.
@@ -162,10 +182,13 @@ module.exports = async (req, res) => {
         const planId = String(body.planId || '').trim();
         if (!planId.startsWith('cus_')) return res.status(200).json({ ok: false });
         const email = limpiarCorreo(body.email);
+        const tel = telefonoNormalizado(body.phone, body.pais);
         await stripe.customers.update(planId, {
           name: String(body.name || '').trim() || undefined,
           email: email || undefined,
-          phone: String(body.phone || '').trim() || undefined,
+          phone: tel.valor || undefined,
+          // Stripe fusiona metadata en update: no pisa plan ni product.
+          metadata: { tel_ok: tel.verificado ? 'si' : 'no' },
         });
         const piId = String(body.paymentIntentId || '').trim();
         if (piId.startsWith('pi_') && email) {
@@ -212,13 +235,19 @@ module.exports = async (req, res) => {
             const esPrueba = !!clave &&
               String(body.code || '').trim().toUpperCase() === String(clave).trim().toUpperCase();
 
+            const telNuevo = telefonoNormalizado(body.phone, body.pais);
+            const meta = {
+              product: 'next-fly-academy',
+              plan: PLAN_ID,
+              tel_ok: telNuevo.verificado ? 'si' : 'no',
+            };
+            if (esPrueba) meta.prueba = '1';
+
             customer = await stripe.customers.create({
               name: String(body.name || '').trim() || undefined,
               email,
-              phone: String(body.phone || '').trim() || undefined,
-              metadata: esPrueba
-                ? { product: 'next-fly-academy', plan: PLAN_ID, prueba: '1' }
-                : { product: 'next-fly-academy', plan: PLAN_ID },
+              phone: telNuevo.valor || undefined,
+              metadata: meta,
             });
             planId = customer.id;
           }

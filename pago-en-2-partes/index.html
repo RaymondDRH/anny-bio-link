@@ -114,6 +114,33 @@ body {
 .input::placeholder { color: rgba(245,237,216,0.32); }
 .input:focus { border-color: var(--gold); }
 
+/* Telefono = selector de pais + numero. El pais se DECLARA, nunca se adivina:
+   sin el, "321 1234567" se guardaria como mexicano siendo colombiano, y Anny
+   terminaria escribiendole por WhatsApp a un desconocido sin enterarse. */
+.field-tel { display: flex; gap: 8px; }
+.field-tel .input { min-width: 0; } /* sin esto el input no encoge dentro del flex */
+
+.field-country {
+  flex: 0 0 42%;
+  padding-right: 26px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23C49A3C' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  text-overflow: ellipsis;
+}
+/* La lista desplegable usa colores del sistema en Windows y Android: se fuerzan
+   para que no salga texto claro sobre fondo claro. */
+.field-country option { background: #1B1408; color: #F5EDD8; }
+
+.field-hint {
+  margin: 5px 0 0; font-size: 10.5px; line-height: 1.4;
+  color: rgba(245,237,216,0.42); font-family: 'Poppins', sans-serif;
+}
+
 /* ---------- Botón ---------- */
 .btn {
   display:block; width: 100%; margin-top: 20px; padding: 15px 22px;
@@ -197,7 +224,40 @@ body {
       </div>
       <div>
         <label class="field-label" for="f-phone">Número de teléfono</label>
-        <input id="f-phone" class="input" type="tel" placeholder="+1 (555) 000-0000" autocomplete="tel">
+        <div class="field-tel">
+          <select id="f-country" class="input field-country" aria-label="País de tu teléfono">
+            <option value="US" data-dial="1">🇺🇸 +1 Estados Unidos</option>
+            <option value="MX" data-dial="52">🇲🇽 +52 México</option>
+            <option value="CO" data-dial="57">🇨🇴 +57 Colombia</option>
+            <option value="VE" data-dial="58">🇻🇪 +58 Venezuela</option>
+            <option value="AR" data-dial="54">🇦🇷 +54 Argentina</option>
+            <option value="ES" data-dial="34">🇪🇸 +34 España</option>
+            <option value="PE" data-dial="51">🇵🇪 +51 Perú</option>
+            <option value="CL" data-dial="56">🇨🇱 +56 Chile</option>
+            <option value="EC" data-dial="593">🇪🇨 +593 Ecuador</option>
+            <option value="DO" data-dial="1">🇩🇴 +1 República Dominicana</option>
+            <option value="PR" data-dial="1">🇵🇷 +1 Puerto Rico</option>
+            <option value="GT" data-dial="502">🇬🇹 +502 Guatemala</option>
+            <option value="CR" data-dial="506">🇨🇷 +506 Costa Rica</option>
+            <option value="PA" data-dial="507">🇵🇦 +507 Panamá</option>
+            <option value="BO" data-dial="591">🇧🇴 +591 Bolivia</option>
+            <option value="UY" data-dial="598">🇺🇾 +598 Uruguay</option>
+            <option value="PY" data-dial="595">🇵🇾 +595 Paraguay</option>
+            <option value="HN" data-dial="504">🇭🇳 +504 Honduras</option>
+            <option value="SV" data-dial="503">🇸🇻 +503 El Salvador</option>
+            <option value="NI" data-dial="505">🇳🇮 +505 Nicaragua</option>
+            <option value="CU" data-dial="53">🇨🇺 +53 Cuba</option>
+            <option value="CA" data-dial="1">🇨🇦 +1 Canadá</option>
+            <option value="BR" data-dial="55">🇧🇷 +55 Brasil</option>
+            <option value="IT" data-dial="39">🇮🇹 +39 Italia</option>
+            <option value="FR" data-dial="33">🇫🇷 +33 Francia</option>
+            <option value="DE" data-dial="49">🇩🇪 +49 Alemania</option>
+            <option value="GB" data-dial="44">🇬🇧 +44 Reino Unido</option>
+          </select>
+          <input id="f-phone" class="input" type="tel" placeholder="300 123 4567"
+                 autocomplete="tel-national" inputmode="tel">
+        </div>
+        <p class="field-hint">¿Tu país no aparece? Escribe tu número con el signo + y el código, por ejemplo +351 912 345 678.</p>
       </div>
     </div>
 
@@ -270,6 +330,64 @@ body {
     $('f-email').value = limpio;
     return limpio;
   }
+
+  // El telefono con su codigo de pais delante. Si ella escribio su propio '+',
+  // ese manda y no se toca: puede ser una colombiana viviendo en Miami.
+  function telefonoConPais() {
+    var tel = $('f-phone');
+    var v = tel ? tel.value.trim() : '';
+    if (!v || v.charAt(0) === '+') return v;
+    var sel = $('f-country');
+    var opt = sel && sel.options[sel.selectedIndex];
+    var dial = opt && opt.getAttribute('data-dial');
+    return dial ? '+' + dial + ' ' + v.replace(/^0+/, '') : v;
+  }
+
+  function paisDeclarado() {
+    var sel = $('f-country');
+    return sel ? sel.value : '';
+  }
+
+  // Guarda el lead ANTES de cobrar y SIN esperar respuesta.
+  // Antes: si se guardaba despues del cobro, quien abandonaba a mitad del pago
+  // quedaba invisible fuera de Stripe — justo la persona a la que Anny querria
+  // escribirle. Un fallo aqui no puede tocar el cobro, por eso va sin await.
+  function guardarLead(d) {
+    try {
+      if (!d || !d.email) return;
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          source: 'checkout',
+          name: d.name || '',
+          email: d.email,
+          telefono: d.telefono || '',
+          pais: d.pais || '',        // DECLARADO: el servidor no lo adivina
+          producto: 'next-fly-academy',
+          origen: '2-partes',
+        }),
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  // Preselecciona el pais con la geolocalizacion que Vercel ya incluye en cada
+  // peticion. Es comodidad, no requisito: si falla queda Estados Unidos y ella
+  // lo cambia. Nunca bloquea ni retrasa el pago.
+  (function () {
+    var sel = $('f-country');
+    if (!sel) return;
+    var tocado = false;
+    sel.addEventListener('change', function () { tocado = true; });
+    try {
+      fetch('/api/leads').then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || !d.pais || tocado) return;
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].value === d.pais) { sel.selectedIndex = i; return; }
+        }
+      }).catch(function () {});
+    } catch (e) {}
+  })();
 
   function show(id) {
     ['v-loading', 'v-plan', 'v-done'].forEach(function (v) {
@@ -418,14 +536,16 @@ body {
       if (editable) {
         var n2 = $('f-name').value.trim();
         var e2 = correoDelCampo();
-        var t2 = $('f-phone').value.trim();
+        var t2 = telefonoConPais();
         if (!n2) { error('Escribe tu nombre completo.'); return; }
         if (!CORREO_OK.test(e2)) { error('Revisa tu correo electrónico: parece que tiene un error.'); return; }
+        // Si corrigio algo, el lead tambien se actualiza.
+        guardarLead({ name: n2, email: e2, telefono: t2, pais: paisDeclarado() });
         guardar = post({
           action: 'plan-datos',
           planId: planId,
           paymentIntentId: clientSecret.split('_secret_')[0],
-          name: n2, email: e2, phone: t2,
+          name: n2, email: e2, phone: t2, pais: paisDeclarado(),
         });
       }
 
@@ -453,10 +573,13 @@ body {
     if (!planId) {
       var name  = $('f-name').value.trim();
       var email = correoDelCampo();
-      var phone = $('f-phone').value.trim();
+      var phone = telefonoConPais();
       if (!name)  { error('Escribe tu nombre completo.'); return; }
       if (!CORREO_OK.test(email)) { error('Revisa tu correo electrónico: parece que tiene un error.'); return; }
-      datos = { name: name, email: email, phone: phone };
+      // ANTES de cobrar: si abandona en el paso de la tarjeta, Anny igual
+      // sabe quien era y puede escribirle.
+      guardarLead({ name: name, email: email, telefono: phone, pais: paisDeclarado() });
+      datos = { name: name, email: email, phone: phone, pais: paisDeclarado() };
     }
 
     btn.disabled = true;
