@@ -160,9 +160,15 @@ module.exports = async (req, res) => {
         // El total se calcula del monto real, no se escribe fijo: en un plan de
         // prueba de $1 un "$697" a mano seria mentira en el correo y en el recibo.
         const totalPlan = (Number(amount) * 2).toFixed(2);
-        const nota = parte === 1
+        // Un telefono que no se pudo verificar se ve igual de bien que uno
+        // bueno. Anny tiene que saberlo ANTES de depender de el para el
+        // seguimiento del segundo pago, no despues de escribir al vacio.
+        const telDudoso = cust && cust.metadata && cust.metadata.tel_ok === 'no';
+        const avisoTel = telDudoso ? ' ⚠️ Teléfono sin verificar: confírmalo antes de escribirle.' : '';
+        const nota = (parte === 1
           ? `PAGO EN 2 PARTES — pagó la 1ra de 2. Le falta $${amount} USD.`
-          : (parte === 2 ? `PAGO EN 2 PARTES — completó el pago ($${totalPlan} USD en total).` : '');
+          : (parte === 2 ? `PAGO EN 2 PARTES — completó el pago ($${totalPlan} USD en total).` : ''))
+          + avisoTel;
 
         await notifyAnny({
           name: nombre,
