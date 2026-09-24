@@ -11,3 +11,6 @@ db/
 
 # Paginas de trabajo para decidir diseno: no son para el publico.
 muestra/
+
+# Herramientas de trabajo (publicar guias en la tienda): no son para el publico.
+scripts/
