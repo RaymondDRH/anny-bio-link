@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Anny Gómez — Fe · Hábitos · Propósito</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta name="description" content="Creadora de contenido enfocada en Fe, hábitos y crecimiento personal. Recursos, guías y comunidad para mujeres que quieren vivir con propósito.">
+<meta name="theme-color" content="#f8f3ee">
 <meta property="og:type"         content="website">
 <meta property="og:url"          content="https://annygomez.com/">
 <meta property="og:title"        content="Anny Gómez — Fe · Hábitos · Propósito">
@@ -18,902 +19,330 @@
 <meta name="twitter:title"       content="Anny Gómez — Fe · Hábitos · Propósito">
 <meta name="twitter:description" content="Creadora de contenido enfocada en Fe, hábitos y crecimiento personal.">
 <meta name="twitter:image"       content="https://annygomez.com/photos/hero.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<!--
+  Bio-link de Anny: el enlace de la bio de Instagram.
+
+  Diseño de Claude Design, proyecto «Banner Next Flight rediseño» (26-sep-2026),
+  archivo «Anny Gomez Links.dc.html». Sustituye a las DOS páginas que había
+  dentro de este mismo archivo (una para celular y otra para computadora, cada
+  una con su HTML, sus formularios y su JavaScript duplicados): ahora es UNA
+  sola, que en escritorio pone el perfil a la izquierda (fijo) y las tarjetas
+  a la derecha, y en el celular lo apila.
+
+  La tarjeta «Tienda de recursos» se rellena con /api/tienda (api/tienda.js),
+  que lee la tienda real. Los tres productos escritos aquí abajo son el
+  respaldo: se ven si JavaScript o la tienda fallan.
+-->
 <style>
-/* ── SHARED TOKENS ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --crema:      #FBF6F2;
-  --nude:       #E8D9CD;
-  --rosa-arena: #D4BEB0;
-  --cobre:      #C4855A;
-  --cobre-deep: #A86E45;
-  --espresso:   #2E1A10;
-  --topo:       #8C6A58;
-  --salvia:     #A6B0A0;
-  --font-script: "Alex Brush", cursive;
-  --font-serif:  "Playfair Display", Georgia, serif;
-  --font-sans:   "Poppins", -apple-system, sans-serif;
-}
-html { scroll-behavior: smooth; }
+  :root {
+    --fondo: #efe7df; --papel: #f8f3ee; --tinta: #2e2420; --cobre: #b8714a; --cobre-hondo: #8f5233;
+    --suave: #7a5f53; --suave-2: #8a6f64; --suave-3: #9a8074; --borde: #d9c6b8; --borde-claro: #efe3d8;
+    --arena: #f1e6dc; --salvia: #a3ae9c;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--fondo); font-family: 'Poppins', system-ui, sans-serif; color: var(--tinta); -webkit-font-smoothing: antialiased; }
+  a { color: var(--cobre); }
+  a:hover { color: var(--cobre-hondo); }
+  img { display: block; max-width: 100%; }
+  :focus-visible { outline: 2px solid var(--cobre); outline-offset: 3px; }
 
-/* ── LAYOUT VISIBILITY ── */
-.mobile-view  { display: block; }
-.desktop-view { display: none; }
+  .marco { min-height: 100vh; display: flex; justify-content: center; }
+  main { width: 100%; max-width: 1120px; background: var(--papel); box-shadow: 0 0 60px rgba(60,35,25,.08); display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; column-gap: 72px; }
 
-@media (min-width: 960px) {
-  .mobile-view  { display: none !important; }
-  .desktop-view { display: grid !important; }
-}
+  /* ── Columna izquierda: el perfil ───────────────────────────────── */
+  .perfil { flex: 1 1 340px; max-width: 440px; display: flex; flex-direction: column; }
+  @media (min-width: 900px) {
+    .perfil { position: sticky; top: 0; height: 100vh; justify-content: center; padding-bottom: 24px; }
+  }
+  .cabecera { padding: 40px 24px 4px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .avatar { width: 112px; height: 112px; border-radius: 50%; padding: 4px; background: var(--papel); box-shadow: 0 0 0 1px var(--borde), 0 10px 28px -12px rgba(120,70,40,.45); }
+  .avatar img { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; }
+  .nombre { margin: 4px 0 0; font-family: 'Great Vibes', cursive; font-weight: 400; font-size: 52px; line-height: 1; color: var(--tinta); }
+  .pilares { display: flex; gap: 12px; font-size: 11px; font-weight: 500; letter-spacing: .32em; color: var(--suave-2); }
+  .pilares i { font-style: normal; color: #c9b3a5; }
+  .saludo { padding: 8px 24px 0; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+  .redes { display: flex; gap: 12px; }
+  .redes a { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--borde); display: grid; place-items: center; color: #6b4f43; transition: background-color .2s ease, border-color .2s ease; }
+  .redes a:hover { background: #fff; border-color: #c9a894; color: #6b4f43; }
+  .saludo h2 { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; font-size: 26px; }
+  .saludo h2 span { color: var(--cobre); }
+  .saludo p { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--suave); text-wrap: pretty; }
 
-/* ════════════════════════════════════════════════════════════
-   MOBILE LAYOUT  (< 960px) — layout original
-   ════════════════════════════════════════════════════════════ */
-.mobile-view {
-  font-family: 'Poppins', sans-serif;
-  background: var(--crema);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  -webkit-font-smoothing: antialiased;
-}
+  /* ── Columna derecha: las tarjetas ──────────────────────────────── */
+  .tarjetas { flex: 1 1 400px; min-width: 0; max-width: 520px; padding-top: clamp(0px, 4vw, 64px); }
+  .lista { padding: 28px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+  .lista > * { animation: entra .6s cubic-bezier(.22,1,.36,1) both; }
+  .lista > *:nth-child(2) { animation-delay: .06s; } .lista > *:nth-child(3) { animation-delay: .12s; }
+  .lista > *:nth-child(4) { animation-delay: .18s; } .lista > *:nth-child(5) { animation-delay: .24s; }
+  @keyframes entra { from { opacity: 0; transform: translateY(10px); } }
 
-.phone-frame {
-  width: 100%;
-  max-width: 100%;
-  background: var(--crema);
-  min-height: 100vh;
-  overflow: hidden;
-}
+  .etiqueta { font-size: 10px; font-weight: 600; letter-spacing: .2em; }
 
-@media (min-width: 600px) and (max-width: 959px) {
-  .mobile-view { background: #EDEAE6; }
-  .phone-frame { max-width: 390px; box-shadow: 0 0 60px rgba(46,26,16,0.18); }
-}
+  /* Test */
+  .test { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 1px 2px rgba(60,35,25,.06), 0 14px 36px -18px rgba(120,70,40,.35); transition: transform .25s ease, box-shadow .25s ease; }
+  .test:hover { color: inherit; transform: translateY(-2px); box-shadow: 0 1px 2px rgba(60,35,25,.06), 0 20px 40px -18px rgba(120,70,40,.45); }
+  .test__mapa { position: relative; background: var(--arena); line-height: 0; }
+  .test__mapa .tira { width: 100%; height: auto; }
+  /* La caminante sobre la tira: mismos archivos y posición que /nivel/. */
+  .test__mapa .wk { position: absolute; left: 8.2%; top: 64.8%; width: 4.6%; transform: translate(-50%, -88%); animation: wkSalta 3.4s ease-in-out infinite; }
+  .test__mapa .wk img { width: 100%; height: auto; filter: drop-shadow(0 3px 6px rgba(46,26,16,.35)); }
+  @keyframes wkSalta { 0%, 72%, 100% { transform: translate(-50%, -88%); } 80% { transform: translate(-50%, -104%) rotate(-6deg); } 88% { transform: translate(-50%, -92%) rotate(3deg); } }
+  .test__insignia { position: absolute; top: 14px; left: 14px; line-height: 1; color: #fff; background: var(--cobre); padding: 7px 10px; border-radius: 999px; }
+  .test__cuerpo { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .test h3 { margin: 0; font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; line-height: 1.15; }
+  .test h3 em { color: var(--cobre); }
+  .test p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--suave); text-wrap: pretty; }
+  .test__datos { display: flex; gap: 8px; font-size: 12px; color: var(--suave-3); }
+  .boton { margin-top: 6px; min-height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .boton span { font-size: 16px; transition: transform .25s ease; }
+  a:hover .boton span { transform: translateX(3px); }
+  .boton--cobre { background: var(--cobre); color: #fff; }
+  .test:hover .boton--cobre { background: #a8633e; }
 
-/* Animations */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.35; transform: scale(0.8); }
-}
-@keyframes btn-tap {
-  0%   { transform: scale(1); }
-  35%  { transform: scale(1.28); }
-  65%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-@keyframes grain-shift {
-  0%   { transform: translate(0,0); }     10%  { transform: translate(-2%,-2%); }
-  20%  { transform: translate(2%,2%); }   30%  { transform: translate(-1%,1%); }
-  40%  { transform: translate(1%,-1%); }  50%  { transform: translate(-2%,1%); }
-  60%  { transform: translate(2%,-2%); }  70%  { transform: translate(0,2%); }
-  80%  { transform: translate(-1%,0); }   90%  { transform: translate(1%,1%); }
-  100% { transform: translate(0,0); }
-}
-@keyframes wlFadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+  /* Tienda */
+  .tienda { display: flex; flex-direction: column; gap: 16px; padding: 20px; background: #fff; border-radius: 22px; border: 1px solid var(--borde-claro); box-shadow: 0 10px 30px -20px rgba(120,70,40,.35); }
+  .tienda__cabeza { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+  .tienda__titulo { display: flex; flex-direction: column; gap: 4px; }
+  .tienda__titulo .etiqueta { color: var(--cobre); }
+  .tienda__titulo h3 { margin: 0; font-family: 'Playfair Display', serif; font-weight: 500; font-size: 22px; line-height: 1.2; }
+  .tienda__todo { flex: none; font-size: 12px; font-weight: 600; text-decoration: none; padding: 6px 0; }
+  .productos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .producto { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; min-width: 0; }
+  .producto:hover { color: inherit; }
+  .producto__foto { aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; background: var(--arena); }
+  /* Las imágenes de la tienda son mockups apaisados (el abanico de las guías,
+     el libro sobre la mesa): se enseñan ENTERAS, no recortadas al cuadrado. */
+  .producto__foto img { width: 100%; height: 100%; object-fit: contain; padding: 6px; transition: transform .35s ease; }
+  .producto:hover .producto__foto img { transform: scale(1.04); }
+  .producto__nombre { font-size: 12px; line-height: 1.35; color: var(--tinta); text-wrap: pretty; }
+  .producto__precio { font-size: 12px; font-weight: 600; color: var(--cobre); }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(32px) scale(0.96);
-  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,0.61,0.36,1);
-}
-.fade-in.visible { opacity: 1; transform: translateY(0) scale(1); }
+  /* Enlaces en fila (blog, guía gratis) */
+  .fila { display: flex; align-items: center; gap: 14px; padding: 16px; text-decoration: none; color: inherit; background: #fff; border-radius: 18px; border: 1px solid var(--borde-claro); transition: border-color .2s ease, transform .2s ease; }
+  .fila:hover { color: inherit; border-color: #d9b9a3; transform: translateY(-1px); }
+  .fila__icono { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; }
+  .fila__icono--blog { background: #e6ebe2; color: #5f6e58; font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; }
+  .fila__icono--gratis { background: #f4e4d8; color: var(--cobre); font-size: 20px; }
+  .fila__texto { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .fila__titulo { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.25; }
+  .fila__nota { font-size: 12px; line-height: 1.45; color: var(--suave-3); text-wrap: pretty; }
+  .fila__flecha { flex: none; color: var(--cobre); font-size: 18px; transition: transform .2s ease; }
+  .fila:hover .fila__flecha { transform: translateX(3px); }
 
-/* Hero */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  min-height: 440px;
-  max-height: 600px;
-  overflow: hidden;
-  animation: fadeInUp 0.85s ease both;
-}
-.hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-.hero-grain {
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.04; animation: grain-shift 8s steps(10) infinite; pointer-events: none; z-index: 1;
-}
-.hero-gradient {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 60%;
-  background: linear-gradient(to top, rgba(46,26,16,0.88) 0%, rgba(46,26,16,0.45) 45%, transparent 100%);
-  z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-  padding-bottom: 32px; gap: 5px;
-}
-.hero-logo {
-  font-family: 'Alex Brush', cursive; font-size: 66px; color: var(--crema);
-  line-height: 1; animation: fadeInUp 1s 0.3s ease both;
-}
-.hero-tagline {
-  font-size: 10px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase;
-  color: rgba(251,246,242,0.65); animation: fadeInUp 1s 0.5s ease both;
-}
-.hero-social {
-  display: flex; justify-content: center; gap: 14px; margin-top: 14px;
-  animation: fadeInUp 1s 0.65s ease both;
-}
-.hero-social-btn {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: rgba(251,246,242,0.18); border: 1px solid rgba(251,246,242,0.3);
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
-  transition: background 0.22s, transform 0.15s ease;
-}
-.hero-social-btn:active { transform: scale(0.9); }
-.hero-social-btn:hover  { background: rgba(251,246,242,0.32); }
-.hero-social-btn svg    { width: 14px; height: 14px; fill: var(--crema); }
-.hero-social-btn.tapped,
-.footer-icon.tapped     { animation: btn-tap 0.42s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+  /* Next Flight Academy */
+  .academia { margin-top: 8px; display: flex; flex-direction: column; text-decoration: none; border-radius: 22px; overflow: hidden; background: #2b1a14; box-shadow: 0 14px 36px -18px rgba(74,13,19,.6); transition: transform .25s ease; }
+  .academia:hover { transform: translateY(-2px); }
+  .academia__marca { height: 120px; background: radial-gradient(120% 100% at 50% 0%, #6a1520 0%, #4a0d13 65%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #c9a25a; }
+  .academia__logo { font-family: 'Playfair Display', serif; font-size: 36px; line-height: 1; }
+  .academia__logo em { font-style: italic; }
+  .academia__sub { font-size: 10px; font-weight: 500; letter-spacing: .42em; padding-left: .42em; }
+  .academia__raya { height: 1px; background: linear-gradient(90deg, transparent, #c9a25a80, transparent); }
+  .academia__cuerpo { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .academia h3 { margin: 0; font-family: 'Playfair Display', serif; font-weight: 600; font-size: 23px; line-height: 1.2; color: #f6efe4; }
+  .academia p { margin: 0; font-size: 14px; line-height: 1.55; color: #cdbfb2; text-wrap: pretty; }
+  .boton--oro { background: linear-gradient(180deg, #dcb65f, #c49a44); color: #2b1a14; }
 
-/* Cards area */
-.cards-area { padding: 20px 16px 0; display: flex; flex-direction: column; gap: 18px; }
+  /* Boletín */
+  .boletin { margin: 28px 16px 0; padding: 24px 20px; border-radius: 22px; background: var(--salvia); display: flex; flex-direction: column; gap: 14px; }
+  .boletin .etiqueta { color: #2f3a2b; }
+  .boletin__frase { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: #1f261c; }
+  .boletin form { display: flex; flex-direction: column; gap: 8px; }
+  .boletin input { height: 50px; border: 0; border-radius: 12px; padding: 0 16px; font: inherit; font-size: 16px; background: var(--papel); color: var(--tinta); outline: none; }
+  .boletin input:focus { box-shadow: 0 0 0 2px #3d342e; }
+  .boletin button { height: 50px; border: 0; border-radius: 12px; background: #3d342e; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color .2s ease; }
+  .boletin button:hover { background: #2e2621; }
+  .boletin button:disabled { opacity: .7; cursor: wait; }
+  .boletin__error { margin: 0; font-size: 13px; color: #6e1f1f; min-height: 0; }
+  .boletin__ok { margin: 0; font-size: 14px; line-height: 1.55; color: #1f261c; }
 
-/* NFA card */
-.nfa-card { background: var(--espresso); border-radius: 20px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.18); position: relative; }
-.nfa-banner { width: 100%; height: 180px; object-fit: cover; object-position: center; display: block; }
-.nfa-body { padding: 20px 20px 24px; position: relative; z-index: 1; }
-.nfa-title { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--crema); margin-bottom: 8px; line-height: 1.25; }
-.nfa-desc  { font-size: 13px; font-weight: 300; color: rgba(251,246,242,0.55); line-height: 1.68; margin-bottom: 18px; }
+  /* Pie */
+  footer { width: 100%; padding: 36px 24px 40px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .versiculo { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 14px; color: var(--suave-2); }
+  .derechos { margin: 0; font-size: 10px; letter-spacing: .22em; color: #a8938a; }
 
-/* Quiz card — puerta de entrada. Clara y accesible (gratis), a proposito
-   distinta de la nfa-card, que es oscura y premium ($697). */
-.quiz-card {
-  position: relative; overflow: hidden;
-  background: linear-gradient(150deg, #FFFDFB 0%, var(--nude) 100%);
-  border: 1px solid rgba(196,133,90,0.28);
-  border-radius: 20px;
-  box-shadow: 0 4px 28px rgba(46,26,16,0.10);
-}
-.quiz-card::before {
-  content: ''; position: absolute; top: -60px; right: -60px;
-  width: 190px; height: 190px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(196,133,90,0.16) 0%, transparent 70%);
-  pointer-events: none;
-}
-.quiz-body { padding: 26px 22px 24px; position: relative; z-index: 1; }
-.quiz-eyebrow {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 10.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--cobre-deep); background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(196,133,90,0.22);
-  padding: 6px 12px; border-radius: 999px; margin-bottom: 14px;
-}
-.quiz-title {
-  font-family: var(--font-serif); font-size: 22px; line-height: 1.22;
-  color: var(--espresso); margin-bottom: 10px;
-}
-.quiz-title em { font-style: italic; color: var(--cobre-deep); }
-.quiz-desc {
-  font-size: 13px; font-weight: 300; color: var(--topo);
-  line-height: 1.68; margin-bottom: 20px;
-}
-.quiz-meta {
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  font-size: 11px; color: var(--topo); margin-bottom: 18px;
-}
-.quiz-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rosa-arena); }
-
-/* Mapa del test: las 4 islas, la muñequita en la primera y la meta al final.
-   Se reutilizan los mismos archivos que usa /nivel/ — no hay copias. */
-.quiz-mapa { position: relative; line-height: 0; margin: 2px 0 18px; }
-.quiz-mapa .tira { width: 100%; height: auto; display: block; }
-.quiz-mapa .wk {
-  position: absolute; left: 8.2%; top: 64.8%; width: 4.6%;
-  transform: translate(-50%, -88%); line-height: 0;
-  animation: wkSalta 3.4s ease-in-out infinite;
-}
-.quiz-mapa .wk img {
-  width: 100%; height: auto; display: block;
-  filter: drop-shadow(0 3px 6px rgba(46,26,16,0.35));
-}
-@keyframes wkSalta {
-  0%, 72%, 100% { transform: translate(-50%, -88%); }
-  80% { transform: translate(-50%, -104%) rotate(-6deg); }
-  88% { transform: translate(-50%, -92%) rotate(3deg); }
-}
-@media (prefers-reduced-motion: reduce) { .quiz-mapa .wk { animation: none; } }
-
-/* Buttons */
-.btn {
-  display: block; width: 100%; padding: 14px 20px;
-  font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 400;
-  letter-spacing: 0.14em; text-transform: uppercase; text-align: center; text-decoration: none;
-  border-radius: 12px; border: none; cursor: pointer;
-  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s, color 0.2s;
-}
-.btn:active { transform: scale(0.96); box-shadow: none; filter: brightness(0.92); }
-.btn-solid  { background: var(--cobre); color: var(--crema); }
-.btn-nfa    { background: linear-gradient(135deg, #C49A3C 0%, #DDB860 100%); color: #330C15; }
-.btn-quiz   { background: linear-gradient(135deg, var(--cobre) 0%, var(--cobre-deep) 100%); color: #fff; }
-@media (hover: hover) and (pointer: fine) {
-  .btn-solid:hover { background: #a96b43; transform: translateY(-2px); box-shadow: 0 6px 22px rgba(196,133,90,0.28); }
-  .btn-nfa:hover   { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
-  .btn-quiz:hover  { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,133,90,0.38); }
-}
-
-/* Reto card */
-.reto-card {
-  background: var(--nude); border-radius: 20px; padding: 28px 22px;
-  box-shadow: 0 4px 24px rgba(46,26,16,0.08); position: relative; overflow: hidden;
-}
-.reto-card::before { content:''; position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; border:1px solid rgba(196,133,90,0.1); }
-.reto-card::after  { content:''; position:absolute; bottom:-70px; left:-70px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(166,176,160,0.12); }
-.coming-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--crema); border: 1px solid var(--rosa-arena); border-radius: 100px;
-  padding: 5px 14px 5px 10px; font-size: 9px; font-weight: 400;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--topo); margin-bottom: 18px;
-}
-.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--salvia); flex-shrink: 0; animation: pulse-dot 1.9s ease-in-out infinite; }
-.reto-title { font-family: 'Playfair Display', serif; font-size: 27px; font-weight: 600; color: var(--espresso); line-height: 1.22; margin-bottom: 12px; }
-.reto-title em { font-style: italic; color: var(--cobre); }
-.reto-desc { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.72; margin-bottom: 24px; }
-
-/* Waitlist form */
-#waitlist-form-wrap, #waitlist-success { position: relative; z-index: 1; }
-.waitlist-fields { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-.waitlist-fields.expanded { display: flex; animation: wlFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
-.wl-input {
-  width: 100%; padding: 12px 16px; border-radius: 12px;
-  border: 1px solid var(--rosa-arena); background: var(--crema);
-  font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--espresso); outline: none;
-}
-.wl-input:focus { border-color: var(--cobre); }
-.wl-input::placeholder { color: var(--topo); opacity: 0.6; }
-.wl-error  { font-size: 12px; color: #b94a4a; margin-top: 8px; min-height: 16px; }
-.wl-success { font-size: 13px; color: var(--topo); font-weight: 400; line-height: 1.6; padding: 14px; background: var(--crema); border-radius: 12px; border: 1px solid var(--rosa-arena); text-align: center; }
-
-/* Blog card — unified with subscribe */
-.blog-card { display: block; position: relative; background: var(--salvia); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 36px -22px rgba(46,26,16,0.22); }
-.blog-watermark { position: absolute; top: 10px; left: 6px; right: 0; font-family: 'Alex Brush', cursive; font-size: 130px; line-height: 1; color: rgba(251,246,242,0.45); pointer-events: none; }
-.blog-page { position: relative; padding: 106px 26px 22px; }
-.blog-eyebrow { font-size: 10.5px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(251,246,242,0.75); margin-bottom: 12px; }
-.blog-title { font-family: 'Playfair Display', serif; font-weight: 500; font-size: 26px; line-height: 1.2; color: #FBF6F2; letter-spacing: -0.01em; margin: 0; }
-.blog-cta { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(46,26,16,0.18); border-radius: 10px; color: #FBF6F2; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background .2s; -webkit-tap-highlight-color: transparent; }
-.blog-cta:hover { background: rgba(46,26,16,0.30); }
-.blog-cta-arrow { font-size: 14px; line-height: 1; }
-.blog-sub-sep { height: 1px; background: rgba(251,246,242,0.25); margin: 0 26px; }
-.blog-sub-section { position: relative; padding: 18px 26px 24px; }
-.blog-sub-eyebrow { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(251,246,242,0.75); margin-bottom: 12px; }
-.blog-subscribe-form { display: flex; flex-direction: column; gap: 10px; }
-.blog-sub-btn { width: 100%; justify-content: center; }
-.blog-sub-input { flex: 1; min-width: 0; padding: 11px 14px; border-radius: 12px; border: 1px solid rgba(251,246,242,0.3); background: rgba(251,246,242,0.92); font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--espresso); outline: none; transition: border-color .2s; }
-.blog-sub-input:focus { border-color: var(--crema); }
-.blog-sub-input::placeholder { color: rgba(46,26,16,0.40); }
-.blog-sub-btn { flex: 0 0 auto; padding: 11px 18px; border-radius: 12px; border: none; background: rgba(46,26,16,0.55); color: #FBF6F2; font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 400; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; }
-.blog-sub-btn:active { transform: scale(0.97); }
-.blog-sub-btn:hover { background: rgba(46,26,16,0.72); }
-.blog-sub-error { font-size: 11.5px; color: rgba(251,246,242,0.85); margin-top: 6px; min-height: 14px; }
-.blog-sub-ok { font-size: 13px; color: rgba(251,246,242,0.90); margin-top: 4px; font-style: italic; font-family: 'Playfair Display', serif; }
-
-/* Guía card */
-.guia-card { background: #F2E8E1; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 28px rgba(46,26,16,0.08); }
-.guia-card-top { background: linear-gradient(140deg, #F7EEE8 0%, var(--rosa-arena) 100%); padding: 28px 24px 22px; display: flex; align-items: flex-start; gap: 14px; position: relative; overflow: hidden; }
-.guia-card-top::after { content:''; position:absolute; width:140px; height:140px; border-radius:50%; border:1px solid rgba(196,133,90,0.15); bottom:-50px; right:-30px; }
-.guia-icon-box { width: 48px; height: 48px; background: var(--cobre); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.guia-icon-box svg { width: 22px; height: 22px; fill: var(--crema); }
-.guia-card-meta { flex: 1; }
-.guia-eyebrow { font-size: 9px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobre); margin-bottom: 6px; }
-.guia-title   { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--espresso); line-height: 1.25; }
-.guia-card-bottom { padding: 18px 24px 24px; border-top: 1px solid rgba(196,133,90,0.15); }
-.guia-desc  { font-size: 13px; font-weight: 300; color: var(--topo); line-height: 1.68; margin-bottom: 18px; }
-.guia-form  { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-.guia-form.expanded { display: flex; animation: wlFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards; }
-.guia-input { width: 100%; padding: 13px 16px; background: var(--crema); border: 1px solid var(--rosa-arena); border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 300; color: var(--espresso); outline: none; transition: border-color 0.2s; }
-.guia-input::placeholder { color: rgba(140,106,88,0.4); }
-.guia-input:focus { border-color: var(--cobre); }
-
-/* Footer mobile */
-.footer { background: linear-gradient(to bottom, #FEFCFA 0%, var(--nude) 100%); padding: 40px 20px 52px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
-.footer-logo   { font-family: 'Alex Brush', cursive; font-size: 46px; color: var(--cobre); line-height: 1; }
-.footer-divider { width: 32px; height: 1px; background: var(--rosa-arena); opacity: 0.6; }
-.footer-social  { display: flex; gap: 12px; }
-.footer-icon   { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--rosa-arena); display: flex; align-items: center; justify-content: center; text-decoration: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background 0.22s, border-color 0.22s, transform 0.15s ease; }
-.footer-icon:active { transform: scale(0.9); }
-.footer-icon:hover  { background: var(--cobre); border-color: var(--cobre); }
-.footer-icon:hover svg { fill: var(--crema); }
-.footer-icon svg { width: 15px; height: 15px; fill: var(--topo); transition: fill 0.22s; }
-.footer-copy { font-size: 9px; font-weight: 400; letter-spacing: 0.08em; color: var(--espresso); opacity: 0.5; }
-
-
-/* ════════════════════════════════════════════════════════════
-   DESKTOP LAYOUT  (≥ 960px) — Claude Design 40/60 split
-   ════════════════════════════════════════════════════════════ */
-.desktop-view {
-  grid-template-columns: 40% 60%;
-  min-height: 100vh;
-  width: 100%;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  color: var(--espresso);
-  font-weight: 300;
-  line-height: 1.55;
-}
-
-/* LEFT: hero */
-.d-hero-col {
-  position: sticky; top: 0; height: 100vh; overflow: hidden;
-  background: linear-gradient(135deg, #d9bfa9 0%, #b78a6e 60%, #8c5e44 100%);
-}
-.d-hero-col img.d-hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-.d-hero-col::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
-  background: linear-gradient(180deg, rgba(46,26,16,0) 45%, rgba(46,26,16,0.78) 100%),
-              linear-gradient(180deg, rgba(46,26,16,0.15) 0%, rgba(46,26,16,0) 20%);
-}
-.d-hero-mark {
-  position: absolute; top: 36px; left: 36px; z-index: 3;
-  color: var(--crema); font-family: var(--font-sans); font-size: 10px;
-  letter-spacing: 0.4em; text-transform: uppercase; opacity: 0.65;
-  writing-mode: vertical-rl; transform: rotate(180deg);
-}
-.d-hero-text {
-  position: absolute; left: 0; right: 0; bottom: 56px;
-  z-index: 3; text-align: center; padding: 0 48px; color: var(--crema);
-}
-.d-hero-logo {
-  font-family: var(--font-script); font-size: 104px; line-height: 0.9; color: var(--crema);
-  text-shadow: 0 2px 24px rgba(46,26,16,0.35); font-weight: 400;
-  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.15s forwards;
-}
-.d-hero-tagline {
-  margin-top: 14px; font-family: var(--font-sans); font-weight: 300; font-size: 11px;
-  letter-spacing: 0.42em; text-transform: uppercase; color: var(--crema);
-  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.35s forwards;
-}
-.d-hero-tagline .dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; vertical-align: middle; margin: 0 10px 2px; opacity: 0.7; }
-.d-hero-socials {
-  margin-top: 28px; display: flex; justify-content: center; gap: 14px;
-  opacity: 0; transform: translateY(14px); animation: heroIn 1.4s cubic-bezier(.22,.7,.25,1) 0.55s forwards;
-}
-.d-hero-socials a { width: 42px; height: 42px; display: grid; place-items: center; color: var(--crema); border: 1px solid rgba(251,246,242,0.35); border-radius: 50%; text-decoration: none; transition: transform .25s ease, background .25s ease, border-color .25s ease; }
-.d-hero-socials a:hover { background: rgba(251,246,242,0.14); border-color: var(--crema); transform: translateY(-2px); }
-.d-hero-socials svg { width: 18px; height: 18px; }
-@keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
-
-/* RIGHT: scrollable cards */
-.d-cards-col {
-  background: var(--crema); position: relative;
-  padding: 88px 56px 88px; display: flex; flex-direction: column; align-items: center; gap: 26px;
-}
-.d-cards-col::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-  opacity: 0.05; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-}
-.d-cards-col > * { position: relative; z-index: 1; width: 100%; max-width: 520px; }
-
-/* Greeting */
-.d-greeting { text-align: left; margin-bottom: 4px; }
-.d-greeting .eyebrow { font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--topo); margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
-.d-greeting .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--cobre); display: inline-block; }
-.d-greeting h1 { font-family: var(--font-serif); font-weight: 400; font-size: 28px; line-height: 1.2; color: var(--espresso); font-style: italic; }
-.d-greeting h1 em { font-style: italic; color: var(--cobre); }
-.d-greeting p { margin-top: 10px; font-size: 14px; color: var(--topo); line-height: 1.65; }
-
-/* Generic card */
-.d-card {
-  background: var(--nude); border-radius: 28px; padding: 30px;
-  border: 1px solid rgba(196,133,90,0.10);
-  box-shadow: 0 1px 2px rgba(46,26,16,0.04), 0 14px 36px -22px rgba(46,26,16,0.18);
-  transition: transform .35s ease, box-shadow .35s ease;
-}
-.d-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 24px 46px -22px rgba(46,26,16,0.26); }
-
-.d-label { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--topo); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-.d-label .icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: rgba(196,133,90,0.14); color: var(--cobre); }
-.d-label .icon svg { width: 13px; height: 13px; }
-
-.d-card h2 { font-family: var(--font-serif); font-weight: 500; font-size: 28px; line-height: 1.18; color: var(--espresso); letter-spacing: -0.01em; }
-.d-card .d-desc { font-size: 14px; color: var(--topo); margin: 12px 0 22px; line-height: 1.6; }
-
-/* Desktop buttons */
-.d-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 13px 24px; border-radius: 12px; border: 1px solid transparent; font-family: var(--font-sans); font-weight: 400; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .3s ease, background .3s ease, color .3s ease; }
-.d-btn .arrow { display: inline-block; transition: transform .3s ease; }
-.d-btn:hover .arrow { transform: translateX(4px); }
-.d-btn-primary { background: var(--cobre); color: var(--crema); box-shadow: 0 10px 22px -10px rgba(196,133,90,0.55); }
-.d-btn-primary:hover { background: var(--cobre-deep); transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(196,133,90,0.65); }
-
-/* Quiz card desktop — puerta de entrada al embudo */
-.d-card-quiz { background: linear-gradient(150deg, #FFFDFB 0%, var(--nude) 100%); border-color: rgba(196,133,90,0.28); position: relative; overflow: hidden; }
-.d-card-quiz::before { content: ''; position: absolute; top: -70px; right: -70px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(196,133,90,0.16) 0%, transparent 70%); pointer-events: none; }
-.d-card-quiz > * { position: relative; z-index: 1; }
-/* El badge base es salvia = "Proximamente". El quiz esta disponible AHORA,
-   asi que va en cobre para que se lea como invitacion, no como espera. */
-.d-card-quiz .d-badge { background: rgba(196,133,90,0.12); border-color: rgba(196,133,90,0.35); color: var(--cobre-deep); }
-.d-card-quiz h2 em { font-style: italic; color: var(--cobre-deep); }
-.d-quiz-meta { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-size: 11.5px; color: var(--topo); margin: 0 0 22px; }
-.d-quiz-meta .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--rosa-arena); }
-
-/* NFA card desktop */
-.d-card-nfa { background: var(--espresso); color: var(--crema); border: none; padding: 0; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; min-height: 240px; text-decoration: none; }
-.d-card-nfa:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 26px 50px -24px rgba(46,26,16,0.45); }
-.d-card-nfa .d-media { position: relative; background: radial-gradient(circle at 25% 30%, rgba(255,255,255,0.15), transparent 55%), linear-gradient(135deg, #c79477 0%, #875238 100%); overflow: hidden; }
-.d-card-nfa .d-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.d-card-nfa .d-media .pill { position: absolute; top: 14px; left: 14px; z-index: 4; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: rgba(251,246,242,0.90); color: var(--espresso); font-weight: 400; backdrop-filter: blur(4px); }
-.d-card-nfa .d-body { padding: 28px; display: flex; flex-direction: column; justify-content: center; }
-.d-card-nfa .d-body .d-label { color: rgba(251,246,242,0.58); }
-.d-card-nfa .d-body .d-label .icon { background: rgba(251,246,242,0.10); color: var(--cobre); }
-.d-card-nfa h2 { color: var(--crema); font-size: 22px; }
-.d-card-nfa .d-desc { color: rgba(251,246,242,0.70); margin: 10px 0 20px; font-size: 13px; }
-.d-btn-nfa { background: linear-gradient(135deg, #C49A3C 0%, #DDB860 100%); color: #330C15; box-shadow: 0 10px 22px -10px rgba(196,154,60,0.45); }
-.d-btn-nfa:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(196,154,60,0.35); }
-.d-card-nfa .d-btn-nfa { align-self: flex-start; }
-
-/* Reto card desktop */
-.d-card-reto { background: var(--crema); border: 1px solid var(--rosa-arena); }
-.d-badge { display: inline-flex; align-items: center; gap: 9px; padding: 6px 14px; background: rgba(166,176,160,0.16); border: 1px solid rgba(166,176,160,0.45); border-radius: 999px; color: #5e6b58; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; margin-bottom: 18px; }
-.d-pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--salvia); position: relative; flex-shrink: 0; }
-.d-pulse-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; background: var(--salvia); opacity: 0.5; animation: dpulse 2s ease-out infinite; }
-@keyframes dpulse { 0% { transform: scale(0.6); opacity: 0.6; } 70% { transform: scale(2.2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
-.d-card-reto h2 { font-style: italic; font-weight: 400; }
-.d-card-reto h2 .div { color: var(--cobre); font-style: normal; margin: 0 6px; }
-
-/* Desktop form fields */
-.d-wl-fields, .d-guia-fields { display: none; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-.d-wl-fields.expanded, .d-guia-fields.expanded { display: flex; }
-.d-input { width: 100%; padding: 12px 18px; border-radius: 12px; border: 1px solid rgba(46,26,16,0.12); background: #fff; color: var(--espresso); font-family: var(--font-sans); font-size: 14px; font-weight: 300; outline: none; transition: border-color .3s; }
-.d-input:focus { border-color: var(--cobre); }
-.d-input::placeholder { color: rgba(46,26,16,0.40); }
-.d-err  { font-size: 12px; color: #c0392b; margin-top: 6px; }
-.d-ok   { font-family: var(--font-serif); font-style: italic; font-size: 14px; color: var(--cobre-deep); margin-top: 8px; }
-
-
-/* Blog card desktop — unified */
-.d-card-blog { background: var(--salvia); border: 1px solid rgba(166,176,160,0.30); padding: 0; overflow: hidden; }
-.d-card-blog:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(46,26,16,0.05), 0 24px 46px -22px rgba(46,26,16,0.26); }
-.d-blog-top { display: flex; align-items: center; gap: 20px; padding: 22px 26px 20px; }
-.d-blog-icon { width: 48px; height: 48px; border-radius: 14px; flex: 0 0 auto; background: rgba(46,26,16,0.18); display: grid; place-items: center; color: #fff; }
-.d-blog-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
-.d-blog-body { flex: 1; min-width: 0; }
-.d-blog-body .d-label { margin-bottom: 6px; display: block; text-transform: uppercase; font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.70); }
-.d-blog-body h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 500; color: #fff; line-height: 1.25; margin-bottom: 10px; }
-.d-blog-cta { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; background: rgba(46,26,16,0.18); border-radius: 8px; color: #fff; font-size: 11.5px; font-weight: 400; letter-spacing: 0.06em; text-decoration: none; transition: gap .25s ease, background .25s ease; }
-.d-blog-cta:hover { gap: 12px; background: rgba(46,26,16,0.28); }
-.d-chev { width: 32px; height: 32px; border-radius: 50%; background: rgba(46,26,16,0.18); display: grid; place-items: center; color: #fff; flex: 0 0 auto; text-decoration: none; transition: background .25s ease, transform .25s ease; }
-.d-chev svg { width: 13px; height: 13px; }
-.d-chev:hover { background: rgba(46,26,16,0.32); transform: translateX(3px); }
-.d-blog-sub-sep { height: 1px; background: rgba(251,246,242,0.20); margin: 0 26px; }
-.d-blog-sub-bottom { padding: 18px 26px 22px; }
-.d-blog-sub-bottom strong { display: block; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 12px; font-weight: 400; }
-.d-blog-sub-form { display: flex; gap: 8px; }
-.d-blog-sub-form .d-input { flex: 1; min-width: 0; background: rgba(251,246,242,0.92); border-color: rgba(251,246,242,0.3); font-size: 13px; padding: 10px 16px; }
-.d-blog-sub-form .d-input::placeholder { color: rgba(46,26,16,0.40); }
-.d-blog-sub-form .d-input:focus { border-color: var(--crema); }
-.d-btn-blog-sub { flex: 0 0 auto; background: rgba(46,26,16,0.55); color: #FBF6F2; padding: 10px 20px; border-radius: 12px; border: none; font-family: var(--font-sans); font-size: 12px; letter-spacing: 0.06em; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; font-weight: 400; }
-.d-btn-blog-sub:hover { background: rgba(46,26,16,0.72); transform: translateY(-1px); }
-.d-blog-sub-err { font-size: 11.5px; color: rgba(251,246,242,0.85); margin-top: 6px; }
-.d-blog-sub-ok { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: rgba(251,246,242,0.90); }
-
-/* Guía card desktop */
-.d-card-guia { background: var(--nude); }
-.d-email-form { margin-top: 22px; display: flex; gap: 10px; flex-wrap: wrap; }
-.d-email-form .d-input { flex: 1; min-width: 0; }
-.d-email-form .d-btn { flex: 0 0 auto; white-space: nowrap; }
-
-/* Mini-footer desktop */
-.d-foot { margin-top: 20px; text-align: center; padding-top: 24px; border-top: 1px solid rgba(46,26,16,0.08); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--topo); }
-.d-foot .verse { font-family: var(--font-serif); font-style: italic; font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--topo); margin-bottom: 14px; display: block; }
-
-/* Desktop scroll reveals */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s cubic-bezier(.22,.7,.25,1), transform .8s cubic-bezier(.22,.7,.25,1); will-change: opacity, transform; }
-.reveal.is-in { opacity: 1; transform: translateY(0); }
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
-  .reveal { opacity: 1; transform: none; }
-}
+  @media (prefers-reduced-motion: reduce) {
+    .lista > *, .test__mapa .wk { animation: none; }
+    * { transition: none !important; }
+  }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
+<div class="marco">
+  <main>
 
-<!-- ════════════════════════════════════════
-     MOBILE (< 960px)
-     ════════════════════════════════════════ -->
-<div class="mobile-view">
-<div class="phone-frame">
+    <div class="perfil">
+      <header class="cabecera">
+        <div class="avatar"><img src="/photos/avatar.webp" alt="Anny Gómez" width="104" height="104"></div>
+        <h1 class="nombre">Anny Gómez</h1>
+        <div class="pilares"><span>FE</span><i>·</i><span>HÁBITOS</span><i>·</i><span>PROPÓSITO</span></div>
+      </header>
 
-  <section class="hero">
-    <img class="hero-img" src="./photos/hero.jpg" alt="Anny Gómez">
-    <div class="hero-grain"></div>
-    <div class="hero-gradient">
-      <div class="hero-logo">Anny Gómez</div>
-      <div class="hero-tagline">Fe · Hábitos · Propósito</div>
-      <div class="hero-social">
-        <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="Instagram">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" class="hero-social-btn" aria-label="TikTok">
-          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
-        </a>
-        <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="hero-social-btn" aria-label="YouTube">
-          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <div class="cards-area">
-
-    <div class="quiz-card fade-in">
-      <div class="quiz-body">
-        <div class="quiz-eyebrow">Test gratuito</div>
-        <div class="quiz-title">No estás perdida.<br>Estás <em>sin mapa</em>.</div>
-        <div class="quiz-desc">Descubre en qué nivel digital estás hoy y qué tan lejos estás de llegar a la meta.</div>
-        <div class="quiz-mapa" aria-hidden="true">
-          <img class="tira" src="/nivel/img/tira.webp" alt="" width="1344" height="576" loading="lazy" decoding="async">
-          <span class="wk"><img src="/nivel/img/walker.webp" alt="" width="88" height="180" loading="lazy" decoding="async"></span>
+      <section class="saludo">
+        <nav class="redes" aria-label="Redes sociales">
+          <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"></circle></svg></a>
+          <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" aria-label="TikTok"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"></path><path d="M14 3c.5 3 2.5 4.8 5.5 5"></path></svg></a>
+          <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" aria-label="YouTube"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"></rect><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"></path></svg></a>
+        </nav>
+        <div>
+          <h2>Me alegra que estés <span>aquí.</span></h2>
+          <p>Encuentra mis recursos, retos y reflexiones — pensados para ayudarte a vivir con propósito.</p>
         </div>
-        <div class="quiz-meta">
-          <span>6 preguntas</span><span class="sep"></span>
-          <span>2 minutos</span><span class="sep"></span>
-          <span>gratis</span>
-        </div>
-        <a href="/nivel/" class="btn btn-quiz">Ver qué tan lejos estoy ✦</a>
-      </div>
+      </section>
     </div>
 
+    <div class="tarjetas">
+      <section class="lista">
 
-    <div class="blog-card fade-in">
-      <div class="blog-watermark">Blog</div>
-      <div class="blog-page">
-        <div class="blog-eyebrow">Mi Blog</div>
-        <h3 class="blog-title">Artículos · Reflexiones y Recursos</h3>
-        <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="blog-cta">Leer artículos <span class="blog-cta-arrow">→</span></a>
-      </div>
-      <div class="blog-sub-sep"></div>
-      <div class="blog-sub-section">
-        <div class="blog-sub-eyebrow">Recibe cada artículo en tu correo</div>
-        <div id="blog-sub-wrap">
-          <div class="blog-subscribe-form">
-            <input id="blog-sub-email" type="email" placeholder="tu@correo.com" class="blog-sub-input" autocomplete="email">
-            <button type="button" class="blog-sub-btn" onclick="handleBlogSubscribe(this)">
-              <span class="blog-sub-label">Quiero recibirlos</span>
-              <span class="blog-sub-loading" style="display:none">Enviando…</span>
-            </button>
+        <a class="test" href="/nivel/">
+          <div class="test__mapa" aria-hidden="true">
+            <img class="tira" src="/nivel/img/tira.webp" alt="" width="1344" height="576" decoding="async">
+            <span class="wk"><img src="/nivel/img/walker.webp" alt="" width="88" height="180" decoding="async"></span>
+            <span class="test__insignia etiqueta">TEST GRATUITO</span>
           </div>
-          <div id="blog-sub-error" class="blog-sub-error"></div>
-        </div>
-        <div id="blog-sub-ok" style="display:none" class="blog-sub-ok">Te mandé un correo. Ábrelo, confirma, y ya estamos.</div>
-      </div>
-    </div>
-
-    <div class="guia-card fade-in">
-      <div class="guia-card-top">
-        <div class="guia-icon-box"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h10v2H7zm0-3h10v2H7zm0 6h7v2H7z"/></svg></div>
-        <div class="guia-card-meta">
-          <div class="guia-eyebrow">Descarga gratis</div>
-          <div class="guia-title">Tu Guía para Organizar tu Vida con Propósito</div>
-        </div>
-      </div>
-      <div class="guia-card-bottom">
-        <div class="guia-desc">Recursos prácticos para organizar tu vida con Fe y disciplina. Sin costo, directo a tu correo.</div>
-        <div id="guia-form-wrap">
-          <div class="guia-form" id="guia-fields">
-            <input id="guia-name"  class="guia-input" type="text"  placeholder="Tu nombre" autocomplete="name">
-            <input id="guia-email" class="guia-input" type="email" placeholder="tu@correo.com" autocomplete="email">
+          <div class="test__cuerpo">
+            <h3>No estás perdida.<br>Estás <em>sin mapa</em>.</h3>
+            <p>Descubre en qué nivel digital estás hoy y qué tan lejos estás de llegar a la meta.</p>
+            <div class="test__datos"><span>6 preguntas</span><span aria-hidden="true">·</span><span>2 minutos</span><span aria-hidden="true">·</span><span>gratis</span></div>
+            <div class="boton boton--cobre">Ver qué tan lejos estoy <span aria-hidden="true">→</span></div>
           </div>
-          <button type="button" class="btn btn-solid" onclick="handleLeads(this)">
-            <span class="guia-label">Quiero mi guía</span>
-            <span class="guia-loading" style="display:none">Enviando…</span>
-          </button>
-          <div id="guia-error" class="wl-error"></div>
-        </div>
-        <div id="guia-success" style="display:none" class="wl-success">¡Listo! Revisa tu correo — tu guía está en camino.</div>
-      </div>
-    </div>
-
-    <div class="nfa-card fade-in">
-      <img class="nfa-banner" src="./next%20fly%20banner.jpeg" alt="NextFlight Academy">
-      <div class="nfa-body">
-        <div class="nfa-title">Tu boleto para despegar tu marca y ganar online</div>
-        <div class="nfa-desc">Aprende a usar las redes sociales estratégicamente para maximizar tu presencia en línea. A través de módulos interactivos, construye y haz crecer tu comunidad.</div>
-        <a href="/next-fly-academy/" class="btn btn-nfa">¡Quiero abordar! →</a>
-      </div>
-    </div>
-
-  </div>
-
-  <footer class="footer fade-in" style="margin-top:32px">
-    <div class="footer-logo">Anny Gómez</div>
-    <div class="footer-divider"></div>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" class="footer-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-      <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" class="footer-icon" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.79a4.85 4.85 0 01-1.07-.1z"/></svg></a>
-      <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" class="footer-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
-    </div>
-    <div class="footer-copy">© 2026 Anny Gómez · Todos los derechos reservados</div>
-  </footer>
-
-</div>
-</div><!-- /mobile-view -->
-
-
-<!-- ════════════════════════════════════════
-     DESKTOP (≥ 960px) — Claude Design 40/60
-     ════════════════════════════════════════ -->
-<main class="desktop-view">
-
-  <aside class="d-hero-col" aria-label="Anny Gómez">
-    <img class="d-hero-photo" src="./photos/hero.jpg" alt="Anny Gómez">
-    <div class="d-hero-mark">Anny · Gómez · 2026</div>
-    <div class="d-hero-text">
-      <div class="d-hero-logo">Anny Gómez</div>
-      <div class="d-hero-tagline">
-        Fe <span class="dot"></span> Hábitos <span class="dot"></span> Propósito
-      </div>
-      <nav class="d-hero-socials" aria-label="Redes sociales">
-        <a href="https://www.instagram.com/annygomezleal" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a href="https://www.tiktok.com/@soyannygomezleal" target="_blank" rel="noopener" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M15 3c0 2.5 2 4.5 4.5 4.5"/></svg>
-        </a>
-        <a href="https://www.youtube.com/@annygomezr" target="_blank" rel="noopener" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.5 9.5l4.5 2.5-4.5 2.5z" fill="currentColor"/></svg>
-        </a>
-      </nav>
-    </div>
-  </aside>
 
-  <section class="d-cards-col">
-
-    <div class="d-greeting reveal">
-      <div class="eyebrow">Bienvenida</div>
-      <h1>Me alegra que estés <em>aquí.</em></h1>
-      <p>Encuentra mis recursos, retos y reflexiones — pensados para ayudarte a vivir con propósito.</p>
-    </div>
-
-    <!-- Test de nivel digital -->
-    <article class="d-card d-card-quiz reveal">
-      <div class="d-badge">Test gratuito</div>
-      <h2>No estás perdida.<br>Estás <em>sin mapa</em>.</h2>
-      <p class="d-desc">Descubre en qué nivel digital estás hoy y qué tan lejos estás de llegar a la meta.</p>
-      <div class="quiz-mapa" aria-hidden="true">
-        <img class="tira" src="/nivel/img/tira.webp" alt="" width="1344" height="576" loading="lazy" decoding="async">
-        <span class="wk"><img src="/nivel/img/walker.webp" alt="" width="88" height="180" loading="lazy" decoding="async"></span>
-      </div>
-      <div class="d-quiz-meta">
-        <span>6 preguntas</span><span class="sep"></span>
-        <span>2 minutos</span><span class="sep"></span>
-        <span>gratis</span>
-      </div>
-      <a href="/nivel/" class="d-btn d-btn-primary">Ver qué tan lejos estoy <span class="arrow">→</span></a>
-    </article>
-
-    <!-- Blog -->
-    <article class="d-card d-card-blog reveal">
-      <div class="d-blog-top">
-        <div class="d-blog-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 3.5c-4 0-9 1-12 5s-3 8-3 12"/><path d="M20.5 3.5C18 9 13 14 5.5 17"/><path d="M11 11h6"/><path d="M8 14h6"/></svg></div>
-        <div class="d-blog-body">
-          <span class="d-label">Mi Blog</span>
-          <h3>Artículos · Reflexiones y Recursos</h3>
-          <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-blog-cta">Leer artículos <span class="arrow">→</span></a>
-        </div>
-        <a href="https://blog.annygomez.com" target="_blank" rel="noopener" class="d-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></a>
-      </div>
-      <div class="d-blog-sub-sep"></div>
-      <div class="d-blog-sub-bottom">
-        <strong>Recibe cada artículo en tu correo</strong>
-        <div id="d-blog-sub-wrap">
-          <div class="d-blog-sub-form">
-            <input id="d-blog-sub-email" type="email" placeholder="tu@correo.com" class="d-input" autocomplete="email">
-            <button type="button" class="d-btn-blog-sub" onclick="dHandleBlogSubscribe(this)">
-              <span class="d-blog-sub-label">Quiero recibirlos</span>
-              <span class="d-blog-sub-loading" style="display:none">Enviando…</span>
-            </button>
+        <div class="tienda">
+          <div class="tienda__cabeza">
+            <div class="tienda__titulo">
+              <span class="etiqueta">TIENDA</span>
+              <h3>Tienda de recursos</h3>
+            </div>
+            <a class="tienda__todo" href="https://recursos.annygomez.com/recursos/">Ver todo →</a>
           </div>
-          <div id="d-blog-sub-err" class="d-blog-sub-err"></div>
+          <div class="productos" id="productos">
+            <!-- Respaldo: la tienda tal como estaba el 26-sep-2026. /api/tienda lo sustituye al cargar. -->
+            <a class="producto" href="https://recursos.annygomez.com/producto/invierte-en-ti/">
+              <div class="producto__foto"><img src="https://recursos.annygomez.com/wp-content/uploads/2026/09/abanico-invierte-768x478.webp" alt="" loading="lazy" decoding="async"></div>
+              <span class="producto__nombre">Invierte en ti</span>
+              <span class="producto__precio">Gratis</span>
+            </a>
+            <a class="producto" href="https://recursos.annygomez.com/producto/reset-5-minutos/">
+              <div class="producto__foto"><img src="https://recursos.annygomez.com/wp-content/uploads/2026/09/abanico-reset-768x478.webp" alt="" loading="lazy" decoding="async"></div>
+              <span class="producto__nombre">Reset de 5 minutos para la mujer agotada</span>
+              <span class="producto__precio">Gratis</span>
+            </a>
+            <a class="producto" href="https://recursos.annygomez.com/producto/raices-venezolanas-vol-1/">
+              <div class="producto__foto"><img src="https://recursos.annygomez.com/wp-content/uploads/2026/09/mockup-raices-v1-768x518.webp" alt="" loading="lazy" decoding="async"></div>
+              <span class="producto__nombre">Raíces Venezolanas · Volumen 1</span>
+              <span class="producto__precio">Ver en Amazon</span>
+            </a>
+          </div>
         </div>
-        <div id="d-blog-sub-ok" style="display:none" class="d-blog-sub-ok">Te mandé un correo. Ábrelo, confirma, y ya estamos.</div>
-      </div>
-    </article>
 
-    <!-- Guía -->
-    <article class="d-card d-card-guia reveal">
-      <div class="d-label">
-        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg></span>
-        Gratis
-      </div>
-      <h2>Guía Gratuita · Descarga</h2>
-      <p class="d-desc">Recursos prácticos para organizar tu vida con propósito y Fe — descarga inmediata.</p>
-      <div id="d-guia-form-wrap">
-        <div class="d-guia-fields" id="d-guia-fields">
-          <input id="d-guia-name"  type="text"  placeholder="Tu nombre" class="d-input" autocomplete="name">
-          <input id="d-guia-email" type="email" placeholder="tu@correo.com" class="d-input" autocomplete="email">
+        <a class="fila" href="https://blog.annygomez.com" target="_blank" rel="noopener">
+          <span class="fila__icono fila__icono--blog" aria-hidden="true">B</span>
+          <span class="fila__texto">
+            <span class="etiqueta" style="color:#7d8a74">MI BLOG</span>
+            <span class="fila__titulo">Artículos · Reflexiones y Recursos</span>
+          </span>
+          <span class="fila__flecha" aria-hidden="true">→</span>
+        </a>
+
+        <a class="fila" href="https://recursos.annygomez.com/categoria/gratis/">
+          <span class="fila__icono fila__icono--gratis" aria-hidden="true">↓</span>
+          <span class="fila__texto">
+            <span class="etiqueta" style="color:var(--cobre)">GRATIS</span>
+            <span class="fila__titulo">Guía Gratuita · Descarga</span>
+            <span class="fila__nota">Recursos prácticos para organizar tu vida con propósito y Fe — descarga inmediata.</span>
+          </span>
+          <span class="fila__flecha" aria-hidden="true">→</span>
+        </a>
+
+        <a class="academia" href="/next-fly-academy/">
+          <div class="academia__marca">
+            <div class="academia__logo"><em>Next</em>Flight</div>
+            <div class="academia__sub">ACADEMY</div>
+          </div>
+          <div class="academia__raya"></div>
+          <div class="academia__cuerpo">
+            <h3>Despega tu marca y gana online</h3>
+            <p>Construye tu negocio digital con estrategia, propósito y las herramientas correctas.</p>
+            <div class="boton boton--oro">¡Quiero abordar! <span aria-hidden="true">→</span></div>
+          </div>
+        </a>
+
+      </section>
+
+      <section class="boletin" aria-labelledby="boletin-titulo">
+        <div>
+          <span class="etiqueta">RECIBE CADA ARTÍCULO EN TU CORREO</span>
+          <div class="boletin__frase" id="boletin-titulo">Una reflexión nueva, directo a ti.</div>
         </div>
-        <button type="button" class="d-btn d-btn-primary" onclick="dHandleLeads(this)">
-          <span class="d-guia-label">Quiero mi guía</span>
-          <span class="d-guia-loading" style="display:none">Enviando…</span>
-          <span class="arrow">→</span>
-        </button>
-        <div id="d-guia-error" class="d-err"></div>
-      </div>
-      <div id="d-guia-success" style="display:none" class="d-ok">¡Listo! Revisa tu correo — tu guía está en camino.</div>
-    </article>
+        <form id="boletin-form" novalidate>
+          <label for="boletin-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Tu correo</label>
+          <input id="boletin-email" type="email" required placeholder="tu@correo.com" autocomplete="email" inputmode="email">
+          <button type="submit">Quiero recibirlos</button>
+          <p class="boletin__error" id="boletin-error" role="alert"></p>
+        </form>
+        <p class="boletin__ok" id="boletin-ok" hidden>Te mandé un correo. Ábrelo, confirma, y ya estamos.</p>
+      </section>
+    </div>
 
-    <!-- NFA -->
-    <a href="/next-fly-academy/" class="d-card d-card-nfa reveal">
-      <div class="d-media">
-        <img src="./next%20fly%20banner.jpeg" alt="Next Flight Academy">
-      </div>
-      <div class="d-body">
-        <h2>Despega tu marca y gana online</h2>
-        <p class="d-desc">Construye tu negocio digital con estrategia, propósito y las herramientas correctas.</p>
-        <span class="d-btn d-btn-nfa">¡Quiero abordar! <span class="arrow">→</span></span>
-      </div>
-    </a>
-
-    <footer class="d-foot reveal">
-      <span class="verse">"Todo lo puedo en Cristo que me fortalece."</span>
-      © 2026 Anny Gómez · Todos los derechos reservados
+    <footer>
+      <p class="versiculo">"Todo lo puedo en Cristo que me fortalece."</p>
+      <p class="derechos">© 2026 ANNY GÓMEZ · TODOS LOS DERECHOS RESERVADOS</p>
     </footer>
 
-  </section>
-
-</main>
+  </main>
+</div>
 
 <script>
-document.addEventListener('touchstart', function(){}, { passive: true });
-
-/* ── MOBILE: scroll animations ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-document.querySelectorAll('.hero-social-btn, .footer-icon').forEach(btn => {
-  btn.addEventListener('click', function () {
-    this.classList.remove('tapped'); void this.offsetWidth; this.classList.add('tapped');
-    this.addEventListener('animationend', () => this.classList.remove('tapped'), { once: true });
-  });
-});
-
-/* ── MOBILE: forms ── */
-function handleLeads(btn) {
-  const fields = document.getElementById('guia-fields');
-  if (!fields.classList.contains('expanded')) {
-    fields.classList.add('expanded');
-    btn.querySelector('.guia-label').textContent = 'Enviar →';
-    setTimeout(() => document.getElementById('guia-name').focus(), 50);
-    return;
-  }
-  submitForm(btn, { nameId:'guia-name', emailId:'guia-email', errorId:'guia-error', wrapId:'guia-form-wrap', successId:'guia-success', labelClass:'guia-label', loadingClass:'guia-loading', endpoint:'/api/leads' });
-}
-function handleWaitlist(btn) {
-  const fields = document.getElementById('wl-fields');
-  if (!fields.classList.contains('expanded')) {
-    fields.classList.add('expanded');
-    btn.querySelector('.wl-label').textContent = 'Enviar →';
-    setTimeout(() => document.getElementById('wl-name').focus(), 50);
-    return;
-  }
-  submitForm(btn, { nameId:'wl-name', emailId:'wl-email', errorId:'wl-error', wrapId:'waitlist-form-wrap', successId:'waitlist-success', labelClass:'wl-label', loadingClass:'wl-loading', endpoint:'/api/waitlist' });
-}
-
-/* ── DESKTOP: scroll reveals ── */
+/* ── Tienda: los productos reales, vía /api/tienda ─────────────────────
+   Si la llamada falla, se quedan los tres escritos en el HTML. */
 (function () {
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
-  const inVP = (el) => { const r = el.getBoundingClientRect(); return r.top < window.innerHeight * 0.93 && r.bottom > 0; };
-  const trigger = (el, i) => { el.style.transitionDelay = (i % 4) * 80 + 'ms'; el.classList.add('is-in'); };
-  reveals.forEach((el, i) => { if (inVP(el)) trigger(el, i); });
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { trigger(e.target, reveals.indexOf(e.target)); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    reveals.forEach((el) => { if (!el.classList.contains('is-in')) io.observe(el); });
-  } else { reveals.forEach((el, i) => trigger(el, i)); }
-  setTimeout(() => reveals.forEach((el, i) => { if (!el.classList.contains('is-in')) trigger(el, i); }), 600);
+  var caja = document.getElementById('productos');
+  if (!caja || !window.fetch) return;
+  function texto(t) { var s = document.createElement('span'); s.textContent = t; return s.innerHTML; }
+  fetch('/api/tienda').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.productos || d.productos.length !== 3) return;
+    caja.innerHTML = d.productos.map(function (p) {
+      return '<a class="producto" href="' + encodeURI(p.url) + '">' +
+        '<div class="producto__foto">' + (p.imagen ? '<img src="' + encodeURI(p.imagen) + '" alt="" loading="lazy" decoding="async">' : '') + '</div>' +
+        '<span class="producto__nombre">' + texto(p.nombre) + '</span>' +
+        (p.precio ? '<span class="producto__precio">' + texto(p.precio) + '</span>' : '') +
+        '</a>';
+    }).join('');
+  }).catch(function () {});
 })();
 
-/* ── DESKTOP: forms ── */
-function dHandleLeads(btn) {
-  const fields = document.getElementById('d-guia-fields');
-  if (!fields.classList.contains('expanded')) {
-    fields.classList.add('expanded');
-    btn.querySelector('.d-guia-label').textContent = 'Enviar';
-    setTimeout(() => document.getElementById('d-guia-name').focus(), 50);
-    return;
-  }
-  submitForm(btn, { nameId:'d-guia-name', emailId:'d-guia-email', errorId:'d-guia-error', wrapId:'d-guia-form-wrap', successId:'d-guia-success', labelClass:'d-guia-label', loadingClass:'d-guia-loading', endpoint:'/api/leads' });
-}
-function dHandleWaitlist(btn) {
-  const fields = document.getElementById('d-wl-fields');
-  if (!fields.classList.contains('expanded')) {
-    fields.classList.add('expanded');
-    btn.querySelector('.d-wl-label').textContent = 'Enviar';
-    setTimeout(() => document.getElementById('d-wl-name').focus(), 50);
-    return;
-  }
-  submitForm(btn, { nameId:'d-wl-name', emailId:'d-wl-email', errorId:'d-wl-error', wrapId:'d-waitlist-form-wrap', successId:'d-waitlist-success', labelClass:'d-wl-label', loadingClass:'d-wl-loading', endpoint:'/api/waitlist' });
-}
-
-/* ── Blog subscribe ── */
-async function handleBlogSubscribe(btn) {
-  const email = document.getElementById('blog-sub-email').value.trim();
-  const error = document.getElementById('blog-sub-error');
-  error.textContent = '';
-  if (!email) { error.textContent = 'Por favor ingresa tu correo.'; return; }
-  btn.disabled = true;
-  btn.querySelector('.blog-sub-label').style.display  = 'none';
-  btn.querySelector('.blog-sub-loading').style.display = 'inline';
-  try {
-    const res  = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById('blog-sub-wrap').style.display = 'none';
-      document.getElementById('blog-sub-ok').style.display   = 'block';
-    } else { throw new Error(data.error || ''); }
-  } catch(e) {
-    error.textContent = e.message || 'Hubo un error. Intenta de nuevo.';
-    btn.disabled = false;
-    btn.querySelector('.blog-sub-label').style.display  = 'inline';
-    btn.querySelector('.blog-sub-loading').style.display = 'none';
-  }
-}
-async function dHandleBlogSubscribe(btn) {
-  const email = document.getElementById('d-blog-sub-email').value.trim();
-  const error = document.getElementById('d-blog-sub-err');
-  error.textContent = '';
-  if (!email) { error.textContent = 'Por favor ingresa tu correo.'; return; }
-  btn.disabled = true;
-  btn.querySelector('.d-blog-sub-label').style.display  = 'none';
-  btn.querySelector('.d-blog-sub-loading').style.display = 'inline';
-  try {
-    const res  = await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById('d-blog-sub-wrap').style.display = 'none';
-      document.getElementById('d-blog-sub-ok').style.display   = 'block';
-    } else { throw new Error(data.error || ''); }
-  } catch(e) {
-    error.textContent = e.message || 'Hubo un error. Intenta de nuevo.';
-    btn.disabled = false;
-    btn.querySelector('.d-blog-sub-label').style.display  = 'inline';
-    btn.querySelector('.d-blog-sub-loading').style.display = 'none';
-  }
-}
-
-/* ── Shared submit ── */
-async function submitForm(btn, cfg) {
-  const name  = document.getElementById(cfg.nameId).value.trim();
-  const email = document.getElementById(cfg.emailId).value.trim();
-  const error = document.getElementById(cfg.errorId);
-  error.textContent = '';
-  if (!name || !email) { error.textContent = 'Por favor completa tu nombre y correo.'; return; }
-  btn.disabled = true;
-  btn.querySelector('.' + cfg.labelClass).style.display   = 'none';
-  btn.querySelector('.' + cfg.loadingClass).style.display = 'inline';
-  try {
-    const res  = await fetch(cfg.endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,email}) });
-    const data = await res.json();
-    if (data.success || data.alreadyRegistered) {
-      document.getElementById(cfg.wrapId).style.display    = 'none';
-      document.getElementById(cfg.successId).style.display = 'block';
-    } else { throw new Error(); }
-  } catch {
-    error.textContent = 'Hubo un error. Por favor intenta de nuevo.';
-    btn.disabled = false;
-    btn.querySelector('.' + cfg.labelClass).style.display   = 'inline';
-    btn.querySelector('.' + cfg.loadingClass).style.display = 'none';
-  }
-}
+/* ── Boletín: el mismo /api/subscribe de siempre (doble confirmación de Ghost) ── */
+(function () {
+  var form = document.getElementById('boletin-form');
+  var input = document.getElementById('boletin-email');
+  var error = document.getElementById('boletin-error');
+  var ok = document.getElementById('boletin-ok');
+  var boton = form.querySelector('button');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = input.value.trim();
+    error.textContent = '';
+    if (!email) { error.textContent = 'Por favor escribe tu correo.'; input.focus(); return; }
+    boton.disabled = true;
+    boton.textContent = 'Enviando…';
+    fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.success) throw new Error(d.error || '');
+        form.hidden = true;
+        ok.hidden = false;
+      })
+      .catch(function (err) {
+        error.textContent = (err && err.message) || 'Hubo un error. Intenta de nuevo.';
+        boton.disabled = false;
+        boton.textContent = 'Quiero recibirlos';
+      });
+  });
+})();
 </script>
-
 </body>
 </html>
