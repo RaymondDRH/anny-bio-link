@@ -16,7 +16,11 @@
     { "source": "/quiz", "destination": "/nivel/", "permanent": false },
     { "source": "/soy", "destination": "/nivel/", "permanent": false },
     { "source": "/quiz/mujer-construccion", "destination": "/quiz/mujer-construccion/", "permanent": false },
-    { "source": "/next-fly-academy", "destination": "/next-fly-academy/", "permanent": false }
+    { "source": "/next-fly-academy", "destination": "/next-fly-academy/", "permanent": false },
+    { "source": "/guias/metodo-5-minutos/", "destination": "/guia-habitos/", "permanent": true },
+    { "source": "/guias/metodo-5-minutos/:path*", "destination": "/guia-habitos/", "permanent": true },
+    { "source": "/guias/guia-organizacion/", "destination": "/guia-habitos/", "permanent": true },
+    { "source": "/guias/guia-organizacion/:path*", "destination": "/guia-habitos/", "permanent": true }
   ],
   "headers": [
     {
