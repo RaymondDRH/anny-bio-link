@@ -26,6 +26,12 @@ GUIAS=(
 	"guias/invierte-en-ti/invierte-en-ti.pdf:invierte-en-ti.pdf"
 	"guias/reset-5-minutos/reset-5-minutos.pdf:reset-5-minutos.pdf"
 	"guias/guia-habitos.pdf:guia-habitos.pdf"
+	# Versiones para imprimir (fondo blanco, tamaño Carta), desde el 26-09-2026.
+	# La guía normal enlaza a ellas en su última página, y la tienda las entrega
+	# como segundo archivo de cada producto.
+	"guias/invierte-en-ti/invierte-en-ti-imprimible.pdf:invierte-en-ti-imprimible.pdf"
+	"guias/reset-5-minutos/reset-5-minutos-imprimible.pdf:reset-5-minutos-imprimible.pdf"
+	"guias/guia-habitos-imprimible.pdf:guia-habitos-imprimible.pdf"
 )
 
 huella() { md5sum | cut -c1-12; }
